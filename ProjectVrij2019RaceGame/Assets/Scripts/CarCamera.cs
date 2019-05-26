@@ -8,6 +8,7 @@ public class CarCamera : MonoBehaviour
     public float distance;
     public float height;
     public float targetPositionSmoothing = 3f;
+    public Transform car;
 
     private void FixedUpdate() {
         Vector3 targetPosition = target.position - target.forward * distance + Vector3.up * height;
