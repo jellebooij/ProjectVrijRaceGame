@@ -28,7 +28,7 @@ public class Health : MonoBehaviour {
     public void TakeDamage(float amount) {
         float combinedHealth = health + armor;
         if (amount < combinedHealth) {
-            combinedHealth -= amount * Time.deltaTime;
+            combinedHealth -= amount;
         }
         if (combinedHealth >= 100) {
             health = 100;

@@ -2,7 +2,7 @@
 
 public class PowerupController : MonoBehaviour {
     public Health healthReference;
-    BaseAttackPowerup currentPowerup;
+    public BaseAttackPowerup currentPowerup;
     LaserPowerup laser;
     NoPowerup none;
     public float laserDuration = 10;
