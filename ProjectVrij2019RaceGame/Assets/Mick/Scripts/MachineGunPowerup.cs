@@ -5,19 +5,14 @@ using UnityEngine;
 public class MachineGunPowerup : BaseAttackPowerup{
 
 
-    public Vector3 laserOriginOffset = Vector3.zero;
-    public float laserDistance = 50f;
-
-    public Transform carTransform;
-    public LayerMask layerMask;
-    public float blastDuration = 1f;
-    public float laserForce = 20f;
-    public float laserDamage = 40f;
-    public GameObject laser;
+    public Vector3 machineGunOriginOffset = Vector3.zero;
+    public float shootDistance = 10f;
+    public float strayFactor = 10f;
+    
+    public GameObject bulletPrefab;
 
     public MachineGunPowerup() {
-        type = PowerupType.Laser;
-        shotTimer = shotDuration;
+        type = PowerupType.MachineGun;
     }
 
     public override void StartPowerup() {
@@ -31,7 +26,6 @@ public class MachineGunPowerup : BaseAttackPowerup{
         LaserPowerupExecution();
     }
     public override void StopPowerup() {
-        laser.SetActive(false);
          AttackPowerupExecutionOrder = null;
     }
 
@@ -41,45 +35,22 @@ public class MachineGunPowerup : BaseAttackPowerup{
         }
         timer -= Time.deltaTime;
 
-        if (Input.GetButtonDown("Fire1") && cooldownTimer > coolDownDuration) {
-            Debug.Log(timer);
+        cooldownTimer += Time.deltaTime;
 
-            Debug.Log("Shoot");
-
-            isShooting = true;
-            shotTimer = 0;
-        }
-
-        Debug.Log(isShooting);
-
-        if (isShooting) {
-            LaserBlast();
-            shotTimer += Time.deltaTime;
-            if (shotTimer > shotDuration) {
-                cooldownTimer = 0;
-                isShooting = false;
-            }
-
-            laser.SetActive(true);
-        }
-
-        if (!isShooting) {
-            cooldownTimer += Time.deltaTime;
-            laser.SetActive(false);
+        if (Input.GetButton("Fire1") && cooldownTimer > coolDownDuration) {
+            Debug.Log("Shooting");
+            ShootBullets();
         }
     }
 
-    void LaserBlast() {
-        RaycastHit hit;
-
-        if (Physics.Raycast(carTransform.position + laserOriginOffset, carTransform.forward, out hit, laserDistance, layerMask)) {
-            if (hit.transform.gameObject.GetComponent<Rigidbody>() != null) {
-                hit.transform.gameObject.GetComponent<Rigidbody>().AddForceAtPosition(carTransform.forward * laserForce, hit.point);
-            }
-            if (hit.transform.GetComponent<Health>() != null) {
-                hit.transform.GetComponent<Health>().TakeDamage(laserDamage);
-            }
-        }
+    void ShootBullets() {
+        var randomNumberX = Random.Range(-strayFactor, strayFactor);
+        var randomNumberY = Random.Range(-strayFactor, strayFactor);
+        var randomNumberZ = Random.Range(-strayFactor, strayFactor);
+        var bullet = Instantiate(bulletPrefab, carTransform.position, carTransform.rotation);
+        Vector3 rotationOffset = Vector3.ClampMagnitude(new Vector3(randomNumberX, randomNumberY, randomNumberZ), strayFactor);
+        bullet.transform.Rotate(rotationOffset.x, rotationOffset.y, rotationOffset.z);
+        cooldownTimer = 0;
     }
 
 }

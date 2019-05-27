@@ -8,12 +8,12 @@ public abstract class BaseAttackPowerup: MonoBehaviour
     public delegate void AttackPowerupAction();
     public AttackPowerupAction AttackPowerupExecutionOrder;
 
-    public float timer = 0; 
+    public float timer = 0;
     public float duration;
     public float cooldownTimer = 0;
     public float coolDownDuration = 1f;
-    public float shotTimer = 0;
-    public float shotDuration = .5f;
+
+    public Transform carTransform;
 
     public bool isShooting;
 
@@ -24,4 +24,4 @@ public abstract class BaseAttackPowerup: MonoBehaviour
 
 }
 
-public enum PowerupType { None, Shield, Laser }
+public enum PowerupType { None, MachineGun, Laser }
