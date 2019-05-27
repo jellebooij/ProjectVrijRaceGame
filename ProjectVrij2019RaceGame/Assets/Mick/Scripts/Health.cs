@@ -25,15 +25,19 @@ public class Health : MonoBehaviour {
         }
     }
 
-    public void GetDamage(float amount) {
+    public void TakeDamage(float amount) {
         float combinedHealth = health + armor;
         if (amount < combinedHealth) {
-            combinedHealth -= amount;
+            combinedHealth -= amount * Time.deltaTime;
         }
         if (combinedHealth >= 100) {
             health = 100;
             armor = combinedHealth - 100;
         }
+        if (combinedHealth < 100) {
+            health = combinedHealth;
+        }
+
         if (amount >= combinedHealth) {
             Debug.Log("Death");
             //perform game over

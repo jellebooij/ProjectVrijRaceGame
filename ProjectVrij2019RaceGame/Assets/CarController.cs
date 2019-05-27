@@ -110,5 +110,9 @@ public class CarController : MonoBehaviour {
 
     }
 
+    private void RotateToFlatPosition() {
+        transform.eulerAngles = Vector3.RotateTowards(transform.eulerAngles, new Vector3(0, transform.eulerAngles.y, 0), 5 * Time.deltaTime, 0);
+    }
+
 
 }

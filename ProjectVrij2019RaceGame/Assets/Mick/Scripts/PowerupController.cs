@@ -12,6 +12,7 @@ public class PowerupController : MonoBehaviour {
     public LayerMask layerMask;
 
     public float shield;
+    public GameObject laserFx;
 
 
     private void Awake() {
@@ -21,6 +22,7 @@ public class PowerupController : MonoBehaviour {
         laser = new LaserPowerup();
         none = new NoPowerup();
 
+        laser.laser = laserFx;
         laser.layerMask = layerMask;
         laser.carTransform = transform;
         laser.duration = laserDuration;

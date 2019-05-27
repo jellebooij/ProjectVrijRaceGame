@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LaserPowerup : BaseAttackPowerup{
+public class MachineGunPowerup : BaseAttackPowerup{
 
 
     public Vector3 laserOriginOffset = Vector3.zero;
@@ -15,7 +15,7 @@ public class LaserPowerup : BaseAttackPowerup{
     public float laserDamage = 40f;
     public GameObject laser;
 
-    public LaserPowerup() {
+    public MachineGunPowerup() {
         type = PowerupType.Laser;
         shotTimer = shotDuration;
     }

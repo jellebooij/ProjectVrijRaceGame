@@ -10,6 +10,12 @@ public abstract class BaseAttackPowerup: MonoBehaviour
 
     public float timer = 0; 
     public float duration;
+    public float cooldownTimer = 0;
+    public float coolDownDuration = 1f;
+    public float shotTimer = 0;
+    public float shotDuration = .5f;
+
+    public bool isShooting;
 
     public PowerupType type { get; protected set; }
     public abstract void StartPowerup();
