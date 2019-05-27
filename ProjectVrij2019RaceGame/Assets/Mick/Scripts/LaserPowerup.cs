@@ -8,16 +8,14 @@ public class LaserPowerup : BaseAttackPowerup{
     public Vector3 laserOriginOffset = Vector3.zero;
     public float laserDistance = 50f;
 
-    public Transform carTransform;
     public LayerMask layerMask;
     public float blastDuration = 1f;
-    public float laserForce = 20f;
+    public float laserForce = 1000f;
     public float laserDamage = 40f;
     public GameObject laser;
 
     public LaserPowerup() {
         type = PowerupType.Laser;
-        shotTimer = shotDuration;
     }
 
     public override void StartPowerup() {
@@ -45,28 +43,12 @@ public class LaserPowerup : BaseAttackPowerup{
             Debug.Log(timer);
 
             Debug.Log("Shoot");
-
-            isShooting = true;
-            shotTimer = 0;
-        }
-
-        Debug.Log(isShooting);
-
-        if (isShooting) {
             LaserBlast();
-            shotTimer += Time.deltaTime;
-            if (shotTimer > shotDuration) {
-                cooldownTimer = 0;
-                isShooting = false;
-            }
-
             laser.SetActive(true);
+            isShooting = true;
+            cooldownTimer = 0;
         }
-
-        if (!isShooting) {
-            cooldownTimer += Time.deltaTime;
-            laser.SetActive(false);
-        }
+        cooldownTimer += Time.deltaTime;
     }
 
     void LaserBlast() {

@@ -4,6 +4,7 @@ public class PowerupController : MonoBehaviour {
     public Health healthReference;
     public BaseAttackPowerup currentPowerup;
     LaserPowerup laser;
+    MachineGunPowerup machineGun;
     NoPowerup none;
     public float laserDuration = 10;
     public float laserDistance = 50f;
@@ -14,12 +15,18 @@ public class PowerupController : MonoBehaviour {
     public float shield;
     public GameObject laserFx;
 
+    public GameObject bulletPrefab;
+    public float machineGunDuration = 5f;
+    public float machineGunStrayFactor = 20f;
+    public float machineGunCooldown = 0.05f;
+
 
     private void Awake() {
         healthReference = GetComponent<Health>();
         //laser initialization
 
         laser = new LaserPowerup();
+        machineGun = new MachineGunPowerup();
         none = new NoPowerup();
 
         laser.laser = laserFx;
@@ -29,6 +36,14 @@ public class PowerupController : MonoBehaviour {
         laser.laserDistance = laserDistance;
         laser.laserOriginOffset = laserOriginOffset;
         laser.blastDuration = 1f;
+
+        //machinegun initialization
+
+        machineGun.bulletPrefab = bulletPrefab;
+        machineGun.duration = machineGunDuration;
+        machineGun.carTransform = transform;
+        machineGun.strayFactor = machineGunStrayFactor;
+        machineGun.coolDownDuration = machineGunCooldown;
 
         currentPowerup = none;
         Debug.Log(currentPowerup.type);
@@ -58,6 +73,13 @@ public class PowerupController : MonoBehaviour {
     private void OnTriggerEnter(Collider other) {
         if (other.tag == "Laser"){
             currentPowerup = laser;
+            currentPowerup.StartPowerup();
+            Debug.Log(currentPowerup.type);
+            Destroy(other.gameObject);
+        }
+
+        if (other.tag == "MachineGun") {
+            currentPowerup = machineGun;
             currentPowerup.StartPowerup();
             Debug.Log(currentPowerup.type);
             Destroy(other.gameObject);
