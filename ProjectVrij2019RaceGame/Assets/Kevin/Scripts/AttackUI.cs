@@ -9,7 +9,6 @@ public class AttackUI : MonoBehaviour {
     public PowerupController powerUp;
     private Vector2 refPos;
     private Vector2 refSize;
-    private float animSpeed;
     private string attackName;
 
     [SerializeField] private RectTransform attackInactive;
