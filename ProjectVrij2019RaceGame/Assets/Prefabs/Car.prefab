@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &315775099
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 315775100}
+  m_Layer: 0
+  m_Name: FirePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &315775100
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 315775099}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.322, z: 0.063}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 318649884566014161}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1687211638
 GameObject:
   m_ObjectHideFlags: 0
@@ -174,6 +204,7 @@ Transform:
   - {fileID: 318649884864397262}
   - {fileID: 1122929801968142877}
   - {fileID: 1687211639}
+  - {fileID: 315775100}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -336,7 +367,8 @@ MonoBehaviour:
     type: 3}
   machineGunDuration: 10
   machineGunStrayFactor: 5
-  machineGunCooldown: 0.03
+  MachineGunFireRate: 0.01
+  MachineGunFirePoint: {fileID: 315775099}
   enemyList: []
   homingMissilePowerupDuration: 10
   homingMissilePrefab: {fileID: 2497808339377303601, guid: 75089e249a6861443a3c44c555360dd5,
@@ -371,7 +403,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 318649884864397261}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1.341, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 318649884566014161}
@@ -498,16 +530,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: voertuig tturret LOW
       objectReference: {fileID: 0}
-    - target: {fileID: -7354606913271764586, guid: 4156e28f9b9e0d74f9e5f6045ef96896,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 26c6609d7fb02c5449acfcb16b49b44f, type: 2}
-    - target: {fileID: -4272814942272845830, guid: 4156e28f9b9e0d74f9e5f6045ef96896,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 26c6609d7fb02c5449acfcb16b49b44f, type: 2}
     - target: {fileID: -4216859302048453862, guid: 4156e28f9b9e0d74f9e5f6045ef96896,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -578,12 +600,12 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.045297056
       objectReference: {fileID: 0}
-    - target: {fileID: -2794840286817860065, guid: 4156e28f9b9e0d74f9e5f6045ef96896,
+    - target: {fileID: -7354606913271764586, guid: 4156e28f9b9e0d74f9e5f6045ef96896,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 26c6609d7fb02c5449acfcb16b49b44f, type: 2}
-    - target: {fileID: -2352628962003625360, guid: 4156e28f9b9e0d74f9e5f6045ef96896,
+    - target: {fileID: -4272814942272845830, guid: 4156e28f9b9e0d74f9e5f6045ef96896,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -594,6 +616,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2100000, guid: a536ce0e7111ce840a7098c487e4a2c0, type: 2}
     - target: {fileID: 6323043940407814156, guid: 4156e28f9b9e0d74f9e5f6045ef96896,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 26c6609d7fb02c5449acfcb16b49b44f, type: 2}
+    - target: {fileID: -2794840286817860065, guid: 4156e28f9b9e0d74f9e5f6045ef96896,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 26c6609d7fb02c5449acfcb16b49b44f, type: 2}
+    - target: {fileID: -2352628962003625360, guid: 4156e28f9b9e0d74f9e5f6045ef96896,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 

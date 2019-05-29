@@ -21,7 +21,8 @@ public class PowerupController : MonoBehaviour {
     public GameObject bulletPrefab;
     public float machineGunDuration = 5f;
     public float machineGunStrayFactor = 20f;
-    public float machineGunCooldown = 0.05f;
+    public float MachineGunFireRate = 0.05f;
+    public GameObject MachineGunFirePoint;
 
     public List<GameObject> enemyList;
     public float homingMissilePowerupDuration = 10f;
@@ -54,7 +55,8 @@ public class PowerupController : MonoBehaviour {
         machineGun.duration = machineGunDuration;
         machineGun.carTransform = transform;
         machineGun.strayFactor = machineGunStrayFactor;
-        machineGun.coolDownDuration = machineGunCooldown;
+        machineGun.coolDownDuration = MachineGunFireRate;
+        machineGun.firePoint = MachineGunFirePoint;
 
         //Homing missile initialization
 

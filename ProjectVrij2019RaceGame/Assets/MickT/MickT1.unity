@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -959,6 +959,149 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 511748544}
   m_CullTransparentMesh: 0
+--- !u!1001 &514476470
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1008601877}
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: powerup.startAction.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: powerup.endAction.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: controller
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: powerup.duration
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: powerup.name
+      value: HighSpeed
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: powerup.startAction.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: powerup.startAction.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: powerup.startAction.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: powerup.startAction.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LaserStartAction
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: powerup.startAction.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: powerup.endAction.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: powerup.endAction.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: powerup.endAction.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: powerup.endAction.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LaserEndAction
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: powerup.endAction.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: powerupName
+      value: Laser
+      objectReference: {fileID: 0}
+    - target: {fileID: 5630969693342647701, guid: aee912e2f9863dd448b3d197bb99baab,
+        type: 3}
+      propertyPath: m_Name
+      value: Powerup (27)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5630969693342647701, guid: aee912e2f9863dd448b3d197bb99baab,
+        type: 3}
+      propertyPath: m_TagString
+      value: MachineGun
+      objectReference: {fileID: 0}
+    - target: {fileID: 2493400644345725150, guid: aee912e2f9863dd448b3d197bb99baab,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -43.95
+      objectReference: {fileID: 0}
+    - target: {fileID: 2493400644345725150, guid: aee912e2f9863dd448b3d197bb99baab,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 150.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 2493400644345725150, guid: aee912e2f9863dd448b3d197bb99baab,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -264.48
+      objectReference: {fileID: 0}
+    - target: {fileID: 2493400644345725150, guid: aee912e2f9863dd448b3d197bb99baab,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2493400644345725150, guid: aee912e2f9863dd448b3d197bb99baab,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2493400644345725150, guid: aee912e2f9863dd448b3d197bb99baab,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2493400644345725150, guid: aee912e2f9863dd448b3d197bb99baab,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2493400644345725150, guid: aee912e2f9863dd448b3d197bb99baab,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 72
+      objectReference: {fileID: 0}
+    - target: {fileID: 2493400644345725150, guid: aee912e2f9863dd448b3d197bb99baab,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2493400644345725150, guid: aee912e2f9863dd448b3d197bb99baab,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2493400644345725150, guid: aee912e2f9863dd448b3d197bb99baab,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 709284573521178779, guid: aee912e2f9863dd448b3d197bb99baab,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5d27312f36633c24080f9b9b75efba65, type: 2}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: aee912e2f9863dd448b3d197bb99baab, type: 3}
 --- !u!1 &540408949
 GameObject:
   m_ObjectHideFlags: 0
@@ -1633,7 +1776,7 @@ PrefabInstance:
     - target: {fileID: 2493400644345725150, guid: aee912e2f9863dd448b3d197bb99baab,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 149.07
+      value: 149.91
       objectReference: {fileID: 0}
     - target: {fileID: 2493400644345725150, guid: aee912e2f9863dd448b3d197bb99baab,
         type: 3}
@@ -5208,6 +5351,31 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: f949b768037f4dc4b9f84d377845016d, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5e24bc9bc85facf4eb833b6c5aec2a3d, type: 3}
+--- !u!1 &7442395122292656413 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7442395122292656413, guid: f760c887110a8e14d974f6e1ae399967,
+    type: 3}
+  m_PrefabInstance: {fileID: 1470812275106265783}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7442395122292656414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7442395122292656413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a816b0bb0a99cc44a89df158baf7718c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clipArray:
+  - {fileID: 0}
+  effectSource: {fileID: 0}
+  pitchMin: 0
+  pitchMax: 0
+  volumeMin: 0
+  volumeMax: 0
 --- !u!1001 &7795832474967395938
 PrefabInstance:
   m_ObjectHideFlags: 0

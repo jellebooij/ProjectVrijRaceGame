@@ -8,6 +8,7 @@ public class MachineGunPowerup : BaseAttackPowerup{
     public Vector3 machineGunOriginOffset = Vector3.zero;
     public float shootDistance = 10f;
     public float strayFactor = 10f;
+    public GameObject firePoint;
     
     public GameObject bulletPrefab;
 
@@ -47,7 +48,7 @@ public class MachineGunPowerup : BaseAttackPowerup{
         var randomNumberX = Random.Range(-strayFactor, strayFactor);
         var randomNumberY = Random.Range(-strayFactor, strayFactor);
         var randomNumberZ = Random.Range(-strayFactor, strayFactor);
-        var bullet = Instantiate(bulletPrefab, carTransform.position, carTransform.rotation);
+        var bullet = Instantiate(bulletPrefab, firePoint.transform.position, firePoint.transform.rotation);
         Vector3 rotationOffset = Vector3.ClampMagnitude(new Vector3(randomNumberX, randomNumberY, randomNumberZ), strayFactor);
         bullet.transform.Rotate(rotationOffset.x, rotationOffset.y, rotationOffset.z);
         cooldownTimer = 0;
