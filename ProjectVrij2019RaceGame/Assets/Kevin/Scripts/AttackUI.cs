@@ -9,7 +9,6 @@ public class AttackUI : MonoBehaviour {
     public PowerupController powerUp;
     private Vector2 refPos;
     private Vector2 refSize;
-    private string attackName;
 
     [SerializeField] private RectTransform attackInactive;
     [SerializeField] private RectTransform attackActive;
@@ -19,12 +18,12 @@ public class AttackUI : MonoBehaviour {
 
     public List<Sprite> icons = new List<Sprite>();
 
-    public void Activate(RectTransform oldState, RectTransform newState, Sprite attackSprite, string name, Vector2 refPos, float animSpeed) {
+    public void Activate(RectTransform oldState, RectTransform newState, Sprite attackSprite, string attackName, Vector2 refPos, float animSpeed) {
         oldState.anchoredPosition = Vector2.Lerp(oldState.anchoredPosition, refPos, animSpeed);
         newState.anchoredPosition = Vector2.Lerp(newState.anchoredPosition, Vector2.zero, animSpeed);
         attackTimer.fillAmount = powerUp.currentPowerup.timer / powerUp.currentPowerup.duration;
         attackIcon.sprite = attackSprite;
-        attackName = name;
+        attackText.text = attackName;
     }
 
     public void Deactivate(RectTransform oldState, RectTransform newState, Vector2 refPos, float animSpeed) {
@@ -35,6 +34,12 @@ public class AttackUI : MonoBehaviour {
     private void Update() {
         if (powerUp.currentPowerup.type == PowerupType.Laser) {
             Activate(attackInactive, attackActive, icons[0], "Laser", new Vector2(250, 0), 0.075f);
+        }
+        else if (powerUp.currentPowerup.type == PowerupType.HomingMissile) {
+            Activate(attackInactive, attackActive, icons[1], "Homing Missiles", new Vector2(250, 0), 0.075f);
+        }
+        else if (powerUp.currentPowerup.type == PowerupType.MachineGun) {
+            Activate(attackInactive, attackActive, icons[2], "Machine Gun", new Vector2(250, 0), 0.075f);
         }
         else if (powerUp.currentPowerup.type == PowerupType.None) {
             Deactivate(attackInactive, attackActive, new Vector2(250, 0), 0.075f);

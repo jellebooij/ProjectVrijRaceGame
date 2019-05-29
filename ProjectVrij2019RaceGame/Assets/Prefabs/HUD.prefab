@@ -1614,6 +1614,7 @@ MonoBehaviour:
   icons:
   - {fileID: 21300000, guid: 7041c59b4083e6f449d5635388ec18ed, type: 3}
   - {fileID: 21300000, guid: a1806483e12db4a469ced81898d1ce52, type: 3}
+  - {fileID: 21300000, guid: 08fefa881ca47124fb82d2c35f003971, type: 3}
 --- !u!114 &766787545401152220
 MonoBehaviour:
   m_ObjectHideFlags: 0
