@@ -24,4 +24,4 @@ public abstract class BaseAttackPowerup: MonoBehaviour
 
 }
 
-public enum PowerupType { None, MachineGun, Laser }
+public enum PowerupType { None, MachineGun, Laser, HomingMissile }

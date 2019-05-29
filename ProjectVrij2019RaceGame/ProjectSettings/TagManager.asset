@@ -8,6 +8,8 @@ TagManager:
   - Health
   - Shield
   - MachineGun
+  - Pod
+  - HomingMissilePowerup
   layers:
   - Default
   - TransparentFX

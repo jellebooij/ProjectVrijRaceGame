@@ -1,10 +1,13 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class PowerupController : MonoBehaviour {
     public Health healthReference;
     public BaseAttackPowerup currentPowerup;
     LaserPowerup laser;
     MachineGunPowerup machineGun;
+    HomingMissilePowerup homingMissilePowerup;
     NoPowerup none;
     public float laserDuration = 10;
     public float laserDistance = 50f;
@@ -20,6 +23,13 @@ public class PowerupController : MonoBehaviour {
     public float machineGunStrayFactor = 20f;
     public float machineGunCooldown = 0.05f;
 
+    public List<GameObject> enemyList;
+    public float homingMissilePowerupDuration = 10f;
+    public GameObject homingMissilePrefab;
+    public Camera cam;
+    public LayerMask setLayerMask;
+    public float missileLockTime = 1f;
+
 
     private void Awake() {
         healthReference = GetComponent<Health>();
@@ -27,6 +37,7 @@ public class PowerupController : MonoBehaviour {
 
         laser = new LaserPowerup();
         machineGun = new MachineGunPowerup();
+        homingMissilePowerup = new HomingMissilePowerup();
         none = new NoPowerup();
 
         laser.laser = laserFx;
@@ -44,6 +55,15 @@ public class PowerupController : MonoBehaviour {
         machineGun.carTransform = transform;
         machineGun.strayFactor = machineGunStrayFactor;
         machineGun.coolDownDuration = machineGunCooldown;
+
+        //Homing missile initialization
+
+        homingMissilePowerup.carTransform = transform;
+        homingMissilePowerup.duration = homingMissilePowerupDuration;
+        homingMissilePowerup.missilePrefab = homingMissilePrefab;
+        homingMissilePowerup.cam = cam;
+        homingMissilePowerup.layerMask = setLayerMask;
+        homingMissilePowerup.lockTime = missileLockTime;
 
         currentPowerup = none;
         Debug.Log(currentPowerup.type);
@@ -81,6 +101,13 @@ public class PowerupController : MonoBehaviour {
         if (other.tag == "MachineGun") {
             currentPowerup = machineGun;
             currentPowerup.StartPowerup();
+            Debug.Log(currentPowerup.type);
+            Destroy(other.gameObject);
+        }
+
+        if (other.tag == "HomingMissilePowerup") {
+            currentPowerup = homingMissilePowerup;
+            homingMissilePowerup.StartPowerup();
             Debug.Log(currentPowerup.type);
             Destroy(other.gameObject);
         }
