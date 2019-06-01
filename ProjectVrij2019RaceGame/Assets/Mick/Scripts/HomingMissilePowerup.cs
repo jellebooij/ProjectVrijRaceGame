@@ -18,6 +18,10 @@ public class HomingMissilePowerup : BaseAttackPowerup{
     public List<float> timeBeforeIsLocked = new List<float>();
     public float lockTime;
     public Vector2 missileLockRectangle;
+    public float shootTimePeriod = 0.5f;
+    private float currentShootTime;
+    private float currentPartialShootTimePeriod;
+    private int amountOfShots;
 
     public HomingMissilePowerup() {
         type = PowerupType.HomingMissile;
@@ -27,6 +31,7 @@ public class HomingMissilePowerup : BaseAttackPowerup{
         timer = duration;
         Debug.Log("Started");
         AttackPowerupExecutionOrder = ExcecutePowerup;
+        currentShootTime = 0;
     }
     public override void ExcecutePowerup() {
 
@@ -43,16 +48,45 @@ public class HomingMissilePowerup : BaseAttackPowerup{
             AttackPowerupExecutionOrder = StopPowerup;
         }
         timer -= Time.deltaTime;
+
+        for (int i = 0; i < timeBeforeIsLocked.Count; i++) {
+            if (timeBeforeIsLocked[i] > 0) {
+                timeBeforeIsLocked[i] -= Time.deltaTime;
+            } else if (timeBeforeIsLocked[i] <= 0) {
+                if (!enemiesLocked.Contains(enemiesLocking[i])) {
+                    enemiesLocked.Add(enemiesLocking[i]);
+                }
+            }
+        }
+
         if (Input.GetButtonDown("Fire1")) {
             Debug.Log("Shooting");
-            for (int i = 0; i < enemiesLocking.Count; i++) {
-                ShootMissile(enemiesLocking[i].transform);
-            }
-            enemiesLocking.Clear();
+            currentPartialShootTimePeriod = shootTimePeriod / enemiesLocked.Count;
+            amountOfShots = enemiesLocked.Count;
+            currentShootTime = shootTimePeriod;
 
         } else {
             DetectenemiesInViewFrustrum();
         }
+
+        if (currentShootTime >= 0) {
+            currentShootTime -= Time.deltaTime;
+            for (int i = 0; i < enemiesLocked.Count; i++) {
+                if (currentShootTime < (currentPartialShootTimePeriod * i) && amountOfShots == (i + 1)) {
+                    ShootMissile(enemiesLocked[i].transform);
+                    enemiesLocked.Remove(enemiesLocked[i]);
+                    amountOfShots--;
+                }
+            }
+
+            if (currentShootTime <= 0) {
+                enemiesLocking.Clear();
+                enemiesLocked.Clear();
+                timeBeforeIsLocked.Clear();
+            }
+        }
+
+        Debug.Log(timeBeforeIsLocked[0]);
     }
 
 
@@ -63,20 +97,40 @@ public class HomingMissilePowerup : BaseAttackPowerup{
 
                 RaycastHit hit;
                 bool isHit = Physics.Raycast(cam.transform.position, enemiesAlive[i].transform.position - cam.transform.position, Mathf.Infinity, layerMask);
-                if (!enemiesLocking.Contains(enemiesAlive[i]) && isHit) {
+                //all xonditions met so enemies can be locked onto
+                if (!enemiesLocking.Contains(enemiesAlive[i]) && isHit && isObjectInPartOfScreen(enemiesAlive[i].transform.position)) {
                     enemiesLocking.Add(enemiesAlive[i]);
+                    timeBeforeIsLocked.Add(lockTime);
                 }
             } else {
                 if (enemiesLocking.Contains(enemiesAlive[i])) {
                     enemiesLocking.Remove(enemiesAlive[i]);
+                    timeBeforeIsLocked.RemoveAt(enemiesLocking.IndexOf(enemiesAlive[i]));
                 }
             }
         }
     }
 
+    private bool isObjectInPartOfScreen(Vector3 worldPosition) {
+        float widthPixels = Screen.width;
+        float heightPixels = Screen.height;
+        Debug.Log(widthPixels);
+        Vector3 toWorldPosition = cam.WorldToScreenPoint(worldPosition);
+        bool isDetected = false;
+        if (toWorldPosition.x > (widthPixels - missileLockRectangle.x * widthPixels) / 2 && toWorldPosition.x < (widthPixels - (widthPixels - missileLockRectangle.x * widthPixels) / 2)) {
+           if (toWorldPosition.y > (heightPixels - missileLockRectangle.y * heightPixels) / 2 && toWorldPosition.y < (heightPixels - (heightPixels - missileLockRectangle.y * heightPixels) / 2)) {
+                isDetected = true;
+            }
+
+        } else {
+            isDetected = false;
+        }
+        return isDetected;
+    }
+
 
     void ShootMissile(Transform target) {
-        GameObject missile = Instantiate(missilePrefab, carTransform.position + homingMissileOriginOffset, Quaternion.identity);
+        GameObject missile = Instantiate(missilePrefab, carTransform.position + homingMissileOriginOffset, carTransform.rotation);
         missile.GetComponent<HomingMissile>().homingTransform = target;
         missile.GetComponent<HomingMissile>().missileOwner = carTransform.gameObject;
     }

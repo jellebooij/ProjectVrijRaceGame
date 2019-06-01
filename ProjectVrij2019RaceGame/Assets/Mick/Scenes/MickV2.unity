@@ -4498,6 +4498,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   powerUp: {fileID: 680595886}
+  attackInactive: {fileID: 0}
+  attackActive: {fileID: 0}
+  attackTimer: {fileID: 0}
+  attackIcon: {fileID: 0}
+  attackText: {fileID: 0}
+  icons: []
 --- !u!114 &1242981570
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4510,6 +4516,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10dfaf2b7c93fd747828a8d3943a5197, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  powerUp: {fileID: 0}
+  defenseInactive: {fileID: 0}
+  defenseActive: {fileID: 0}
+  defendTimer: {fileID: 0}
+  defendIcon: {fileID: 0}
+  defendText: {fileID: 0}
+  icons: []
 --- !u!1 &1261395933
 GameObject:
   m_ObjectHideFlags: 0
@@ -7556,6 +7569,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4690119334147182115, guid: fd84fbef1a6fadf44a0dba34de2d1384,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4690119334147182115, guid: fd84fbef1a6fadf44a0dba34de2d1384,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 228.88466
+      objectReference: {fileID: 0}
+    - target: {fileID: 4690119334147182115, guid: fd84fbef1a6fadf44a0dba34de2d1384,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 145.45259
+      objectReference: {fileID: 0}
+    - target: {fileID: 318649884566014165, guid: fd84fbef1a6fadf44a0dba34de2d1384,
+        type: 3}
+      propertyPath: extents.y
+      value: 0.67
+      objectReference: {fileID: 0}
+    - target: {fileID: 318649885586146973, guid: fd84fbef1a6fadf44a0dba34de2d1384,
+        type: 3}
+      propertyPath: m_Convex
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd84fbef1a6fadf44a0dba34de2d1384, type: 3}

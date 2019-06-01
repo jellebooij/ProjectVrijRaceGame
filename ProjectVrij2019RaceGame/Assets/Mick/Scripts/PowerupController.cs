@@ -28,8 +28,8 @@ public class PowerupController : MonoBehaviour {
     public float homingMissilePowerupDuration = 10f;
     public GameObject homingMissilePrefab;
     public Camera cam;
-    public LayerMask setLayerMask;
     public float missileLockTime = 1f;
+    public Vector2 missileLockCenterRectanglePart = new Vector2(0.3f, 0.4f);
 
 
     private void Awake() {
@@ -64,8 +64,9 @@ public class PowerupController : MonoBehaviour {
         homingMissilePowerup.duration = homingMissilePowerupDuration;
         homingMissilePowerup.missilePrefab = homingMissilePrefab;
         homingMissilePowerup.cam = cam;
-        homingMissilePowerup.layerMask = setLayerMask;
+        homingMissilePowerup.layerMask = layerMask;
         homingMissilePowerup.lockTime = missileLockTime;
+        homingMissilePowerup.missileLockRectangle = missileLockCenterRectanglePart;
 
         currentPowerup = none;
         Debug.Log(currentPowerup.type);
@@ -125,6 +126,7 @@ public class PowerupController : MonoBehaviour {
         }
     }
 }
+
 
 
 public class NoPowerup : BaseAttackPowerup {
