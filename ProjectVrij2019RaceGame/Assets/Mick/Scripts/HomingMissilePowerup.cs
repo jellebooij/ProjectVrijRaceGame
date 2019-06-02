@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HomingMissilePowerup : BaseAttackPowerup{
+public class HomingMissilePowerup : BasePowerup{
 
 
     public Vector3 homingMissileOriginOffset = Vector3.zero;
@@ -30,7 +30,7 @@ public class HomingMissilePowerup : BaseAttackPowerup{
     public override void StartPowerup() {
         timer = duration;
         Debug.Log("Started");
-        AttackPowerupExecutionOrder = ExcecutePowerup;
+        PowerupExecutionOrder = ExcecutePowerup;
         currentShootTime = 0;
     }
     public override void ExcecutePowerup() {
@@ -40,12 +40,12 @@ public class HomingMissilePowerup : BaseAttackPowerup{
         HomingMissilePowerupExecution();
     }
     public override void StopPowerup() {
-         AttackPowerupExecutionOrder = null;
+         PowerupExecutionOrder = null;
     }
 
     private void HomingMissilePowerupExecution() {
         if (timer <= 0) {
-            AttackPowerupExecutionOrder = StopPowerup;
+            PowerupExecutionOrder = StopPowerup;
         }
         timer -= Time.deltaTime;
 

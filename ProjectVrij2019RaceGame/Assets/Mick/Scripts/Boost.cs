@@ -23,28 +23,23 @@ public class Boost : MonoBehaviour {
     void Update() {
         BoostControl();
 
-        if (waitForNewBoostTimer > 0) {
-            waitForNewBoostTimer -= Time.deltaTime;
-        }
-
-        if (currentBoostLevel <= 0) {
-            currentBoostLevel = 0;
-            waitForNewBoostTimer = waitForNewBoostTime;
-        }
     }
 
     private void BoostRegeneration() {
-        if (currentBoostLevel < maxBoostLevel) {
+        if (currentBoostLevel < maxBoostLevel && waitForNewBoostTimer >= waitForNewBoostTime) {
             currentBoostLevel += boostRegenerationSpeed * Time.deltaTime;
         }
     }
 
     private void BoostControl() {
-        if (Input.GetButton("Boost") && waitForNewBoostTimer <= 0) {
+        if (Input.GetButton("Boost") && currentBoostLevel > 0) {
             currentBoostLevel -= boostFallOffSpeed * Time.deltaTime;
             carController.boostSpeed = carController.speed * boostMultiplier;
-        } else {
+            waitForNewBoostTimer = 0;
+        }
+        if (currentBoostLevel <= 0 || !Input.GetButton("Boost")){
             carController.boostSpeed = 0;
+            waitForNewBoostTimer += Time.deltaTime;
             BoostRegeneration();
         }
     }

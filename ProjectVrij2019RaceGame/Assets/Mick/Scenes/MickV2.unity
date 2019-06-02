@@ -7588,7 +7588,12 @@ PrefabInstance:
     - target: {fileID: 318649884566014165, guid: fd84fbef1a6fadf44a0dba34de2d1384,
         type: 3}
       propertyPath: extents.y
-      value: 0.67
+      value: 0.36
+      objectReference: {fileID: 0}
+    - target: {fileID: 318649884566014165, guid: fd84fbef1a6fadf44a0dba34de2d1384,
+        type: 3}
+      propertyPath: rayHeight
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 318649885586146973, guid: fd84fbef1a6fadf44a0dba34de2d1384,
         type: 3}

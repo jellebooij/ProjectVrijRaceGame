@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class BaseAttackPowerup: MonoBehaviour
+public abstract class BasePowerup: MonoBehaviour
 {
 
-    public delegate void AttackPowerupAction();
-    public AttackPowerupAction AttackPowerupExecutionOrder;
+    public delegate void PowerupAction();
+    public PowerupAction PowerupExecutionOrder;
 
     public float timer = 0;
     public float duration;
@@ -24,4 +24,4 @@ public abstract class BaseAttackPowerup: MonoBehaviour
 
 }
 
-public enum PowerupType { None, MachineGun, Laser, HomingMissile }
+public enum PowerupType { None, MachineGun, Laser, HomingMissile, Shield }

@@ -19,7 +19,7 @@ public class CarController : MonoBehaviour {
     Vector3[] cornersWorld = new Vector3[4];
 
     private float yRotation;
-    private Vector3 velocity;
+    public Vector3 velocity;
 
     public float downForce = -3f;
 
@@ -27,6 +27,8 @@ public class CarController : MonoBehaviour {
 
     public float boostSpeed;
     public float rayHeight = 0.7f;
+
+    public float steeringWheelHorizontal;
 
     void Start() {
         currentSpeed = speed;
@@ -57,10 +59,10 @@ public class CarController : MonoBehaviour {
         float gasPedal;
         if (Input.GetButton("Gas")) { gasPedal = 1; } else gasPedal = 0;
 
-        float steeringWheelHorizontal = Input.GetAxisRaw("Horizontal");
+        steeringWheelHorizontal = Input.GetAxisRaw("Horizontal");
         float steeringWheelVertical = Input.GetAxisRaw("Vertical");
 
-        Vector3 velocity = new Vector3(transform.forward.x, transform.forward.y * 0f, transform.forward.z) * gasPedal * currentSpeed;
+        velocity = new Vector3(transform.forward.x, transform.forward.y * 0f, transform.forward.z) * gasPedal * currentSpeed;
 
         if (boostSpeed == 0) {
             currentRotationSpeed = rb.velocity.magnitude*rotationSpeed + minimumRotationSpeed;
@@ -94,7 +96,7 @@ public class CarController : MonoBehaviour {
 
             if (Physics.Linecast(cornersWorld[i], cornersWorld[i] - transform.up * rayHeight, out hit, hitmask)) {
                 hitDistance = hit.distance;
-            }
+            } 
 
             float mass = rb.mass / 8;
             compressionRatio = 1 - Mathf.Pow(hitDistance, 2f);
@@ -107,11 +109,13 @@ public class CarController : MonoBehaviour {
         Debug.DrawLine(transform.position, transform.position + Vector3.down * 20);
 
         rb.AddForce(transform.up * downForce);
+        RotateToFlatPosition();
 
     }
 
     private void RotateToFlatPosition() {
-        transform.eulerAngles = Vector3.RotateTowards(transform.eulerAngles, new Vector3(0, transform.eulerAngles.y, 0), 5 * Time.deltaTime, 0);
+        Quaternion newRotation =  Quaternion.Euler(new Vector3(0, transform.eulerAngles.y, 0));
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, newRotation, Time.deltaTime * 30);
     }
 
 

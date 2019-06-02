@@ -21,7 +21,7 @@ public class AttackUI : MonoBehaviour {
     public void Activate(RectTransform oldState, RectTransform newState, Sprite attackSprite, string attackName, Vector2 refPos, float animSpeed) {
         oldState.anchoredPosition = Vector2.Lerp(oldState.anchoredPosition, refPos, animSpeed);
         newState.anchoredPosition = Vector2.Lerp(newState.anchoredPosition, Vector2.zero, animSpeed);
-        attackTimer.fillAmount = powerUp.currentPowerup.timer / powerUp.currentPowerup.duration;
+        attackTimer.fillAmount = powerUp.currentAttackPowerup.timer / powerUp.currentAttackPowerup.duration;
         attackIcon.sprite = attackSprite;
         attackText.text = attackName;
     }
@@ -32,16 +32,16 @@ public class AttackUI : MonoBehaviour {
     }
 
     private void Update() {
-        if (powerUp.currentPowerup.type == PowerupType.Laser) {
+        if (powerUp.currentAttackPowerup.type == PowerupType.Laser) {
             Activate(attackInactive, attackActive, icons[0], "Laser", new Vector2(250, 0), 0.075f);
         }
-        else if (powerUp.currentPowerup.type == PowerupType.HomingMissile) {
+        else if (powerUp.currentAttackPowerup.type == PowerupType.HomingMissile) {
             Activate(attackInactive, attackActive, icons[1], "Homing Missiles", new Vector2(250, 0), 0.075f);
         }
-        else if (powerUp.currentPowerup.type == PowerupType.MachineGun) {
+        else if (powerUp.currentAttackPowerup.type == PowerupType.MachineGun) {
             Activate(attackInactive, attackActive, icons[2], "Machine Gun", new Vector2(250, 0), 0.075f);
         }
-        else if (powerUp.currentPowerup.type == PowerupType.None) {
+        else if (powerUp.currentAttackPowerup.type == PowerupType.None) {
             Deactivate(attackInactive, attackActive, new Vector2(250, 0), 0.075f);
         }
     }

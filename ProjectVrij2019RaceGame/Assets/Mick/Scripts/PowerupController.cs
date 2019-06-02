@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class PowerupController : MonoBehaviour {
     public Health healthReference;
-    public BaseAttackPowerup currentPowerup;
+    public BasePowerup currentAttackPowerup;
+    public BasePowerup currentDefensePowerup;
     LaserPowerup laser;
     MachineGunPowerup machineGun;
     HomingMissilePowerup homingMissilePowerup;
+    ShieldPowerup shieldPowerup;
     NoPowerup none;
     public float laserDuration = 10;
     public float laserDistance = 50f;
@@ -31,6 +33,7 @@ public class PowerupController : MonoBehaviour {
     public float missileLockTime = 1f;
     public Vector2 missileLockCenterRectanglePart = new Vector2(0.3f, 0.4f);
 
+    public float shieldDuration = 5f;
 
     private void Awake() {
         healthReference = GetComponent<Health>();
@@ -39,6 +42,7 @@ public class PowerupController : MonoBehaviour {
         laser = new LaserPowerup();
         machineGun = new MachineGunPowerup();
         homingMissilePowerup = new HomingMissilePowerup();
+        shieldPowerup = new ShieldPowerup();
         none = new NoPowerup();
 
         laser.laser = laserFx;
@@ -68,8 +72,11 @@ public class PowerupController : MonoBehaviour {
         homingMissilePowerup.lockTime = missileLockTime;
         homingMissilePowerup.missileLockRectangle = missileLockCenterRectanglePart;
 
-        currentPowerup = none;
-        Debug.Log(currentPowerup.type);
+        shieldPowerup.health = healthReference;
+        shieldPowerup.duration = shieldDuration;
+
+        currentAttackPowerup = none;
+        Debug.Log(currentAttackPowerup.type);
     }
 
     private void Update() {
@@ -77,46 +84,55 @@ public class PowerupController : MonoBehaviour {
 
 
 
-        if (currentPowerup.AttackPowerupExecutionOrder != null) {
-            currentPowerup.AttackPowerupExecutionOrder();
+        if (currentAttackPowerup.PowerupExecutionOrder != null) {
+            currentAttackPowerup.PowerupExecutionOrder();
         } else {
-            currentPowerup = none;
+            currentAttackPowerup = none;
         }
-        Debug.Log(currentPowerup.type);
+        Debug.Log(currentAttackPowerup.type);
 
-            //if (currentpowerup.attackpowerupexecutionorder != null) {
-            //    currentpowerup.attackpowerupexecutionorder();
-            //}
-            //if (currentpowerup.attackpowerupexecutionorder == null) {
-            //    currentpowerup = null;
-            //}
-
+        if (currentDefensePowerup.PowerupExecutionOrder != null) {
+            currentDefensePowerup.PowerupExecutionOrder();
+        } else {
+            currentAttackPowerup = none;
         }
+        Debug.Log(currentDefensePowerup.type);
+
+        //if (currentpowerup.attackpowerupexecutionorder != null) {
+        //    currentpowerup.attackpowerupexecutionorder();
+        //}
+        //if (currentpowerup.attackpowerupexecutionorder == null) {
+        //    currentpowerup = null;
+        //}
+
+    }
 
     private void OnTriggerEnter(Collider other) {
         if (other.tag == "Laser"){
-            currentPowerup = laser;
-            currentPowerup.StartPowerup();
-            Debug.Log(currentPowerup.type);
+            currentAttackPowerup = laser;
+            currentAttackPowerup.StartPowerup();
+            Debug.Log(currentAttackPowerup.type);
             Destroy(other.gameObject);
         }
 
         if (other.tag == "MachineGun") {
-            currentPowerup = machineGun;
-            currentPowerup.StartPowerup();
-            Debug.Log(currentPowerup.type);
+            currentAttackPowerup = machineGun;
+            currentAttackPowerup.StartPowerup();
+            Debug.Log(currentAttackPowerup.type);
             Destroy(other.gameObject);
         }
 
         if (other.tag == "HomingMissilePowerup") {
-            currentPowerup = homingMissilePowerup;
-            homingMissilePowerup.StartPowerup();
-            Debug.Log(currentPowerup.type);
+            currentAttackPowerup = homingMissilePowerup;
+            currentAttackPowerup.StartPowerup();
+            Debug.Log(currentAttackPowerup.type);
             Destroy(other.gameObject);
         }
 
         if (other.tag == "Shield") {
-            healthReference.armor = 100;
+            currentDefensePowerup = shieldPowerup;
+            currentDefensePowerup.StartPowerup();
+            Debug.Log(currentAttackPowerup.type);
             Destroy(other.gameObject);
         }
 
@@ -129,7 +145,7 @@ public class PowerupController : MonoBehaviour {
 
 
 
-public class NoPowerup : BaseAttackPowerup {
+public class NoPowerup : BasePowerup {
 
 
     public NoPowerup() {

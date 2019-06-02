@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LaserPowerup : BaseAttackPowerup{
+public class LaserPowerup : BasePowerup{
 
 
     public Vector3 laserOriginOffset = Vector3.zero;
@@ -21,7 +21,7 @@ public class LaserPowerup : BaseAttackPowerup{
     public override void StartPowerup() {
         timer = duration;
         Debug.Log("Started");
-        AttackPowerupExecutionOrder = ExcecutePowerup;
+        PowerupExecutionOrder = ExcecutePowerup;
     }
     public override void ExcecutePowerup() {
 
@@ -30,12 +30,12 @@ public class LaserPowerup : BaseAttackPowerup{
     }
     public override void StopPowerup() {
         laser.SetActive(false);
-         AttackPowerupExecutionOrder = null;
+         PowerupExecutionOrder = null;
     }
 
     private void LaserPowerupExecution() {
         if (timer <= 0) {
-            AttackPowerupExecutionOrder = StopPowerup;
+            PowerupExecutionOrder = StopPowerup;
         }
         timer -= Time.deltaTime;
 
