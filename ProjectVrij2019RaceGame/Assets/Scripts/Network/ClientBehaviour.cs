@@ -3,6 +3,7 @@ using Unity.Collections;
 using UnityEngine;
 using System.Collections.Generic;
 using Unity.Networking.Transport;
+using Unity.Networking.Transport.LowLevel.Unsafe;
 using Unity.Networking.Transport.Utilities;
 
 
@@ -13,15 +14,24 @@ public class ClientBehaviour : MonoBehaviour
 {
     public UdpNetworkDriver m_Driver;
     public NetworkConnection m_Connection;
+    public float time;
     public bool m_Done;
     public GameObject playerPrefab;
     private NetworkPipeline relieablePipeline;
     private NetworkPipeline unrelieablePipeline;
+    private PacketHandler packetHandler;
     public Dictionary<int, Transform> transforms = new Dictionary<int, Transform>();
+
+    TransformList packets;
+
     public Transform player;
+    public float msIntervall;
     int networkId;
 
     bool connected;
+
+    float t = 0;
+
     
     void Start ()
 	{   
@@ -34,8 +44,18 @@ public class ClientBehaviour : MonoBehaviour
         //relieablePipeline = m_Driver.CreatePipeline(typeof(ReliableSequencedPipelineStage));
         //unrelieablePipeline = m_Driver.CreatePipeline(typeof(UnreliableSequencedPipelineStage));
 
-        var endpoint = NetworkEndPoint.Parse("10.3.21.119", 9000);
+        var endpoint = NetworkEndPoint.Parse("192.168.178.42", 9000);
         m_Connection = m_Driver.Connect(endpoint);
+        
+        packetHandler = new PacketHandler();
+
+        packetHandler.RegisterHandler(packetTypes.UpdatePlayer, UpdatePlayer);
+        packetHandler.RegisterHandler(packetTypes.PlayerConnected, PlayerConnected);
+        packetHandler.RegisterHandler(packetTypes.SetupConnection, SetupConnection);
+        packetHandler.RegisterHandler(packetTypes.ServerTime, ReceiveTime);
+
+        packets = new TransformList();
+
     }
     
     public void OnDestroy()
@@ -45,7 +65,11 @@ public class ClientBehaviour : MonoBehaviour
     
     void Update()
     {
-        int c = 0;
+
+        time += Time.deltaTime;
+
+        if(connected)
+            UpdateWorldState();
 
         m_Driver.ScheduleUpdate().Complete();
 
@@ -68,52 +92,11 @@ public class ClientBehaviour : MonoBehaviour
 
                 var readerCtx = default(DataStreamReader.Context);
                 connected = true;
-                //var value = 1;
-                //using (var writer = new DataStreamWriter(4, Allocator.Temp))
-                //{
-                //    writer.Write(value);
-                //    m_Connection.Send(m_Driver, writer);
-                //}
+
             }
             else if (cmd == NetworkEvent.Type.Data)
             {
-                var readerCtx = default(DataStreamReader.Context);
-                packetTypes value = (packetTypes)stream.ReadInt(ref readerCtx);
-                
-
-                switch(value){
-
-                    case packetTypes.SetupConnection:
-                        networkId = stream.ReadInt(ref readerCtx);
-                        
-                        for(int i = 0; i < networkId; i++){
-                            SpawnPlayer(i);
-                        }
-
-                    break;
-                    
-
-                    case packetTypes.PlayerConnected:
-                        int playerID = stream.ReadInt(ref readerCtx);
-                        SpawnPlayer(playerID);
-                        //Debug.Log(playerID + "  " + networkId);
-                    break;
-
-                    case packetTypes.UpdatePlayer:
-                        int id = stream.ReadInt(ref readerCtx);
-                        UpdatePlayer(id, stream.ReadFloat(ref readerCtx), stream.ReadFloat(ref readerCtx),stream.ReadFloat(ref readerCtx),
-                            stream.ReadFloat(ref readerCtx),stream.ReadFloat(ref readerCtx),stream.ReadFloat(ref readerCtx),stream.ReadFloat(ref readerCtx)
-                        );
-                    break;
-
-                    case packetTypes.Test:
-                        var w = new DataStreamWriter(8, Allocator.Temp);
-                        w.Write((int)packetTypes.Test);
-                        w.Write(networkId);
-                        m_Driver.Send(NetworkPipeline.Null,m_Connection,w);
-                    break;
-                }
-              
+                packetHandler.ProcessPacket(stream);
             }
             else if (cmd == NetworkEvent.Type.Disconnect)
             {
@@ -122,49 +105,107 @@ public class ClientBehaviour : MonoBehaviour
             }
         }
 
-        if(connected){
+
+        t += Time.deltaTime * 1000;
+        if(connected && t > msIntervall){
+            t = 0;
             SendPosition();
+            RequestTime();
         }
     }
 
-    void SpawnPlayer(int playerID){
+    void RequestTime(){
 
-        
-
-        Transform p = Instantiate(playerPrefab,Vector3.zero,Quaternion.identity).transform;
-        transforms.Add(playerID, p);
-
-
-    }
-
-    void UpdatePlayer(int playerID, float x, float y, float z, float xr, float yr, float zr, float wr){
-       
-        if(!transforms.ContainsKey(playerID))
-            return;
-
-        Transform p = transforms[playerID];
-        p.position = new Vector3(x,y,z);
-        p.rotation = new Quaternion(xr,yr,zr,wr);
+        RequestTimePacket timePacket = new RequestTimePacket(networkId,time);
+        var writer = timePacket.Write();
+        m_Driver.Send(NetworkPipeline.Null, m_Connection, writer);
         
     }
 
     void SendPosition(){
+        
+        Vector3 position = player.position;
+        Quaternion rotation = player.rotation;
 
-        var writer = new DataStreamWriter(36, Allocator.Temp);
+        CarTransformPacked packed = new CarTransformPacked(networkId, time, position, rotation);
 
-        writer.Write((int)packetTypes.UpdatePlayer);
-
-        writer.Write(networkId);
-        writer.Write(player.position.x);
-        writer.Write(player.position.y);
-        writer.Write(player.position.z);
-
-        writer.Write(player.rotation.x);
-        writer.Write(player.rotation.y);
-        writer.Write(player.rotation.z);
-        writer.Write(player.rotation.w);
+        var writer = packed.Write();
 
         m_Driver.Send(NetworkPipeline.Null, m_Connection, writer);
 
     }
+
+    void ReceiveTime(DataStreamReader reader, ref DataStreamReader.Context context){
+
+        ServerTimePacket packet = new ServerTimePacket();
+        packet.Read(reader, ref context);
+
+        float t = packet.serverTime + (time - packet.localTime) / 2;
+
+        if(Mathf.Abs(time - t) > 0.5f){
+            time = t;
+        }
+
+    }
+
+    void PlayerConnected(DataStreamReader reader, ref DataStreamReader.Context context){
+
+        int playerID = reader.ReadInt(ref context);
+
+        Transform p = Instantiate(playerPrefab,Vector3.zero,Quaternion.identity).transform;
+        transforms.Add(playerID, p);
+
+        //Debug.Log(playerID + "  " + networkId);
+
+    }
+
+    void SetupConnection(DataStreamReader reader, ref DataStreamReader.Context context){
+
+        networkId = reader.ReadInt(ref context);
+
+        for(int i = 0; i < networkId; i++){
+            Transform p = Instantiate(playerPrefab,Vector3.zero,Quaternion.identity).transform;
+            transforms.Add(i, p);
+        }
+
+    }
+
+    void UpdatePlayer(DataStreamReader reader, ref DataStreamReader.Context context){
+
+        BasePacket packet = new CarTransformPacked();
+        packet.Read(reader, ref context);
+        CarTransformPacked p = packet as CarTransformPacked;
+
+        packets.Add(p.netID, p);
+        
+    }
+
+    void UpdateWorldState(){
+
+        float currentTime = time - 0.4f;
+
+        for(int i = 0; i < 10; i++){
+            
+            TransformPair pair = packets.GetPair(i,currentTime);
+
+            if(pair == null)
+                continue;   
+
+            if(pair.before == null || pair.after == null)   
+                continue;   
+                
+            if(!transforms.ContainsKey(pair.after.netID))
+                continue;
+                
+            float lerpValue = (currentTime - pair.before.timeStamp) / (pair.after.timeStamp - pair.before.timeStamp);
+            transforms[pair.after.netID].position = Vector3.Lerp(pair.before.postition, pair.after.postition, lerpValue);
+            transforms[pair.after.netID].rotation = Quaternion.Slerp(pair.before.rotation, pair.after.rotation, lerpValue);
+            
+
+        }
+
+    }
+
+    
+
 }
