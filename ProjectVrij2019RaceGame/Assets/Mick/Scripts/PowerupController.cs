@@ -74,11 +74,13 @@ public class PowerupController : MonoBehaviour {
         homingMissilePowerup.missileLockRectangleFractional = missileLockCenterRectangleFractional;
         homingMissilePowerup.homingMissileOriginOffset = homingMissileOriginOffset;
         homingMissilePowerup.lockRectangleFractionalHeight = lockRectangleFractionalHeight;
+        homingMissilePowerup.thisGameObject = gameObject;
 
         shieldPowerup.health = healthReference;
         shieldPowerup.duration = shieldDuration;
 
         currentAttackPowerup = none;
+        currentDefensePowerup = none;
         Debug.Log(currentAttackPowerup.type);
     }
 
@@ -97,7 +99,7 @@ public class PowerupController : MonoBehaviour {
         if (currentDefensePowerup.PowerupExecutionOrder != null) {
             currentDefensePowerup.PowerupExecutionOrder();
         } else {
-            currentAttackPowerup = none;
+            currentDefensePowerup = none;
         }
         Debug.Log(currentDefensePowerup.type);
 

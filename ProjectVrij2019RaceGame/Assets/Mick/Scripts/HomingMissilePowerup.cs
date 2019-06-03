@@ -7,6 +7,7 @@ public class HomingMissilePowerup : BasePowerup{
 
     public Vector3 homingMissileOriginOffset = Vector3.zero;
     public Camera cam;
+    public GameObject thisGameObject;
     private Plane[] planes;
     private Collider objectCollider;
     public LayerMask layerMask;
@@ -86,8 +87,6 @@ public class HomingMissilePowerup : BasePowerup{
                 timeBeforeIsLocked.Clear();
             }
         }
-
-        Debug.Log(timeBeforeIsLocked[0]);
     }
 
 
@@ -97,11 +96,14 @@ public class HomingMissilePowerup : BasePowerup{
             if (GeometryUtility.TestPlanesAABB(planes, enemiesAlive[i].GetComponent<Collider>().bounds)) {
 
                 RaycastHit hit;
-                bool isHit = Physics.Raycast(cam.transform.position, enemiesAlive[i].transform.position - cam.transform.position, Mathf.Infinity, layerMask);
+                bool isHit = Physics.Raycast(cam.transform.position, enemiesAlive[i].transform.position - cam.transform.position, out hit, Mathf.Infinity, layerMask);
                 //all xonditions met so enemies can be locked onto
                 if (!enemiesLocking.Contains(enemiesAlive[i]) && isHit && isObjectInPartOfScreen(enemiesAlive[i].transform.position)) {
-                    enemiesLocking.Add(enemiesAlive[i]);
-                    timeBeforeIsLocked.Add(lockTime);
+                    
+                    if (hit.transform.gameObject != thisGameObject) {
+                        enemiesLocking.Add(enemiesAlive[i]);
+                        timeBeforeIsLocked.Add(lockTime);
+                    }
                 }
             } else {
                 if (enemiesLocking.Contains(enemiesAlive[i])) {

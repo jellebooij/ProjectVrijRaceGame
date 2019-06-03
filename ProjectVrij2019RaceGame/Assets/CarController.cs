@@ -4,6 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody), typeof(BoxCollider))]
 public class CarController : MonoBehaviour {
+    public bool inTestMode;
     public float drag;
     public float rotationDrag;
     public float rotationSpeed = 0.1f;
@@ -58,6 +59,9 @@ public class CarController : MonoBehaviour {
 
         float gasPedal;
         if (Input.GetButton("Gas")) { gasPedal = 1; } else gasPedal = 0;
+        if (inTestMode) {
+            gasPedal = 1;
+        }
 
         steeringWheelHorizontal = Input.GetAxisRaw("Horizontal");
         float steeringWheelVertical = Input.GetAxisRaw("Vertical");
