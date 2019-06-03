@@ -24,13 +24,12 @@ public class DefendUI : MonoBehaviour {
     }
 
     private void Update() {
-        /*
-        if (powerUp.currentPowerup.type == PowerupType.Shield) {
+        if (powerUp.currentDefensePowerup.type == PowerupType.Shield) {
             Activate(defenseInactive, defenseActive, icons[0], "Shield", new Vector2(-800, 0), 0.075f);
         }
-        else if (powerUp.currentPowerup.type == PowerupType.None) {
+        else if (powerUp.currentDefensePowerup.type == PowerupType.None) {
             Deactivate(defenseInactive, defenseActive, new Vector2(-800, 0), 0.075f);
-        }*/
+        }
     }
 
     private void Activate(RectTransform oldState, RectTransform newState, Sprite defendSprite, string name, Vector2 refPos, float animSpeed) {
