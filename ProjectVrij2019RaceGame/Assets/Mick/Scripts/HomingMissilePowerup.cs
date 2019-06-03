@@ -17,7 +17,8 @@ public class HomingMissilePowerup : BasePowerup{
     public List<GameObject> enemiesLocked = new List<GameObject>();
     public List<float> timeBeforeIsLocked = new List<float>();
     public float lockTime;
-    public Vector2 missileLockRectangle;
+    public Vector2 missileLockRectangleFractional;
+    public float lockRectangleFractionalHeight = 0.2f;
     public float shootTimePeriod = 0.5f;
     private float currentShootTime;
     private float currentPartialShootTimePeriod;
@@ -117,8 +118,9 @@ public class HomingMissilePowerup : BasePowerup{
         Debug.Log(widthPixels);
         Vector3 toWorldPosition = cam.WorldToScreenPoint(worldPosition);
         bool isDetected = false;
-        if (toWorldPosition.x > (widthPixels - missileLockRectangle.x * widthPixels) / 2 && toWorldPosition.x < (widthPixels - (widthPixels - missileLockRectangle.x * widthPixels) / 2)) {
-           if (toWorldPosition.y > (heightPixels - missileLockRectangle.y * heightPixels) / 2 && toWorldPosition.y < (heightPixels - (heightPixels - missileLockRectangle.y * heightPixels) / 2)) {
+        if (toWorldPosition.x > (widthPixels - missileLockRectangleFractional.x * widthPixels) / 2 && toWorldPosition.x < (widthPixels - (widthPixels - missileLockRectangleFractional.x * widthPixels) / 2)) {
+           if (toWorldPosition.y > ((heightPixels - missileLockRectangleFractional.y * heightPixels) / 2 + lockRectangleFractionalHeight * heightPixels) && 
+                toWorldPosition.y < (heightPixels - (heightPixels - missileLockRectangleFractional.y * heightPixels) / 2 + lockRectangleFractionalHeight * heightPixels)) {
                 isDetected = true;
             }
 

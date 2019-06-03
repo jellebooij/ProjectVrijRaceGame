@@ -26,8 +26,10 @@ public class HomingMissile : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other) {
-        if (other.gameObject.GetComponentInParent<Health>() != null && other.transform.parent.gameObject != missileOwner) {
-            other.gameObject.GetComponentInParent<Health>().TakeDamage(damage);
+        if (other.transform.parent.gameObject != missileOwner) {
+            if (other.gameObject.GetComponent<Health>() != null) {
+                other.gameObject.GetComponent<Health>().TakeDamage(damage);
+            }
             Destroy(this.gameObject);
         }
     }

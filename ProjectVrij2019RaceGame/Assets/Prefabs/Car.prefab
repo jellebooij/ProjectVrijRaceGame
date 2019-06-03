@@ -337,10 +337,12 @@ MonoBehaviour:
   hitmask:
     serializedVersion: 2
     m_Bits: 4294967295
+  velocity: {x: 0, y: 0, z: 0}
   downForce: -5
-  extents: {x: 0.7086182, y: 0.2699627, z: 1.060806}
+  extents: {x: 0.7086182, y: 0.36, z: 1.060806}
   boostSpeed: 0
-  rayHeight: 0.7
+  rayHeight: 1
+  steeringWheelHorizontal: 0
 --- !u!114 &318649884566014164
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -354,7 +356,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthReference: {fileID: 0}
-  currentPowerup: {fileID: 0}
+  currentAttackPowerup: {fileID: 0}
+  currentDefensePowerup: {fileID: 0}
   laserDuration: 10
   laserDistance: 50
   laserOriginOffset: {x: 0, y: 0, z: 0}
@@ -363,21 +366,21 @@ MonoBehaviour:
     m_Bits: 4294967295
   shield: 0
   laserFx: {fileID: 318649884864397261}
-  bulletPrefab: {fileID: 7442395122292656413, guid: f760c887110a8e14d974f6e1ae399967,
+  bulletPrefab: {fileID: 6367922504392950946, guid: 185e4b582f5910f4696d10050d419649,
     type: 3}
   machineGunDuration: 10
-  machineGunStrayFactor: 5
+  machineGunStrayFactor: 10
   MachineGunFireRate: 0.01
   MachineGunFirePoint: {fileID: 315775099}
-  enemyList: []
   homingMissilePowerupDuration: 10
+  homingMissileOriginOffset: {x: 0, y: 1, z: 0}
   homingMissilePrefab: {fileID: 2497808339377303601, guid: 75089e249a6861443a3c44c555360dd5,
     type: 3}
   cam: {fileID: 0}
-  setLayerMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
   missileLockTime: 1
+  missileLockCenterRectangleFractional: {x: 0.3, y: 0.4}
+  lockRectangleFractionalHeight: 0.2
+  shieldDuration: 5
 --- !u!1 &318649884864397261
 GameObject:
   m_ObjectHideFlags: 0
@@ -667,7 +670,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: bf0c3f106ba4d9443a0e3c89c0be3b59,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: bf0c3f106ba4d9443a0e3c89c0be3b59,
         type: 3}
@@ -722,12 +725,12 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: bf0c3f106ba4d9443a0e3c89c0be3b59,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 101.57302
+      value: 228.88466
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: bf0c3f106ba4d9443a0e3c89c0be3b59,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 101.57304
+      value: 145.45259
       objectReference: {fileID: 0}
     - target: {fileID: -1504981713932161579, guid: bf0c3f106ba4d9443a0e3c89c0be3b59,
         type: 3}

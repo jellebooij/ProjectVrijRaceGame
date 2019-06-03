@@ -3491,6 +3491,7 @@ MonoBehaviour:
   distance: 10
   height: 3
   targetPositionSmoothing: 3
+  backToDistanceSmoothness: 5
   car: {fileID: 680595894}
 --- !u!1 &1088099051
 GameObject:
@@ -6144,7 +6145,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 5e47aa47eac8c6444bf645afc51fd8aa, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6720,7 +6721,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 5e47aa47eac8c6444bf645afc51fd8aa, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7478,43 +7479,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Car (2)
       objectReference: {fileID: 0}
-    - target: {fileID: 318649884566014171, guid: fd84fbef1a6fadf44a0dba34de2d1384,
-        type: 3}
-      propertyPath: m_TagString
-      value: Pod
-      objectReference: {fileID: 0}
-    - target: {fileID: 318649884566014164, guid: fd84fbef1a6fadf44a0dba34de2d1384,
-        type: 3}
-      propertyPath: bulletPrefab
-      value: 
-      objectReference: {fileID: 6367922504392950946, guid: 185e4b582f5910f4696d10050d419649,
-        type: 3}
-    - target: {fileID: 318649884566014164, guid: fd84fbef1a6fadf44a0dba34de2d1384,
-        type: 3}
-      propertyPath: machineGunStrayFactor
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 318649884566014164, guid: fd84fbef1a6fadf44a0dba34de2d1384,
-        type: 3}
-      propertyPath: machineGunCooldown
-      value: 0.03
-      objectReference: {fileID: 0}
-    - target: {fileID: 318649884566014164, guid: fd84fbef1a6fadf44a0dba34de2d1384,
-        type: 3}
-      propertyPath: homingMissilePrefab
-      value: 
-      objectReference: {fileID: 2497808339377303601, guid: 75089e249a6861443a3c44c555360dd5,
-        type: 3}
     - target: {fileID: 318649884566014164, guid: fd84fbef1a6fadf44a0dba34de2d1384,
         type: 3}
       propertyPath: cam
       value: 
       objectReference: {fileID: 1041764752}
-    - target: {fileID: 318649884566014164, guid: fd84fbef1a6fadf44a0dba34de2d1384,
-        type: 3}
-      propertyPath: setLayerMask.m_Bits
-      value: 4294967295
-      objectReference: {fileID: 0}
     - target: {fileID: 318649884566014161, guid: fd84fbef1a6fadf44a0dba34de2d1384,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7570,35 +7539,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4690119334147182115, guid: fd84fbef1a6fadf44a0dba34de2d1384,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4690119334147182115, guid: fd84fbef1a6fadf44a0dba34de2d1384,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 228.88466
-      objectReference: {fileID: 0}
-    - target: {fileID: 4690119334147182115, guid: fd84fbef1a6fadf44a0dba34de2d1384,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 145.45259
-      objectReference: {fileID: 0}
-    - target: {fileID: 318649884566014165, guid: fd84fbef1a6fadf44a0dba34de2d1384,
-        type: 3}
-      propertyPath: extents.y
-      value: 0.36
-      objectReference: {fileID: 0}
-    - target: {fileID: 318649884566014165, guid: fd84fbef1a6fadf44a0dba34de2d1384,
-        type: 3}
-      propertyPath: rayHeight
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 318649885586146973, guid: fd84fbef1a6fadf44a0dba34de2d1384,
         type: 3}
       propertyPath: m_Convex
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 318649885586146973, guid: fd84fbef1a6fadf44a0dba34de2d1384,
+        type: 3}
+      propertyPath: m_CookingOptions
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8030245219776334060, guid: fd84fbef1a6fadf44a0dba34de2d1384,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd84fbef1a6fadf44a0dba34de2d1384, type: 3}

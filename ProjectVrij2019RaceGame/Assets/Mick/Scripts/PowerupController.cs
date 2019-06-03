@@ -26,12 +26,13 @@ public class PowerupController : MonoBehaviour {
     public float MachineGunFireRate = 0.05f;
     public GameObject MachineGunFirePoint;
 
-    public List<GameObject> enemyList;
     public float homingMissilePowerupDuration = 10f;
+    public Vector3 homingMissileOriginOffset = Vector3.zero;
     public GameObject homingMissilePrefab;
     public Camera cam;
     public float missileLockTime = 1f;
-    public Vector2 missileLockCenterRectanglePart = new Vector2(0.3f, 0.4f);
+    public Vector2 missileLockCenterRectangleFractional = new Vector2(0.3f, 0.4f);
+    public float lockRectangleFractionalHeight = 0.2f;
 
     public float shieldDuration = 5f;
 
@@ -70,7 +71,9 @@ public class PowerupController : MonoBehaviour {
         homingMissilePowerup.cam = cam;
         homingMissilePowerup.layerMask = layerMask;
         homingMissilePowerup.lockTime = missileLockTime;
-        homingMissilePowerup.missileLockRectangle = missileLockCenterRectanglePart;
+        homingMissilePowerup.missileLockRectangleFractional = missileLockCenterRectangleFractional;
+        homingMissilePowerup.homingMissileOriginOffset = homingMissileOriginOffset;
+        homingMissilePowerup.lockRectangleFractionalHeight = lockRectangleFractionalHeight;
 
         shieldPowerup.health = healthReference;
         shieldPowerup.duration = shieldDuration;
