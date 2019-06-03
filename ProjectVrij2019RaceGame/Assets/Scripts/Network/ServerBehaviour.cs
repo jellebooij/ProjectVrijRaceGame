@@ -9,23 +9,22 @@ using System.Collections.Generic;
 
 using NetworkConnection = Unity.Networking.Transport.NetworkConnection;
 
-public enum packetTypes { PlayerConnected, SetupConnection, UpdatePlayer, Test }
+public enum packetTypes { PlayerConnected, SetupConnection, UpdatePlayer, RequestTime, ServerTime, Last }
 
 public class ServerBehaviour : MonoBehaviour
 {   
     public UdpNetworkDriver m_Driver;
+    public float time;
     private NativeList<NetworkConnection> m_Connections;
     private NetworkPipeline relieablePipeline;
     private NetworkPipeline unrelieablePipeline;
-
-    public Dictionary<int, PlayerTransform> players = new Dictionary<int, PlayerTransform>();
-    
+    private PacketHandler packetHandler;
 
     void Start () {
 
         m_Driver = new UdpNetworkDriver(new INetworkParameter[0]);
 
-        if (m_Driver.Bind(NetworkEndPoint.Parse("10.3.27.18", 9000)) != 0)
+        if (m_Driver.Bind(NetworkEndPoint.Parse("192.168.178.42", 9000)) != 0)
             Debug.Log("Failed to bind to port 9000");
         else
             m_Driver.Listen();
@@ -34,6 +33,11 @@ public class ServerBehaviour : MonoBehaviour
         //unrelieablePipeline = m_Driver.CreatePipeline(typeof(UnreliableSequencedPipelineStage));
 
         m_Connections = new NativeList<NetworkConnection>(16, Allocator.Persistent);
+
+        packetHandler = new PacketHandler();
+        packetHandler.RegisterHandler(packetTypes.UpdatePlayer, UpdatePlayer);
+        packetHandler.RegisterHandler(packetTypes.RequestTime,RespondTime);
+
     }
     
     void OnDestroy() {
@@ -45,6 +49,8 @@ public class ServerBehaviour : MonoBehaviour
     
 
     void Update () {
+
+        time += Time.deltaTime;
 
         m_Driver.ScheduleUpdate().Complete();
         
@@ -101,43 +107,7 @@ public class ServerBehaviour : MonoBehaviour
             {
                 if (cmd == NetworkEvent.Type.Data)
                 {
-                    var readerCtx = default(DataStreamReader.Context);
-                    packetTypes packetType = (packetTypes)stream.ReadInt(ref readerCtx);
-
-                    switch(packetType){
-
-                        case packetTypes.UpdatePlayer:
-
-                            int id = stream.ReadInt(ref readerCtx);
-                            Debug.Log(id);
-                            float x = stream.ReadFloat(ref readerCtx);
-                            float y = stream.ReadFloat(ref readerCtx);
-                            float z = stream.ReadFloat(ref readerCtx);
-
-                            float xr = stream.ReadFloat(ref readerCtx);
-                            float yr = stream.ReadFloat(ref readerCtx);
-                            float zr = stream.ReadFloat(ref readerCtx);
-                            float wr = stream.ReadFloat(ref readerCtx);
-
-
-                            SendPosition(id,x,y,z,xr ,yr ,zr,wr);
-                                
-                        break; 
-
-                        case packetTypes.Test:
-                            //Debug.Log("received from client" + "  " + stream.ReadInt(ref readerCtx));
-                        break;
-
-                    }
-                    
-                    //Debug.Log("Got " + number + " from the Client adding + 2 to it.");
-                    //number +=2;
-//
-                    //using (var writer = new DataStreamWriter(4, Allocator.Temp))
-                    //{
-                    //    writer.Write(number);
-                    //    m_Driver.Send(NetworkPipeline.Null, m_Connections[i], writer);
-                    //}
+                    packetHandler.ProcessPacket(stream);
                 }
                 else if (cmd == NetworkEvent.Type.Disconnect)
                 {
@@ -147,38 +117,34 @@ public class ServerBehaviour : MonoBehaviour
             }
         }
 
-
-
-            for(int i = 0; i < m_Connections.Length; i++){
-
-                using (DataStreamWriter w = new DataStreamWriter(8, Allocator.Temp))
-                {
-                    w.Write((int)packetTypes.Test);
-                    m_Driver.Send(NetworkPipeline.Null, m_Connections[i], w);
-                      
-                }
-
-            }
     }
 
-    void SendPosition(int id, float x, float y, float z, float xr, float yr, float zr, float wr){
+    void RespondTime(DataStreamReader stream, ref DataStreamReader.Context context){
+        
+        RequestTimePacket packet = new RequestTimePacket();
+        packet.Read(stream, ref context);
 
-        var writer = new DataStreamWriter(36, Allocator.Temp);
+        ServerTimePacket returnPacket = new ServerTimePacket(time + Random.Range(-0.1f,0.1f), packet.localTime);
+        var writer = returnPacket.Write();
 
-        writer.Write((int)packetTypes.UpdatePlayer);
+        m_Driver.Send(unrelieablePipeline,m_Connections[packet.netID], writer);
 
-        writer.Write(id);
-        writer.Write(x);
-        writer.Write(y);
-        writer.Write(z);
+    }
 
-        writer.Write(xr);
-        writer.Write(yr);
-        writer.Write(zr);
-        writer.Write(wr);
+    void UpdatePlayer(DataStreamReader stream, ref DataStreamReader.Context context){
 
+        BasePacket packet = new CarTransformPacked();
+        packet.Read(stream, ref context);
+        SendPosition(packet as CarTransformPacked);
+                                
+    }
+
+    void SendPosition(CarTransformPacked packed){
+
+        var writer = packed.Write();
+        
         for(int j = 0; j < m_Connections.Length; j++){
-            m_Driver.Send(relieablePipeline, m_Connections[j], writer);
+            m_Driver.Send(unrelieablePipeline, m_Connections[j], writer);
         }
 
     }
