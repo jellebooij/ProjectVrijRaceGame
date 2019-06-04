@@ -333,16 +333,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 268616328}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b83760b2cb47ec4ab07cc28f27266cb, type: 3}
+  m_Script: {fileID: 11500000, guid: a509d9f1f826dd349aad806797cdd2ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  drag: 1
-  rotationDrag: 1
+  inTestMode: 0
+  drag: 0
+  rotationDrag: 0
+  rotationSpeed: 0.1
+  minimumRotationSpeed: 2
   currentSpeed: 0
   speed: 5
   hitmask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 4294967295
+  velocity: {x: 0, y: 0, z: 0}
+  downForce: -3
+  extents: {x: 0, y: 0, z: 0}
+  boostSpeed: 0
+  rayHeight: 0.7
+  steeringWheelHorizontal: 0
 --- !u!54 &268616330
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -984,10 +993,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea0abffd98da56b4dac9bfdf11697b45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 0
   target: {fileID: 268616334}
   distance: 5
   height: 3
   targetPositionSmoothing: 3
+  backToDistanceSmoothness: 5
+  car: {fileID: 268616334}
 --- !u!1 &1194230661
 GameObject:
   m_ObjectHideFlags: 0
