@@ -9,16 +9,19 @@ using System.Collections.Generic;
 
 using NetworkConnection = Unity.Networking.Transport.NetworkConnection;
 
-public enum packetTypes { PlayerConnected, SetupConnection, UpdatePlayer, RequestTime, ServerTime, Last }
+public enum packetTypes { PlayerConnected, SetupConnection, UpdatePlayer, RequestTime, ServerTime, PlayerDisconected ,Last }
 
 public class ServerBehaviour : MonoBehaviour
 {   
     public UdpNetworkDriver m_Driver;
     public float time;
     private NativeList<NetworkConnection> m_Connections;
+    private Dictionary<NetworkConnection, int> idMap = new Dictionary<NetworkConnection, int>();
     private NetworkPipeline relieablePipeline;
     private NetworkPipeline unrelieablePipeline;
     private PacketHandler packetHandler;
+
+    private List<int> IDs = new List<int>();
 
     void Start () {
 
@@ -71,8 +74,12 @@ public class ServerBehaviour : MonoBehaviour
             Debug.Log("Accepted a connection");
 
             m_Connections.Add(c);
-        
-            for(int i = 0; i < m_Connections.Length; i++){
+
+            int id = GetNewID();
+            idMap.Add(c, id);
+
+
+            for (int i = 0; i < m_Connections.Length; i++){
 
                 using (DataStreamWriter writer = new DataStreamWriter(8, Allocator.Temp))
                 {
@@ -80,17 +87,15 @@ public class ServerBehaviour : MonoBehaviour
                         continue;
 
                     writer.Write((int)packetTypes.PlayerConnected);
-                    writer.Write(m_Connections.Length - 1);
+                    writer.Write(id);
                     m_Driver.Send(NetworkPipeline.Null, m_Connections[i], writer);
                       
                 }
 
             }
             
-            DataStreamWriter otherWriter = new DataStreamWriter(8, Allocator.Temp);
-            otherWriter.Write((int)packetTypes.SetupConnection);
-            otherWriter.Write(m_Connections.Length - 1);
-            m_Driver.Send(relieablePipeline,c,otherWriter);
+            SetupConnection conn = new SetupConnection(id, IDs.Count, IDs.ToArray());
+            m_Driver.Send(relieablePipeline,c,conn.Write());
    
         }
         
@@ -112,7 +117,29 @@ public class ServerBehaviour : MonoBehaviour
                 else if (cmd == NetworkEvent.Type.Disconnect)
                 {
                     Debug.Log("Client disconnected from server");
+                    int disId = idMap[m_Connections[i]];
+                    idMap.Remove(m_Connections[i]);
                     m_Connections[i] = default(NetworkConnection);
+
+                    for (int j = 0; j < m_Connections.Length; j++)
+                    {
+
+                        using (DataStreamWriter writer = new DataStreamWriter(8, Allocator.Temp))
+                        {
+                            if (i == m_Connections.Length - 1)
+                                continue;
+
+                            writer.Write((int)packetTypes.PlayerConnected);
+                            writer.Write(disId);
+                            m_Driver.Send(NetworkPipeline.Null, m_Connections[i], writer);
+
+                        }
+
+                    }
+
+                    IDs.Remove(disId);
+
+
                 }
             }
         }
@@ -147,5 +174,22 @@ public class ServerBehaviour : MonoBehaviour
             m_Driver.Send(unrelieablePipeline, m_Connections[j], writer);
         }
 
+    }
+
+    int GetNewID()
+    {
+        int id = 0;
+
+        for(int i = 0; i < IDs.Count; i++)
+        {
+            if (IDs[i] != i)
+            {
+                id = i;
+                IDs.Add(i);
+                return id;
+            }
+        }
+
+        return IDs.Count;
     }
 }

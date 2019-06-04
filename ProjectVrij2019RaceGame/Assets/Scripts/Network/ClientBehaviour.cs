@@ -159,13 +159,21 @@ public class ClientBehaviour : MonoBehaviour
 
     }
 
+    void Disconnect(DataStreamReader reader, ref DataStreamReader.Context context)
+    {
+        int id = reader.ReadInt(ref context);
+        Destroy(transforms[id].gameObject);
+        transforms.Remove(id);
+    }
+
     void SetupConnection(DataStreamReader reader, ref DataStreamReader.Context context){
 
-        networkId = reader.ReadInt(ref context);
+        SetupConnection conn = new SetupConnection();
+        conn.Read(reader, ref context);
 
-        for(int i = 0; i < networkId; i++){
+        for(int i = 0; i < conn.connectedPlayerAmount; i++){
             Transform p = Instantiate(playerPrefab,Vector3.zero,Quaternion.identity).transform;
-            transforms.Add(i, p);
+            transforms.Add(conn.IDs[i], p);
         }
 
     }
@@ -184,7 +192,7 @@ public class ClientBehaviour : MonoBehaviour
 
         float currentTime = time - 0.5f;
 
-        for(int i = 0; i < 10; i++){
+        for(int i = 0; i < 20; i++){
             
             TransformPair pair = packets.GetPair(i,currentTime);
 
