@@ -53,6 +53,7 @@ public class ClientBehaviour : MonoBehaviour
         packetHandler.RegisterHandler(packetTypes.PlayerConnected, PlayerConnected);
         packetHandler.RegisterHandler(packetTypes.SetupConnection, SetupConnection);
         packetHandler.RegisterHandler(packetTypes.ServerTime, ReceiveTime);
+        packetHandler.RegisterHandler(packetTypes.PlayerDisconected, Disconnect);
 
         packets = new TransformList();
 
