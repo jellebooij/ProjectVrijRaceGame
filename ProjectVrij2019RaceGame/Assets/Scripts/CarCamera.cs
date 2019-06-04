@@ -23,7 +23,6 @@ public class CarCamera : MonoBehaviour
         carController = car.GetComponent<CarController>();
     }
     private void FixedUpdate() {
-        CheckCollision();
         targetPosition = target.position - new Vector3(target.forward.x, 0, target.forward.z).normalized * currentDistance;
         targetPosition.y = target.position.y + height;
 
@@ -33,11 +32,15 @@ public class CarCamera : MonoBehaviour
 
     }
 
+    private void LateUpdate() {
+        CheckCollision();
+    }
+
     private void CheckCollision() {
         RaycastHit hit;
         if (Physics.Linecast(target.position, target.position - new Vector3(target.forward.x, 0, target.forward.z).normalized * distance + target.up * height, out hit, layerMask)){
             Debug.Log("Hit");
-            currentDistance = Vector3.Distance(targetPosition, hit.point) - 1f;
+            currentDistance = Mathf.Lerp(currentDistance, Vector3.Distance(targetPosition, hit.point) - 1f , Time.deltaTime * 20f);
         } else {
             currentDistance = Mathf.Lerp(currentDistance, distance, Time.deltaTime * backToDistanceSmoothness);
         }
