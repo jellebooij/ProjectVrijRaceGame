@@ -172,6 +172,9 @@ public class ClientBehaviour : MonoBehaviour
         conn.Read(reader, ref context);
 
         for(int i = 0; i < conn.connectedPlayerAmount; i++){
+            if (conn.IDs[i] == networkId)
+                continue;
+
             Transform p = Instantiate(playerPrefab,Vector3.zero,Quaternion.identity).transform;
             transforms.Add(conn.IDs[i], p);
         }

@@ -76,6 +76,8 @@ public class ServerBehaviour : MonoBehaviour
             m_Connections.Add(c);
 
             int id = GetNewID();
+
+            Debug.Log(id);
             idMap.Add(c, id);
 
 
@@ -190,6 +192,8 @@ public class ServerBehaviour : MonoBehaviour
             }
         }
 
-        return IDs.Count;
+        id = IDs.Count;
+        IDs.Add(id);
+        return id;
     }
 }
