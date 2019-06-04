@@ -39,7 +39,6 @@ public class Spawn : MonoBehaviour
 
             if (timer[i] > durationBeforeRespawn) {
 
-
                 if (isOccupied[i] == null) {
                     isOccupied[i] = (GameObject)Instantiate(objectsToSpawn[Random.Range(0, objectsToSpawn.Length)], spawns[i].position, Quaternion.identity);
                     durationBeforeRespawn = durationBeforeRespawn - (durationBeforeRespawn / 10) * percentageFallOff;
