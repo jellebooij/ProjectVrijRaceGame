@@ -104,7 +104,7 @@ public class CarController : MonoBehaviour {
 
             float mass = rb.mass / 8;
             compressionRatio = 1 - Mathf.Pow(hitDistance, 2f);
-            float force = mass * Physics.gravity.magnitude * compressionRatio * 12f;
+            float force = mass * Physics.gravity.magnitude * compressionRatio * 10f;
 
             rb.AddForceAtPosition(transform.up * force, cornersWorld[i]);
 
