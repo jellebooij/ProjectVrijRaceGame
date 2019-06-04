@@ -124,7 +124,7 @@ public class ServerBehaviour : MonoBehaviour
         RequestTimePacket packet = new RequestTimePacket();
         packet.Read(stream, ref context);
 
-        ServerTimePacket returnPacket = new ServerTimePacket(time + Random.Range(-0.1f,0.1f), packet.localTime);
+        ServerTimePacket returnPacket = new ServerTimePacket(time, packet.localTime);
         var writer = returnPacket.Write();
 
         m_Driver.Send(unrelieablePipeline,m_Connections[packet.netID], writer);
