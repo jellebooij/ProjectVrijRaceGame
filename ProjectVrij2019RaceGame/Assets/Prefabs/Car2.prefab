@@ -662,6 +662,20 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: -1
   m_Mesh: {fileID: 4068373912626513877, guid: bf0c3f106ba4d9443a0e3c89c0be3b59, type: 3}
+--- !u!114 &637239742581365547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8596808152662293552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35e1f2d378590f24db40f88e862a99f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thisCarController: {fileID: 318649884566014165}
+  healthReference: {fileID: 318649884566014162}
 --- !u!1001 &106078332
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -796,6 +810,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 638da869910d95845b1af5ff1f8eb9d1, type: 3}
+--- !u!1 &809370047100871182 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 809370047064261234, guid: 638da869910d95845b1af5ff1f8eb9d1,
+    type: 3}
+  m_PrefabInstance: {fileID: 106078332}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1690619202572172869 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1690619202602671673, guid: 638da869910d95845b1af5ff1f8eb9d1,
@@ -811,12 +831,6 @@ GameObject:
 --- !u!1 &268649051298582602 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 268649051194880054, guid: 638da869910d95845b1af5ff1f8eb9d1,
-    type: 3}
-  m_PrefabInstance: {fileID: 106078332}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &809370047100871182 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 809370047064261234, guid: 638da869910d95845b1af5ff1f8eb9d1,
     type: 3}
   m_PrefabInstance: {fileID: 106078332}
   m_PrefabAsset: {fileID: 0}
@@ -959,7 +973,7 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: bf0c3f106ba4d9443a0e3c89c0be3b59,
         type: 3}
       propertyPath: m_TagString
-      value: GameController
+      value: Pod
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: bf0c3f106ba4d9443a0e3c89c0be3b59,
         type: 3}
@@ -1038,15 +1052,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf0c3f106ba4d9443a0e3c89c0be3b59, type: 3}
---- !u!4 &4690119334147182115 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: bf0c3f106ba4d9443a0e3c89c0be3b59,
-    type: 3}
-  m_PrefabInstance: {fileID: 318649885275546937}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &8596808152662293552 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: bf0c3f106ba4d9443a0e3c89c0be3b59,
+    type: 3}
+  m_PrefabInstance: {fileID: 318649885275546937}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4690119334147182115 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: bf0c3f106ba4d9443a0e3c89c0be3b59,
     type: 3}
   m_PrefabInstance: {fileID: 318649885275546937}
   m_PrefabAsset: {fileID: 0}
@@ -1057,6 +1071,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 318649884566014161}
     m_Modifications:
+    - target: {fileID: 8332039901393225074, guid: e925ec0b9db63c24e8ac819023a28e85,
+        type: 3}
+      propertyPath: m_Name
+      value: Pod
+      objectReference: {fileID: 0}
+    - target: {fileID: 8332039901393225074, guid: e925ec0b9db63c24e8ac819023a28e85,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7318249674340457311, guid: e925ec0b9db63c24e8ac819023a28e85,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1126,16 +1150,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 0.29432473
-      objectReference: {fileID: 0}
-    - target: {fileID: 8332039901393225074, guid: e925ec0b9db63c24e8ac819023a28e85,
-        type: 3}
-      propertyPath: m_Name
-      value: Pod
-      objectReference: {fileID: 0}
-    - target: {fileID: 8332039901393225074, guid: e925ec0b9db63c24e8ac819023a28e85,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e925ec0b9db63c24e8ac819023a28e85, type: 3}
