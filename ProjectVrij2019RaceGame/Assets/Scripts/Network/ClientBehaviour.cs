@@ -21,6 +21,7 @@ public class ClientBehaviour : MonoBehaviour
     private NetworkPipeline unrelieablePipeline;
     private PacketHandler packetHandler;
     public Dictionary<int, Transform> transforms = new Dictionary<int, Transform>();
+    public GameObject machinegunBullet;
 
     TransformList packets;
 
@@ -32,7 +33,21 @@ public class ClientBehaviour : MonoBehaviour
 
     float t = 0;
 
-    
+    public static ClientBehaviour instance;
+
+    private void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            DestroyImmediate(this);
+        }
+    }
+
+
     void Start ()
 	{   
 
@@ -149,6 +164,12 @@ public class ClientBehaviour : MonoBehaviour
 
     }
 
+    public void FireMachineGun(Vector3 bulletPosition, Quaternion bulletRotation)
+    {
+        MachineGunFirePacked packed = new MachineGunFirePacked(networkId, bulletPosition, bulletRotation);
+        m_Driver.Send(NetworkPipeline.Null, m_Connection, packed.Write());
+    }
+
     void PlayerConnected(DataStreamReader reader, ref DataStreamReader.Context context){
 
         int playerID = reader.ReadInt(ref context);
@@ -168,6 +189,16 @@ public class ClientBehaviour : MonoBehaviour
         int id = reader.ReadInt(ref context);
         Destroy(transforms[id].gameObject);
         transforms.Remove(id);
+    }
+
+    void MachineGunFire(DataStreamReader reader, ref DataStreamReader.Context context)
+    {
+        MachineGunFirePacked packet = new MachineGunFirePacked();
+        packet.Read(reader, ref context);
+
+        GameObject obj = Instantiate(machinegunBullet, packet.bulletPosition, packet.bulletRotation);
+        obj.GetComponent<MachineGunBullet>().isOwner = false;
+
     }
 
     void SetupConnection(DataStreamReader reader, ref DataStreamReader.Context context){
