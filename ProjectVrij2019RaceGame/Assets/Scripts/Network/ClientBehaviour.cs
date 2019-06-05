@@ -178,7 +178,7 @@ public class ClientBehaviour : MonoBehaviour
 
         Transform p = Instantiate(playerPrefab,Vector3.zero,Quaternion.identity).transform;
         transforms.Add(playerID, p);
-        p.GetComponent<NetworkPlayer>().id = playerID;
+        p.GetComponentInChildren<NetworkPlayer>().id = playerID;
 
         Debug.Log(playerID + " connectedTOClient");
 
@@ -225,7 +225,7 @@ public class ClientBehaviour : MonoBehaviour
 
             Transform p = Instantiate(playerPrefab,Vector3.zero,Quaternion.identity).transform;
             transforms.Add(conn.IDs[i], p);
-            p.GetComponent<NetworkPlayer>().id = conn.IDs[i];
+            p.GetComponentInChildren<NetworkPlayer>().id = conn.IDs[i];
         }
 
     }
