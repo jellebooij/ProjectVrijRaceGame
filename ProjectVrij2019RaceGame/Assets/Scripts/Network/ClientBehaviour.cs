@@ -156,12 +156,15 @@ public class ClientBehaviour : MonoBehaviour
         Transform p = Instantiate(playerPrefab,Vector3.zero,Quaternion.identity).transform;
         transforms.Add(playerID, p);
 
-        //Debug.Log(playerID + "  " + networkId);
+        Debug.Log(playerID + " connectedTOClient");
 
     }
 
     void Disconnect(DataStreamReader reader, ref DataStreamReader.Context context)
     {
+
+        Debug.Log("playerdisconnectedClient");
+
         int id = reader.ReadInt(ref context);
         Destroy(transforms[id].gameObject);
         transforms.Remove(id);
