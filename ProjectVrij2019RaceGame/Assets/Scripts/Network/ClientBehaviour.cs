@@ -177,6 +177,7 @@ public class ClientBehaviour : MonoBehaviour
 
         Transform p = Instantiate(playerPrefab,Vector3.zero,Quaternion.identity).transform;
         transforms.Add(playerID, p);
+        p.GetComponent<NetworkPlayer>().id = playerID;
 
         Debug.Log(playerID + " connectedTOClient");
 
@@ -202,6 +203,13 @@ public class ClientBehaviour : MonoBehaviour
 
     }
 
+    public void TakeDamage(int damagedPlayerId, float damage)
+    {
+        TakeDamage packed = new TakeDamage(damagedPlayerId, damage);
+        m_Driver.Send(NetworkPipeline.Null, m_Connection, packed.Write());
+
+    }
+
     void SetupConnection(DataStreamReader reader, ref DataStreamReader.Context context){
 
         SetupConnection conn = new SetupConnection();
@@ -216,6 +224,7 @@ public class ClientBehaviour : MonoBehaviour
 
             Transform p = Instantiate(playerPrefab,Vector3.zero,Quaternion.identity).transform;
             transforms.Add(conn.IDs[i], p);
+            p.GetComponent<NetworkPlayer>().id = conn.IDs[i];
         }
 
     }
@@ -228,6 +237,21 @@ public class ClientBehaviour : MonoBehaviour
 
         packets.Add(p.netID, p);
         
+    }
+
+
+    void Damage(DataStreamReader reader, ref DataStreamReader.Context context)
+    {
+
+        BasePacket packet = new TakeDamage();
+        packet.Read(reader, ref context);
+        TakeDamage p = packet as TakeDamage;
+
+        if(p.damagedPlayerID == networkId)
+        {
+            player.gameObject.GetComponent<Health>().health -= p.damage;
+        }
+
     }
 
     void UpdateWorldState(){

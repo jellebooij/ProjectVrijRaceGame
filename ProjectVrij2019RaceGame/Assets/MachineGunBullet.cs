@@ -34,8 +34,8 @@ public class MachineGunBullet : MonoBehaviour
         if (isOwner) { 
             RaycastHit hit;
             if (Physics.Linecast(transform.position, transform.position + transform.forward * speed * Time.deltaTime, out hit, layerMask)) {
-                if (hit.transform.gameObject.GetComponent<Health>() != null) {
-                    hit.transform.gameObject.GetComponent<Health>().TakeDamage(1f);
+                if (hit.transform.gameObject.GetComponent<NetworkPlayer>() != null) {
+                    ClientBehaviour.instance.TakeDamage(hit.transform.gameObject.GetComponent<NetworkPlayer>().id, 2f);
                     Debug.Log("Hit Player");
                 }
                 Destroy(gameObject);

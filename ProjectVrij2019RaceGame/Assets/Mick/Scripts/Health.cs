@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Health : MonoBehaviour {
 
@@ -9,6 +10,7 @@ public class Health : MonoBehaviour {
 
     public float maxArmor;
     public float armor;
+    public Text text;
 
     // Start is called before the first frame update
     void Start() {
@@ -23,6 +25,8 @@ public class Health : MonoBehaviour {
         if (health < 0) {
             Debug.Log("Death");
         }
+
+        text.text = health.ToString();
     }
 
     public void TakeDamage(float amount) {
