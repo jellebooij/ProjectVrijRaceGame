@@ -70,6 +70,7 @@ public class ClientBehaviour : MonoBehaviour
         packetHandler.RegisterHandler(packetTypes.ServerTime, ReceiveTime);
         packetHandler.RegisterHandler(packetTypes.PlayerDisconected, Disconnect);
         packetHandler.RegisterHandler(packetTypes.MachineGunFire, MachineGunFire);
+        packetHandler.RegisterHandler(packetTypes.Damage, Damage);
 
         packets = new TransformList();
 
