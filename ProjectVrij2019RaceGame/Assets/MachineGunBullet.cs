@@ -5,7 +5,7 @@ using UnityEngine;
 public class MachineGunBullet : MonoBehaviour
 {
 
-    public float speed = 5f;
+    public float speed = 20f;
     public float lifeTime = 1f;
     private float timer;
     public LayerMask layerMask;
