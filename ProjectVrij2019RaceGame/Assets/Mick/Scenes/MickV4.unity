@@ -1403,7 +1403,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 778284428}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bb2d41e9ef41866439e98394da0006da, type: 3}
   m_Name: 
@@ -4685,6 +4685,26 @@ PrefabInstance:
         type: 3}
       propertyPath: machineGunDuration
       value: 10000
+      objectReference: {fileID: 0}
+    - target: {fileID: 315775100, guid: fd84fbef1a6fadf44a0dba34de2d1384, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.041550495
+      objectReference: {fileID: 0}
+    - target: {fileID: 315775100, guid: fd84fbef1a6fadf44a0dba34de2d1384, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 315775100, guid: fd84fbef1a6fadf44a0dba34de2d1384, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 315775100, guid: fd84fbef1a6fadf44a0dba34de2d1384, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99913645
+      objectReference: {fileID: 0}
+    - target: {fileID: 315775100, guid: fd84fbef1a6fadf44a0dba34de2d1384, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 4.763
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd84fbef1a6fadf44a0dba34de2d1384, type: 3}
