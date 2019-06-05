@@ -22,6 +22,7 @@ public class ClientBehaviour : MonoBehaviour
     private PacketHandler packetHandler;
     public Dictionary<int, Transform> transforms = new Dictionary<int, Transform>();
     public GameObject machinegunBullet;
+    public Transform parent;
 
     TransformList packets;
 
@@ -59,7 +60,7 @@ public class ClientBehaviour : MonoBehaviour
         //relieablePipeline = m_Driver.CreatePipeline(typeof(ReliableSequencedPipelineStage));
         //unrelieablePipeline = m_Driver.CreatePipeline(typeof(UnreliableSequencedPipelineStage));
 
-        var endpoint = NetworkEndPoint.Parse("10.3.21.132", 9000);
+        var endpoint = NetworkEndPoint.Parse("10.3.21.151", 9000);
         m_Connection = m_Driver.Connect(endpoint);
         
         packetHandler = new PacketHandler();
@@ -176,7 +177,7 @@ public class ClientBehaviour : MonoBehaviour
 
         int playerID = reader.ReadInt(ref context);
 
-        Transform p = Instantiate(playerPrefab,Vector3.zero,Quaternion.identity).transform;
+        Transform p = Instantiate(playerPrefab,Vector3.zero,Quaternion.identity,parent).transform;
         transforms.Add(playerID, p);
         p.GetComponentInChildren<NetworkPlayer>().id = playerID;
 
@@ -223,7 +224,7 @@ public class ClientBehaviour : MonoBehaviour
             if (conn.IDs[i] == networkId) 
                 continue;
 
-            Transform p = Instantiate(playerPrefab,Vector3.zero,Quaternion.identity).transform;
+            Transform p = Instantiate(playerPrefab,Vector3.zero,Quaternion.identity,parent).transform;
             transforms.Add(conn.IDs[i], p);
             p.GetComponentInChildren<NetworkPlayer>().id = conn.IDs[i];
         }
