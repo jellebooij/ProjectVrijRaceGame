@@ -56,6 +56,8 @@ public class MachineGunPowerup : BasePowerup{
         var bullet = Instantiate(bulletPrefab, firePoint.transform.position, bulletRotation);
         
         bullet.transform.Rotate(rotationOffset.x, rotationOffset.y, rotationOffset.z);
+        ClientBehaviour.instance.FireMachineGun(firePoint.transform.position, bulletRotation);
+
         cooldownTimer = 0;
     }
 
