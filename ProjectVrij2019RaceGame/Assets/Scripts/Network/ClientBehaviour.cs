@@ -60,7 +60,7 @@ public class ClientBehaviour : MonoBehaviour
         //relieablePipeline = m_Driver.CreatePipeline(typeof(ReliableSequencedPipelineStage));
         //unrelieablePipeline = m_Driver.CreatePipeline(typeof(UnreliableSequencedPipelineStage));
 
-        var endpoint = NetworkEndPoint.Parse("10.3.21.151", 9000);
+        var endpoint = NetworkEndPoint.Parse("10.3.27.151", 9000);
         m_Connection = m_Driver.Connect(endpoint);
         
         packetHandler = new PacketHandler();
