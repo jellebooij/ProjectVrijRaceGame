@@ -10,10 +10,12 @@ public class PlayerStateHandler : MonoBehaviour
     public Transform[] otherCarTransforms;
     public Transform parentOfOtherCarTransforms;
     public PlayerState type { get; protected set; }
+    private Health health;
 
     // Start is called before the first frame update
     void Start()
     {
+        health = GetComponent<Health>();
         myCarTarget = GetComponent<Transform>();
         targetIndex = 1;
         type = PlayerState.Playing;
@@ -22,7 +24,7 @@ public class PlayerStateHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1)) {
+        if (Input.GetKeyDown(KeyCode.Alpha1) || health.health >= 0) {
             Debug.Log("Spectating");
             type = PlayerState.Spectating;
         } else if (Input.GetKeyDown(KeyCode.Alpha2)) {
