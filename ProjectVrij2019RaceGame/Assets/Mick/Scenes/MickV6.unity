@@ -2326,6 +2326,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 92.35498, y: -90, z: 0}
+--- !u!1 &328095341 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2390585591395929174, guid: fd84fbef1a6fadf44a0dba34de2d1384,
+    type: 3}
+  m_PrefabInstance: {fileID: 1889448897}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &332321512
 GameObject:
   m_ObjectHideFlags: 0
@@ -7360,6 +7366,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6757644388362762175, guid: 088b9e5bfb7dcf043a0cca29b14e696d,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 06d51bd13844db04880ba83d993373a8, type: 2}
     - target: {fileID: -927199367670048503, guid: 088b9e5bfb7dcf043a0cca29b14e696d,
         type: 3}
       propertyPath: m_Name
@@ -7420,11 +7431,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6757644388362762175, guid: 088b9e5bfb7dcf043a0cca29b14e696d,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 06d51bd13844db04880ba83d993373a8, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 088b9e5bfb7dcf043a0cca29b14e696d, type: 3}
 --- !u!1 &1031650329
@@ -13778,6 +13784,7 @@ MonoBehaviour:
   carCamera: {fileID: 1041764754}
   otherCarTransforms: []
   parentOfOtherCarTransforms: {fileID: 750610011}
+  pod: {fileID: 328095341}
 --- !u!1 &1923517363
 GameObject:
   m_ObjectHideFlags: 0

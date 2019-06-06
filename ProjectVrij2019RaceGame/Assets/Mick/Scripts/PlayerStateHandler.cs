@@ -11,10 +11,13 @@ public class PlayerStateHandler : MonoBehaviour
     public Transform parentOfOtherCarTransforms;
     public PlayerState type { get; protected set; }
     private Health health;
+    private CarController carController;
+    public GameObject pod;
 
     // Start is called before the first frame update
     void Start()
     {
+        carController = GetComponent<CarController>();
         myCarTarget = GetComponent<Transform>();
         targetIndex = 1;
         type = PlayerState.Playing;
@@ -44,6 +47,8 @@ public class PlayerStateHandler : MonoBehaviour
     }
 
     private void Spectating() {
+        carController.enabled = false;
+        pod.SetActive(false);
         otherCarTransforms = parentOfOtherCarTransforms.GetComponentsInChildren<Transform>();
         if (Input.GetButtonDown("Fire1")) {
             if (otherCarTransforms.Length <= 1) {
