@@ -11,14 +11,12 @@ public class MachineGunPowerup : BasePowerup{
     public GameObject firePoint;
     
     public GameObject bulletPrefab;
-    private BulletSound bulletSound;
 
     public MachineGunPowerup() {
         type = PowerupType.MachineGun;
     }
 
     public override void StartPowerup() {
-        bulletSound = carTransform.GetComponentInChildren<BulletSound>();
         timer = duration;
         Debug.Log("Started");
         PowerupExecutionOrder = ExcecutePowerup;
@@ -56,8 +54,6 @@ public class MachineGunPowerup : BasePowerup{
         Quaternion bulletRotation = firePoint.transform.rotation * Quaternion.Euler(rotationOffset);
 
         var bullet = Instantiate(bulletPrefab, firePoint.transform.position, bulletRotation);
-
-        bulletSound.PlayAudioClip();
         
         bullet.transform.Rotate(rotationOffset.x, rotationOffset.y, rotationOffset.z);
         ClientBehaviour.instance.FireMachineGun(firePoint.transform.position, bulletRotation);
