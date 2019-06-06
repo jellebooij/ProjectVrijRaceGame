@@ -154,7 +154,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 9
   m_Type: 2
-  m_Color: {r: 0.7735849, g: 0.31733143, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.8083517, b: 0.6745283, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -245,15 +245,24 @@ TrailRenderer:
   m_Time: 0.3
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.1
+    widthMultiplier: 0.3
     widthCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
+        value: 0.78873634
+        inSlope: -0.42723116
+        outSlope: -0.42723116
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.23076923
+      - serializedVersion: 3
+        time: 0.6275212
+        value: 0.6077019
+        inSlope: -0.70925885
+        outSlope: -0.70925885
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
@@ -261,44 +270,44 @@ TrailRenderer:
       - serializedVersion: 3
         time: 1
         value: 0
-        inSlope: -3.4196966
-        outSlope: -3.4196966
+        inSlope: -1.4098591
+        outSlope: -1.4098591
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0.16216218
+        inWeight: 0.2197802
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
-      key1: {r: 1, g: 1, b: 1, a: 0}
-      key2: {r: 0, g: 0, b: 0, a: 0}
+      key0: {r: 0.9811321, g: 0.36816493, b: 0.032395888, a: 1}
+      key1: {r: 1, g: 0.78429806, b: 0.6650944, a: 0.715625}
+      key2: {r: 1, g: 1, b: 1, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
       key5: {r: 0, g: 0, b: 0, a: 0}
       key6: {r: 0, g: 0, b: 0, a: 0}
       key7: {r: 0, g: 0, b: 0, a: 0}
       ctime0: 0
-      ctime1: 65535
-      ctime2: 0
+      ctime1: 24094
+      ctime2: 65535
       ctime3: 0
       ctime4: 0
       ctime5: 0
       ctime6: 0
       ctime7: 0
       atime0: 0
-      atime1: 65535
-      atime2: 0
+      atime1: 17540
+      atime2: 61680
       atime3: 0
       atime4: 0
       atime5: 0
       atime6: 0
       atime7: 0
       m_Mode: 0
-      m_NumColorKeys: 2
-      m_NumAlphaKeys: 2
+      m_NumColorKeys: 3
+      m_NumAlphaKeys: 3
     numCornerVertices: 0
     numCapVertices: 0
     alignment: 0

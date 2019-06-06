@@ -31,17 +31,20 @@ public class MachineGunBullet : MonoBehaviour
     }
 
     private void CheckRayCollision() {
-         if (isOwner)
-         {
+        
             RaycastHit hit;
             if (Physics.Linecast(transform.position, transform.position + transform.forward * speed * Time.deltaTime, out hit, layerMask)) {
                 if (hit.transform.gameObject.GetComponent<NetworkPlayer>() != null) {
-                   
+                    if (isOwner)
+                    {
                         ClientBehaviour.instance.TakeDamage(hit.transform.gameObject.GetComponent<NetworkPlayer>().id, 2f);
                     }
+
+
+                    Destroy(gameObject);
                     Debug.Log("Hit Player");
                 }
-                Destroy(gameObject);
+               
             }
      }
     
