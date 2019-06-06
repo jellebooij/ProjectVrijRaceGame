@@ -43,6 +43,6 @@ public class MachineGunBullet : MonoBehaviour
                 }
                 Destroy(gameObject);
             }
-        }
     }
+    
 }
