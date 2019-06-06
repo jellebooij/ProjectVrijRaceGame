@@ -60,7 +60,7 @@ public class ClientBehaviour : MonoBehaviour
         //relieablePipeline = m_Driver.CreatePipeline(typeof(ReliableSequencedPipelineStage));
         //unrelieablePipeline = m_Driver.CreatePipeline(typeof(UnreliableSequencedPipelineStage));
 
-        var endpoint = NetworkEndPoint.Parse("10.3.27.151", 9000);
+        var endpoint = NetworkEndPoint.Parse("10.3.21.132", 9000);
         m_Connection = m_Driver.Connect(endpoint);
         
         packetHandler = new PacketHandler();
@@ -200,7 +200,7 @@ public class ClientBehaviour : MonoBehaviour
         MachineGunFirePacked packet = new MachineGunFirePacked();
         packet.Read(reader, ref context);
 
-        GameObject obj = Instantiate(machinegunBullet, packet.bulletPosition, packet.bulletRotation);
+        GameObject obj = Instantiate(machinegunBullet, transforms[packet.netID].position + transforms[packet.netID].up, packet.bulletRotation);
         obj.GetComponent<MachineGunBullet>().isOwner = false;
 
     }
@@ -258,7 +258,7 @@ public class ClientBehaviour : MonoBehaviour
 
     void UpdateWorldState(){
 
-        float currentTime = time - 0.5f;
+        float currentTime = time - 0.15f;
 
         for(int i = 0; i < 20; i++){
             

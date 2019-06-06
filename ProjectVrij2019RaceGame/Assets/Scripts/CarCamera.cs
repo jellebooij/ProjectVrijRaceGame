@@ -17,7 +17,7 @@ public class CarCamera : MonoBehaviour
     public Transform car;
     private CarController carController;
 
-    private Vector3 targetPosition;
+    public Vector3 targetPosition;
 
     private Vector3 positionTurnOffset;
 
