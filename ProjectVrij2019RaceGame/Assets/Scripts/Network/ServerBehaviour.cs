@@ -122,6 +122,9 @@ public class ServerBehaviour : MonoBehaviour
                 else if (cmd == NetworkEvent.Type.Disconnect)
                 {
                     Debug.Log("Client disconnected from server");
+                   
+
+
                 }
             }
         }
@@ -141,10 +144,14 @@ public class ServerBehaviour : MonoBehaviour
                 {
 
                     int disId = IDs[i];
-                    m_Connections.Remove(m_Connections[idMap[disId]]);
+                    m_Connections[idMap[disId]] = default(NetworkConnection);
 
                     for (int j = 0; j < m_Connections.Count; j++)
                     {
+
+                        if (j == idMap[disId])
+                            continue;
+
                         using (DataStreamWriter writer = new DataStreamWriter(8, Allocator.Temp))
                         {
 
