@@ -48,9 +48,16 @@ public class MachineGunPowerup : BasePowerup{
         var randomNumberX = Random.Range(-strayFactor, strayFactor);
         var randomNumberY = Random.Range(-strayFactor, strayFactor);
         var randomNumberZ = Random.Range(-strayFactor, strayFactor);
-        var bullet = Instantiate(bulletPrefab, firePoint.transform.position, firePoint.transform.rotation);
+
         Vector3 rotationOffset = Vector3.ClampMagnitude(new Vector3(randomNumberX, randomNumberY, randomNumberZ), strayFactor);
+
+        Quaternion bulletRotation = firePoint.transform.rotation * Quaternion.Euler(rotationOffset);
+
+        var bullet = Instantiate(bulletPrefab, firePoint.transform.position, bulletRotation);
+        
         bullet.transform.Rotate(rotationOffset.x, rotationOffset.y, rotationOffset.z);
+        ClientBehaviour.instance.FireMachineGun(firePoint.transform.position, bulletRotation);
+
         cooldownTimer = 0;
     }
 

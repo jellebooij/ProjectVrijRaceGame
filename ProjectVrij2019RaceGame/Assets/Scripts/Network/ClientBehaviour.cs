@@ -21,6 +21,8 @@ public class ClientBehaviour : MonoBehaviour
     private NetworkPipeline unrelieablePipeline;
     private PacketHandler packetHandler;
     public Dictionary<int, Transform> transforms = new Dictionary<int, Transform>();
+    public GameObject machinegunBullet;
+    public Transform parent;
 
     TransformList packets;
 
@@ -32,7 +34,21 @@ public class ClientBehaviour : MonoBehaviour
 
     float t = 0;
 
-    
+    public static ClientBehaviour instance;
+
+    private void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            DestroyImmediate(this);
+        }
+    }
+
+
     void Start ()
 	{   
 
@@ -53,6 +69,9 @@ public class ClientBehaviour : MonoBehaviour
         packetHandler.RegisterHandler(packetTypes.PlayerConnected, PlayerConnected);
         packetHandler.RegisterHandler(packetTypes.SetupConnection, SetupConnection);
         packetHandler.RegisterHandler(packetTypes.ServerTime, ReceiveTime);
+        packetHandler.RegisterHandler(packetTypes.PlayerDisconected, Disconnect);
+        packetHandler.RegisterHandler(packetTypes.MachineGunFire, MachineGunFire);
+        packetHandler.RegisterHandler(packetTypes.Damage, Damage);
 
         packets = new TransformList();
 
@@ -148,24 +167,66 @@ public class ClientBehaviour : MonoBehaviour
 
     }
 
+    public void FireMachineGun(Vector3 bulletPosition, Quaternion bulletRotation)
+    {
+        MachineGunFirePacked packed = new MachineGunFirePacked(networkId, bulletPosition, bulletRotation);
+        m_Driver.Send(NetworkPipeline.Null, m_Connection, packed.Write());
+    }
+
     void PlayerConnected(DataStreamReader reader, ref DataStreamReader.Context context){
 
         int playerID = reader.ReadInt(ref context);
 
-        Transform p = Instantiate(playerPrefab,Vector3.zero,Quaternion.identity).transform;
+        Transform p = Instantiate(playerPrefab,Vector3.zero,Quaternion.identity,parent).transform;
         transforms.Add(playerID, p);
+        p.GetComponentInChildren<NetworkPlayer>().id = playerID;
 
-        //Debug.Log(playerID + "  " + networkId);
+        Debug.Log(playerID + " connectedTOClient");
+
+    }
+
+    void Disconnect(DataStreamReader reader, ref DataStreamReader.Context context)
+    {
+
+        Debug.Log("playerdisconnectedClient");
+
+        int id = reader.ReadInt(ref context);
+        Destroy(transforms[id].gameObject);
+        transforms.Remove(id);
+    }
+
+    void MachineGunFire(DataStreamReader reader, ref DataStreamReader.Context context)
+    {
+        MachineGunFirePacked packet = new MachineGunFirePacked();
+        packet.Read(reader, ref context);
+
+        GameObject obj = Instantiate(machinegunBullet, transforms[packet.netID].position + transforms[packet.netID].up, packet.bulletRotation);
+        obj.GetComponent<MachineGunBullet>().isOwner = false;
+
+    }
+
+    public void TakeDamage(int damagedPlayerId, float damage)
+    {
+        TakeDamage packed = new TakeDamage(damagedPlayerId, damage);
+        m_Driver.Send(NetworkPipeline.Null, m_Connection, packed.Write());
 
     }
 
     void SetupConnection(DataStreamReader reader, ref DataStreamReader.Context context){
 
-        networkId = reader.ReadInt(ref context);
+        SetupConnection conn = new SetupConnection();
+        conn.Read(reader, ref context);
 
-        for(int i = 0; i < networkId; i++){
-            Transform p = Instantiate(playerPrefab,Vector3.zero,Quaternion.identity).transform;
-            transforms.Add(i, p);
+        networkId = conn.netID;
+
+        for(int i = 0; i < conn.connectedPlayerAmount; i++){
+
+            if (conn.IDs[i] == networkId) 
+                continue;
+
+            Transform p = Instantiate(playerPrefab,Vector3.zero,Quaternion.identity,parent).transform;
+            transforms.Add(conn.IDs[i], p);
+            p.GetComponentInChildren<NetworkPlayer>().id = conn.IDs[i];
         }
 
     }
@@ -180,11 +241,26 @@ public class ClientBehaviour : MonoBehaviour
         
     }
 
+
+    void Damage(DataStreamReader reader, ref DataStreamReader.Context context)
+    {
+
+        BasePacket packet = new TakeDamage();
+        packet.Read(reader, ref context);
+        TakeDamage p = packet as TakeDamage;
+
+        if(p.damagedPlayerID == networkId)
+        {
+            player.gameObject.GetComponent<Health>().health -= p.damage;
+        }
+
+    }
+
     void UpdateWorldState(){
 
-        float currentTime = time - 0.5f;
+        float currentTime = time - 0.15f;
 
-        for(int i = 0; i < 10; i++){
+        for(int i = 0; i < 20; i++){
             
             TransformPair pair = packets.GetPair(i,currentTime);
 
