@@ -13,10 +13,12 @@ public class PlayerStateHandler : MonoBehaviour
     private Health health;
     private CarController carController;
     public GameObject pod;
+    private Rigidbody rb;
 
     // Start is called before the first frame update
     void Start()
     {
+        rb = GetComponent<Rigidbody>();
         carController = GetComponent<CarController>();
         myCarTarget = GetComponent<Transform>();
         targetIndex = 1;
@@ -47,6 +49,9 @@ public class PlayerStateHandler : MonoBehaviour
     }
 
     private void Spectating() {
+        if (!rb.isKinematic) {
+            rb.isKinematic = true;
+        }
         carController.enabled = false;
         pod.SetActive(false);
         otherCarTransforms = parentOfOtherCarTransforms.GetComponentsInChildren<Transform>();

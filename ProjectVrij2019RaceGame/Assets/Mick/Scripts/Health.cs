@@ -21,7 +21,6 @@ public class Health : MonoBehaviour {
             health = maxHealth;
         }
         if (health < 0) {
-            Debug.Log("Death");
         }
     }
 
