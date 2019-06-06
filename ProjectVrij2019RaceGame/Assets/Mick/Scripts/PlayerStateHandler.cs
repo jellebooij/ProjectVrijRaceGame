@@ -48,7 +48,7 @@ public class PlayerStateHandler : MonoBehaviour
             }
 
             carCamera.target = otherCarTransforms[targetIndex];
-            carCamera.gameObject.transform.position = carCamera.target.position;
+            carCamera.gameObject.transform.position = carCamera.targetPosition;
         }
     }
 
