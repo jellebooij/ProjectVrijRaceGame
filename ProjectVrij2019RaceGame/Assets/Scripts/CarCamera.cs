@@ -7,7 +7,10 @@ public class CarCamera : MonoBehaviour
     public LayerMask layerMask;
     public Transform target;
     public float distance;
+    public float targetHeight = 2f;
+
     private float currentDistance;
+
     public float height;
     public float targetPositionSmoothing = 3f;
     public float backToDistanceSmoothness = 5f;
@@ -27,9 +30,11 @@ public class CarCamera : MonoBehaviour
         targetPosition.y = target.position.y + height;
 
         transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * targetPositionSmoothing);
-        positionTurnOffset = Vector3.Lerp(positionTurnOffset, -target.right * 2 * carController.steeringWheelHorizontal, Time.deltaTime * 3f);
-        transform.LookAt(target);
-
+            
+        if (target.GetComponent<CarController>() != null)
+            positionTurnOffset = Vector3.Lerp(positionTurnOffset, -target.right * 2 * carController.steeringWheelHorizontal, Time.deltaTime * 3f);
+            
+        transform.LookAt(target.position + Vector3.up * targetHeight);
     }
 
     private void LateUpdate() {
