@@ -191,6 +191,9 @@ public class ServerBehaviour : MonoBehaviour
 
          for(int j =0; j<m_Connections.Count; j++)
          {
+            if (IDs[j] == packed.netID)
+                continue;
+
             m_Driver.Send(unrelieablePipeline, m_Connections[j], packed.Write());
          }
 
