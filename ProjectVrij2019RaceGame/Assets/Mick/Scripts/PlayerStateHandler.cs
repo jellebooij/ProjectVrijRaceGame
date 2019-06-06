@@ -17,7 +17,6 @@ public class PlayerStateHandler : MonoBehaviour
         myCarTarget = GetComponent<Transform>();
         targetIndex = 1;
         type = PlayerState.Playing;
-        otherCarTransforms = parentOfOtherCarTransforms.GetComponentsInChildren<Transform>();
     }
 
     // Update is called once per frame
@@ -29,6 +28,9 @@ public class PlayerStateHandler : MonoBehaviour
         } else if (Input.GetKeyDown(KeyCode.Alpha2)) {
             type = PlayerState.Playing;
         }
+    }
+
+    private void FixedUpdate() {
         switch (type) {
             case PlayerState.Spectating:
                 Spectating();
@@ -40,7 +42,11 @@ public class PlayerStateHandler : MonoBehaviour
     }
 
     private void Spectating() {
+        otherCarTransforms = parentOfOtherCarTransforms.GetComponentsInChildren<Transform>();
         if (Input.GetButtonDown("Fire1")) {
+            if (otherCarTransforms.Length <= 1) {
+                return;
+            }
             if (targetIndex < otherCarTransforms.Length) {
                 targetIndex += 1;
             } else {
