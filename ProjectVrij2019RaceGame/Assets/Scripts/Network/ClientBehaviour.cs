@@ -200,7 +200,7 @@ public class ClientBehaviour : MonoBehaviour
         MachineGunFirePacked packet = new MachineGunFirePacked();
         packet.Read(reader, ref context);
 
-        GameObject obj = Instantiate(machinegunBullet, transforms[packet.netID].position + transforms[packet.netID].up, packet.bulletRotation);
+        GameObject obj = Instantiate(machinegunBullet, transforms[packet.netID].position + transforms[packet.netID].up * 1.2f, packet.bulletRotation);
         obj.GetComponent<MachineGunBullet>().isOwner = false;
 
     }

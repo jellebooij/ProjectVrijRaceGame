@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 7237372234402849661}
   m_Layer: 0
   m_Name: Car2 (1)
-  m_TagString: Untagged
+  m_TagString: Pod
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
