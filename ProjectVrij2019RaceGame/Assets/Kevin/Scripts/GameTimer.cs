@@ -5,13 +5,13 @@ using TMPro;
 
 public class GameTimer : MonoBehaviour {
 
-    public float gameDuration = 300f; // 5 minutes
+    public float gameDuration = 1f; // 5 minutes
 
     [SerializeField]
     private TextMeshProUGUI timerText;
 
     private void Update() {
-        gameDuration -= Time.deltaTime;
+        gameDuration += Time.deltaTime;
         UpdateLevelTimer(gameDuration);
 
         if (gameDuration < 0) {
