@@ -53,6 +53,9 @@ public class PlayerStateHandler : MonoBehaviour
     }
 
     private void Spectating() {
+
+        carCamera.isSpectating = true;
+
         if (!rb.isKinematic) {
             rb.isKinematic = true;
         }

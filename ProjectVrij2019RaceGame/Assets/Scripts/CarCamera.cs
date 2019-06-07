@@ -21,11 +21,13 @@ public class CarCamera : MonoBehaviour
 
     private Vector3 positionTurnOffset;
 
+    public bool isSpectating;
+
     private void Awake() {
         currentDistance = distance;
         carController = car.GetComponent<CarController>();
     }
-    private void FixedUpdate() {
+    private void UpdateCam() {
         targetPosition = target.position - new Vector3(target.forward.x, 0, target.forward.z).normalized * currentDistance;
         targetPosition.y = target.position.y + height;
 
@@ -39,6 +41,14 @@ public class CarCamera : MonoBehaviour
 
     private void LateUpdate() {
         CheckCollision();
+
+        if (isSpectating)
+            UpdateCam();
+    }
+
+    private void FixedUpdate() {
+        if (!isSpectating)
+            UpdateCam();
     }
 
     private void CheckCollision() {
