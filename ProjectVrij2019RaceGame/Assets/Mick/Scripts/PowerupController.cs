@@ -80,6 +80,7 @@ public class PowerupController : MonoBehaviour {
         shieldPowerup.health = healthReference;
         shieldPowerup.duration = shieldDuration;
         shieldPowerup.shieldGameObject = shield;
+        shieldPowerup.thisGameObject = this.gameObject;
 
         currentAttackPowerup = none;
         currentDefensePowerup = none;

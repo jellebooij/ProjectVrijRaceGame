@@ -73,6 +73,7 @@ public class ClientBehaviour : MonoBehaviour
         packetHandler.RegisterHandler(packetTypes.MachineGunFire, MachineGunFire);
         packetHandler.RegisterHandler(packetTypes.Damage, Damage);
         packetHandler.RegisterHandler(packetTypes.PlayerDied, PlayerDied);
+        packetHandler.RegisterHandler(packetTypes.ActivateShield, PlayerActivateShield);
 
         packets = new TransformList();
 
@@ -178,6 +179,19 @@ public class ClientBehaviour : MonoBehaviour
     {
         PlayerDiedPackage package = new PlayerDiedPackage(networkId);
         m_Driver.Send(NetworkPipeline.Null, m_Connection, package.Write());
+    }
+
+    public void ActivateShield()
+    {
+        ActivateShieldPackage package = new ActivateShieldPackage(networkId);
+        m_Driver.Send(NetworkPipeline.Null, m_Connection, package.Write());
+    }
+
+    void PlayerActivateShield(DataStreamReader reader, ref DataStreamReader.Context context)
+    {
+        PlayerDiedPackage packed = new PlayerDiedPackage();
+        packed.Read(reader, ref context);
+        transforms[packed.netID].gameObject.GetComponent<ShieldSwitch>().EnableShield();
     }
 
     void PlayerDied(DataStreamReader reader, ref DataStreamReader.Context context)

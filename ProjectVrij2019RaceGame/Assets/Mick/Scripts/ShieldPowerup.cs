@@ -9,6 +9,7 @@ public class ShieldPowerup : BasePowerup{
     public Health health;
     public float shieldPoints;
     public GameObject shieldGameObject;
+    public GameObject thisGameObject;
 
     public ShieldPowerup() {
         type = PowerupType.Shield;
@@ -16,6 +17,8 @@ public class ShieldPowerup : BasePowerup{
 
     public override void StartPowerup() {
         timer = duration;
+        thisGameObject.GetComponent<ShieldSwitch>().EnableShield();
+        ClientBehaviour.instance.ActivateShield();
         Debug.Log("Started");
         PowerupExecutionOrder = ExcecutePowerup;
         shieldPoints = health.health; 
@@ -39,7 +42,7 @@ public class ShieldPowerup : BasePowerup{
         
         timer -= Time.deltaTime;
 
-        health.health = shieldPoints;
+        //health.health = shieldPoints;
     }
 
 }
