@@ -42,7 +42,7 @@ public class ShieldPowerup : BasePowerup{
         
         timer -= Time.deltaTime;
 
-        health.health = shieldPoints;
+        //health.health = shieldPoints;
     }
 
 }
