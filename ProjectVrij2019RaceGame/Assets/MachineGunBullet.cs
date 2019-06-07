@@ -40,9 +40,8 @@ public class MachineGunBullet : MonoBehaviour
                         ClientBehaviour.instance.TakeDamage(hit.transform.gameObject.GetComponent<NetworkPlayer>().id, 2f);
                     }
 
-                    if(hit.collider.gameObject.tag == "pod")
-                        Destroy(gameObject);
-
+                if (hit.collider.gameObject.tag != "pod")
+                    Destroy(gameObject);
                 }
                
             }
