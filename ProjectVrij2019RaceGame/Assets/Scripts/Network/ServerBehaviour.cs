@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 using NetworkConnection = Unity.Networking.Transport.NetworkConnection;
 
-public enum packetTypes { PlayerConnected, SetupConnection, UpdatePlayer, RequestTime, ServerTime, PlayerDisconected, MachineGunFire, Damage, Last }
+public enum packetTypes { PlayerConnected, SetupConnection, UpdatePlayer, RequestTime, ServerTime, PlayerDisconected, MachineGunFire, Damage, PlayerDied ,Last }
 
 public class ServerBehaviour : MonoBehaviour
 {   
@@ -43,6 +43,7 @@ public class ServerBehaviour : MonoBehaviour
         packetHandler.RegisterHandler(packetTypes.RequestTime,RespondTime);
         packetHandler.RegisterHandler(packetTypes.MachineGunFire, MachineGunFire);
         packetHandler.RegisterHandler(packetTypes.Damage, Damage);
+        packetHandler.RegisterHandler(packetTypes.PlayerDied, PlayerDied);
 
     }
     
@@ -197,6 +198,20 @@ public class ServerBehaviour : MonoBehaviour
             m_Driver.Send(unrelieablePipeline, m_Connections[j], packed.Write());
          }
 
+    }
+
+    void PlayerDied(DataStreamReader stream, ref DataStreamReader.Context context)
+    {
+        PlayerDiedPackage packed = new PlayerDiedPackage();
+        packed.Read(stream, ref context);
+
+        for (int j = 0; j < m_Connections.Count; j++)
+        {
+            if (IDs[j] == packed.netID)
+                continue;
+
+            m_Driver.Send(unrelieablePipeline, m_Connections[j], packed.Write());
+        }
     }
 
     void Damage(DataStreamReader stream, ref DataStreamReader.Context context)

@@ -72,6 +72,7 @@ public class ClientBehaviour : MonoBehaviour
         packetHandler.RegisterHandler(packetTypes.PlayerDisconected, Disconnect);
         packetHandler.RegisterHandler(packetTypes.MachineGunFire, MachineGunFire);
         packetHandler.RegisterHandler(packetTypes.Damage, Damage);
+        packetHandler.RegisterHandler(packetTypes.PlayerDied, PlayerDied);
 
         packets = new TransformList();
 
@@ -171,6 +172,19 @@ public class ClientBehaviour : MonoBehaviour
     {
         MachineGunFirePacked packed = new MachineGunFirePacked(networkId, bulletPosition, bulletRotation);
         m_Driver.Send(NetworkPipeline.Null, m_Connection, packed.Write());
+    }
+
+    public void Die()
+    {
+        PlayerDiedPackage package = new PlayerDiedPackage(networkId);
+        m_Driver.Send(NetworkPipeline.Null, m_Connection, package.Write());
+    }
+
+    void PlayerDied(DataStreamReader reader, ref DataStreamReader.Context context)
+    {
+        PlayerDiedPackage packed = new PlayerDiedPackage();
+        packed.Read(reader, ref context);
+        transforms[packed.netID].gameObject.SetActive(false);
     }
 
     void PlayerConnected(DataStreamReader reader, ref DataStreamReader.Context context){

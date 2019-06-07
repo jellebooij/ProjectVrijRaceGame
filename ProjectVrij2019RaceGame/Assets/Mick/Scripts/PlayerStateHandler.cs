@@ -34,8 +34,11 @@ public class PlayerStateHandler : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1) || health.health <= 0) {
+
             Debug.Log("Spectating");
             type = PlayerState.Spectating;
+            ClientBehaviour.instance.Die();
+
         } else if (Input.GetKeyDown(KeyCode.Alpha2)) {
             type = PlayerState.Playing;
         }
