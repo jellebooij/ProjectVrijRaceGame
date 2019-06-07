@@ -4811,7 +4811,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 652393376}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 386.26, y: 0, z: 198.09}
+  m_LocalPosition: {x: 386.26, y: 39.1, z: 198.09}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 750610011}
@@ -10663,7 +10663,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1410937616}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 367, y: 0, z: 197}
+  m_LocalPosition: {x: 367, y: 39.1, z: 197}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 750610011}
@@ -13958,6 +13958,7 @@ MonoBehaviour:
   otherCarTransforms: []
   parentOfOtherCarTransforms: {fileID: 750610011}
   pod: {fileID: 328095341}
+  staticWatchingTime: 10
 --- !u!1 &1923517363
 GameObject:
   m_ObjectHideFlags: 0

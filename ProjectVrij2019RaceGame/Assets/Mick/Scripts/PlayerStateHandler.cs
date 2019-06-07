@@ -14,10 +14,14 @@ public class PlayerStateHandler : MonoBehaviour
     private CarController carController;
     public GameObject pod;
     private Rigidbody rb;
+    private float watchingPodThisLong;
+    public float staticWatchingTime = 10f;
+    private bool isSpectatingAutomatically;
 
     // Start is called before the first frame update
     void Start()
     {
+        isSpectatingAutomatically = true;
         rb = GetComponent<Rigidbody>();
         carController = GetComponent<CarController>();
         myCarTarget = GetComponent<Transform>();
@@ -54,20 +58,33 @@ public class PlayerStateHandler : MonoBehaviour
         }
         carController.enabled = false;
         pod.SetActive(false);
+
+        if (isSpectatingAutomatically) {
+            watchingPodThisLong += Time.deltaTime;
+            if (watchingPodThisLong > staticWatchingTime) {
+                SwitchSpectatorToPlayer();
+                watchingPodThisLong = 0;
+            }
+        }
         otherCarTransforms = parentOfOtherCarTransforms.GetComponentsInChildren<Transform>();
         if (Input.GetButtonDown("Fire1")) {
-            if (otherCarTransforms.Length <= 1) {
-                return;
-            }
-            if (targetIndex < otherCarTransforms.Length) {
-                targetIndex += 1;
-            } else {
-                targetIndex = 1;
-            }
-
-            carCamera.target = otherCarTransforms[targetIndex];
-            carCamera.gameObject.transform.position = carCamera.targetPosition;
+            isSpectatingAutomatically = false;
+            SwitchSpectatorToPlayer();
         }
+    }
+
+    private void SwitchSpectatorToPlayer() {
+        if (otherCarTransforms.Length <= 1) {
+            return;
+        }
+        if (targetIndex < otherCarTransforms.Length) {
+            targetIndex += 1;
+        } else {
+            targetIndex = 1;
+        }
+
+        carCamera.target = otherCarTransforms[targetIndex];
+        carCamera.gameObject.transform.position = carCamera.targetPosition;
     }
 
     private void Playing() {
