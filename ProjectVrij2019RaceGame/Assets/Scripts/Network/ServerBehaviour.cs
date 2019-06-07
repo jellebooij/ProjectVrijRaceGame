@@ -9,7 +9,8 @@ using System.Collections.Generic;
 
 using NetworkConnection = Unity.Networking.Transport.NetworkConnection;
 
-public enum packetTypes { PlayerConnected, SetupConnection, UpdatePlayer, RequestTime, ServerTime, PlayerDisconected, MachineGunFire, Damage, PlayerDied ,Last }
+public enum packetTypes { PlayerConnected, SetupConnection, UpdatePlayer, RequestTime, ServerTime,
+    PlayerDisconected, MachineGunFire, Damage, PlayerDied, ActivateShield, Last }
 
 public class ServerBehaviour : MonoBehaviour
 {   
@@ -44,6 +45,7 @@ public class ServerBehaviour : MonoBehaviour
         packetHandler.RegisterHandler(packetTypes.MachineGunFire, MachineGunFire);
         packetHandler.RegisterHandler(packetTypes.Damage, Damage);
         packetHandler.RegisterHandler(packetTypes.PlayerDied, PlayerDied);
+        packetHandler.RegisterHandler(packetTypes.ActivateShield, ActivateShield);
 
     }
     
@@ -183,6 +185,24 @@ public class ServerBehaviour : MonoBehaviour
         m_Driver.Send(unrelieablePipeline,m_Connections[packet.netID], writer);
 
     }
+
+    void ActivateShield(DataStreamReader stream, ref DataStreamReader.Context context)
+    {
+
+        ActivateShieldPackage packed = new ActivateShieldPackage();
+        packed.Read(stream, ref context);
+
+        for (int j = 0; j < m_Connections.Count; j++)
+        {
+            if (IDs[j] == packed.netID)
+                continue;
+
+            m_Driver.Send(unrelieablePipeline, m_Connections[j], packed.Write());
+        }
+
+    }
+
+
 
     void MachineGunFire(DataStreamReader stream, ref DataStreamReader.Context context)
     {

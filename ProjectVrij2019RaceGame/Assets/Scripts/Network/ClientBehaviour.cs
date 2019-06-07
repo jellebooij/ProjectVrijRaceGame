@@ -180,6 +180,19 @@ public class ClientBehaviour : MonoBehaviour
         m_Driver.Send(NetworkPipeline.Null, m_Connection, package.Write());
     }
 
+    public void ActivateShield()
+    {
+        ActivateShieldPackage package = new ActivateShieldPackage(networkId);
+        m_Driver.Send(NetworkPipeline.Null, m_Connection, package.Write());
+    }
+
+    void PlayerActivateShield()
+    {
+        PlayerDiedPackage packed = new PlayerDiedPackage();
+        packed.Read(reader, ref context);
+        transforms[packed.netID].gameObject.GetComponent<ShieldSwitch>().enableSield();
+    }
+
     void PlayerDied(DataStreamReader reader, ref DataStreamReader.Context context)
     {
         PlayerDiedPackage packed = new PlayerDiedPackage();
