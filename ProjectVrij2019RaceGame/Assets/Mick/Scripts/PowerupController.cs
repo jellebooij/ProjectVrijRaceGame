@@ -17,7 +17,7 @@ public class PowerupController : MonoBehaviour {
 
     public LayerMask layerMask;
 
-    public float shield;
+    public float shieldLength;
     public GameObject laserFx;
 
     public GameObject bulletPrefab;
@@ -35,6 +35,7 @@ public class PowerupController : MonoBehaviour {
     public float lockRectangleFractionalHeight = 0.2f;
 
     public float shieldDuration = 5f;
+    public GameObject shield;
 
     private void Awake() {
         healthReference = GetComponent<Health>();
@@ -78,6 +79,7 @@ public class PowerupController : MonoBehaviour {
 
         shieldPowerup.health = healthReference;
         shieldPowerup.duration = shieldDuration;
+        shieldPowerup.shieldGameObject = shield;
 
         currentAttackPowerup = none;
         currentDefensePowerup = none;

@@ -8,6 +8,7 @@ public class ShieldPowerup : BasePowerup{
     public GameObject shield;
     public Health health;
     public float shieldPoints;
+    public GameObject shieldGameObject;
 
     public ShieldPowerup() {
         type = PowerupType.Shield;
@@ -25,13 +26,17 @@ public class ShieldPowerup : BasePowerup{
         ShieldPowerupExecution();
     }
     public override void StopPowerup() {
-         PowerupExecutionOrder = null;
+        shieldGameObject.SetActive(false);
+        PowerupExecutionOrder = null;
     }
 
     private void ShieldPowerupExecution() {
         if (timer <= 0) {
             PowerupExecutionOrder = StopPowerup;
         }
+
+        shieldGameObject.SetActive(true);
+        
         timer -= Time.deltaTime;
 
         health.health = shieldPoints;
