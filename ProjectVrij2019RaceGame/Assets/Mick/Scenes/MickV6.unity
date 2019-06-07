@@ -13137,6 +13137,26 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1803579508}
   m_Mesh: {fileID: -463343683984849232, guid: 6e52317acec857d49a4494bfb6621fe6, type: 3}
+--- !u!1 &1826211513 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1518730618, guid: fd84fbef1a6fadf44a0dba34de2d1384,
+    type: 3}
+  m_PrefabInstance: {fileID: 1889448897}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1826211518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1826211513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf3c11d0bd6038a47886f77310cbbe3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isOn: 0
+  time: 0
 --- !u!1 &1833322036
 GameObject:
   m_ObjectHideFlags: 0
@@ -13400,35 +13420,20 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 1041764752}
-    - target: {fileID: 318649884566014163, guid: fd84fbef1a6fadf44a0dba34de2d1384,
-        type: 3}
-      propertyPath: boostMultiplier
-      value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 318649884566014163, guid: fd84fbef1a6fadf44a0dba34de2d1384,
-        type: 3}
-      propertyPath: boostRegenerationSpeed
-      value: 35
-      objectReference: {fileID: 0}
-    - target: {fileID: 318649884566014163, guid: fd84fbef1a6fadf44a0dba34de2d1384,
-        type: 3}
-      propertyPath: boostFallOffSpeed
-      value: 35
-      objectReference: {fileID: 0}
     - target: {fileID: 318649884566014161, guid: fd84fbef1a6fadf44a0dba34de2d1384,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 326.64
+      value: 330.072
       objectReference: {fileID: 0}
     - target: {fileID: 318649884566014161, guid: fd84fbef1a6fadf44a0dba34de2d1384,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 9.35
+      value: 9.053
       objectReference: {fileID: 0}
     - target: {fileID: 318649884566014161, guid: fd84fbef1a6fadf44a0dba34de2d1384,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 182
+      value: 182.785
       objectReference: {fileID: 0}
     - target: {fileID: 318649884566014161, guid: fd84fbef1a6fadf44a0dba34de2d1384,
         type: 3}
@@ -13478,6 +13483,10 @@ PrefabInstance:
       propertyPath: parentOfOtherCarTransforms
       value: 
       objectReference: {fileID: 750610011}
+    - target: {fileID: 1518730618, guid: fd84fbef1a6fadf44a0dba34de2d1384, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd84fbef1a6fadf44a0dba34de2d1384, type: 3}
 --- !u!1 &1897585516
