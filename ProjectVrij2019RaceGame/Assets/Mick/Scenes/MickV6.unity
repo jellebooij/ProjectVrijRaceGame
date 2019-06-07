@@ -13400,6 +13400,21 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 1041764752}
+    - target: {fileID: 318649884566014163, guid: fd84fbef1a6fadf44a0dba34de2d1384,
+        type: 3}
+      propertyPath: boostMultiplier
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 318649884566014163, guid: fd84fbef1a6fadf44a0dba34de2d1384,
+        type: 3}
+      propertyPath: boostRegenerationSpeed
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 318649884566014163, guid: fd84fbef1a6fadf44a0dba34de2d1384,
+        type: 3}
+      propertyPath: boostFallOffSpeed
+      value: 35
+      objectReference: {fileID: 0}
     - target: {fileID: 318649884566014161, guid: fd84fbef1a6fadf44a0dba34de2d1384,
         type: 3}
       propertyPath: m_LocalPosition.x

@@ -494,9 +494,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentBoostLevel: 0
   maxBoostLevel: 100
-  boostRegenerationSpeed: 20
-  boostFallOffSpeed: 30
-  boostMultiplier: 2
+  boostRegenerationSpeed: 35
+  boostFallOffSpeed: 35
+  boostMultiplier: 2.5
   carController: {fileID: 318649884566014165}
 --- !u!114 &318649884566014165
 MonoBehaviour:
