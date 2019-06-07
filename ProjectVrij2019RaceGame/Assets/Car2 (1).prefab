@@ -39,7 +39,6 @@ GameObject:
   - component: {fileID: 3295567403861434071}
   - component: {fileID: 2051613350835969027}
   - component: {fileID: 5574970052686829603}
-  - component: {fileID: 7903798258571334097}
   m_Layer: 0
   m_Name: Shield
   m_TagString: Untagged
@@ -119,20 +118,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7903798258571334097
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3114246326965441348}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf3c11d0bd6038a47886f77310cbbe3d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isOn: 0
-  time: 0
 --- !u!1 &7548061939022831209
 GameObject:
   m_ObjectHideFlags: 0
@@ -145,6 +130,7 @@ GameObject:
   - component: {fileID: 7548061939022831202}
   - component: {fileID: 7548061939022831213}
   - component: {fileID: 7237372234402849661}
+  - component: {fileID: 7342261411268804705}
   m_Layer: 0
   m_Name: Car2 (1)
   m_TagString: Pod
@@ -233,6 +219,21 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.14, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7342261411268804705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7548061939022831209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf3c11d0bd6038a47886f77310cbbe3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isOn: 0
+  shield: {fileID: 3114246326965441348}
+  time: 0
 --- !u!1 &7548061940335208831
 GameObject:
   m_ObjectHideFlags: 0

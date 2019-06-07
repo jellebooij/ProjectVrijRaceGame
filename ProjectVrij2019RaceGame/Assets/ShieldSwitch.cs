@@ -6,7 +6,7 @@ public class ShieldSwitch : MonoBehaviour
 {
 
     public bool isOn;
-    private GameObject shield;
+    public GameObject shield;
     public float time;
     // Start is called before the first frame update
     void Start()
