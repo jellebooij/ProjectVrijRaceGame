@@ -16,6 +16,7 @@ public class ShieldPowerup : BasePowerup{
 
     public override void StartPowerup() {
         timer = duration;
+        shieldGameObject.GetComponent<ShieldSwitch>().EnableShield();
         Debug.Log("Started");
         PowerupExecutionOrder = ExcecutePowerup;
         shieldPoints = health.health; 
