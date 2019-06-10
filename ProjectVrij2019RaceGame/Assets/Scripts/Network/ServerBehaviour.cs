@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using NetworkConnection = Unity.Networking.Transport.NetworkConnection;
 
 public enum packetTypes { PlayerConnected, SetupConnection, UpdatePlayer, RequestTime, ServerTime,
-    PlayerDisconected, MachineGunFire, Damage, PlayerDied, ActivateShield, Last }
+    PlayerDisconected, MachineGunFire, Damage, PlayerDied, ActivateShield, AssignPostion, Last }
 
 public class ServerBehaviour : MonoBehaviour
 {   
@@ -21,6 +21,9 @@ public class ServerBehaviour : MonoBehaviour
     private NetworkPipeline relieablePipeline;
     private NetworkPipeline unrelieablePipeline;
     private PacketHandler packetHandler;
+    public Transform[] spawns;
+
+    int spawnIndex = 0;
 
     private List<int> IDs = new List<int>();
     private Dictionary<int, float> timeSinceLastPacked = new Dictionary<int, float>();
@@ -84,6 +87,12 @@ public class ServerBehaviour : MonoBehaviour
 
             Debug.Log(id);
             idMap.Add(id, m_Connections.Count - 1);
+            AssignPosition(id, spawns[spawnIndex]);
+
+            spawnIndex++;
+
+            if (spawnIndex == spawns.Length)
+                spawnIndex = 0;
 
 
             for (int i = 0; i < m_Connections.Count; i++){
@@ -182,8 +191,18 @@ public class ServerBehaviour : MonoBehaviour
         ServerTimePacket returnPacket = new ServerTimePacket(time, packet.localTime);
         var writer = returnPacket.Write();
 
-        m_Driver.Send(unrelieablePipeline,m_Connections[packet.netID], writer);
+        m_Driver.Send(unrelieablePipeline,m_Connections[idMap[packet.netID]], writer);
 
+    }
+
+    void AssignPosition(int carID, Transform position)
+    {
+
+        if (idMap.ContainsKey(carID))
+        {
+            AssignPositionPacked packed = new AssignPositionPacked(position.position, position.rotation);
+            m_Driver.Send( unrelieablePipeline, m_Connections[idMap[carID]], packed.Write() );
+        }
     }
 
     void ActivateShield(DataStreamReader stream, ref DataStreamReader.Context context)
@@ -260,6 +279,7 @@ public class ServerBehaviour : MonoBehaviour
         timeSinceLastPacked[(packet as CarTransformPacked).netID] = 0;
 
         SendPosition(packet as CarTransformPacked);
+        Debug.Log("got position from  " + (packet as CarTransformPacked).netID);
                                 
     }
 
