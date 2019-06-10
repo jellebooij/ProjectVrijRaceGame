@@ -363,10 +363,10 @@ GameObject:
   - component: {fileID: 318649884566014162}
   - component: {fileID: 318649884566014163}
   - component: {fileID: 318649884566014165}
-  - component: {fileID: 318649884566014164}
   - component: {fileID: 1759984961}
   - component: {fileID: 1915206066}
   - component: {fileID: 1052535514640812710}
+  - component: {fileID: 7601401071761869587}
   m_Layer: 0
   m_Name: Car2
   m_TagString: Pod
@@ -527,45 +527,6 @@ MonoBehaviour:
   boostSpeed: 0
   rayHeight: 1
   steeringWheelHorizontal: 0
---- !u!114 &318649884566014164
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 318649884566014171}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1b9c0f7b7ad38e428a165cacb7651e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthReference: {fileID: 0}
-  currentAttackPowerup: {fileID: 0}
-  currentDefensePowerup: {fileID: 0}
-  laserDuration: 10
-  laserDistance: 50
-  laserOriginOffset: {x: 0, y: 0, z: 0}
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  shieldLength: 0
-  laserFx: {fileID: 318649884864397261}
-  bulletPrefab: {fileID: 7442395122292656413, guid: f760c887110a8e14d974f6e1ae399967,
-    type: 3}
-  machineGunDuration: 10000
-  machineGunStrayFactor: 2
-  MachineGunFireRate: 0.05
-  MachineGunFirePoint: {fileID: 315775099}
-  homingMissilePowerupDuration: 10
-  homingMissileOriginOffset: {x: 0, y: 1, z: 0}
-  homingMissilePrefab: {fileID: 2497808339377303601, guid: 75089e249a6861443a3c44c555360dd5,
-    type: 3}
-  cam: {fileID: 0}
-  missileLockTime: 1
-  missileLockCenterRectangleFractional: {x: 0.3, y: 0.4}
-  lockRectangleFractionalHeight: 0.2
-  shieldDuration: 5
-  shield: {fileID: 1518730618}
 --- !u!114 &1759984961
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -613,6 +574,21 @@ MonoBehaviour:
   isOn: 0
   shield: {fileID: 1518730618}
   time: 0
+--- !u!114 &7601401071761869587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 318649884566014171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35e1f2d378590f24db40f88e862a99f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thisCarController: {fileID: 0}
+  healthReference: {fileID: 0}
+  damageMultiplier: 1
 --- !u!1 &318649884864397261
 GameObject:
   m_ObjectHideFlags: 0
@@ -767,6 +743,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thisCarController: {fileID: 318649884566014165}
   healthReference: {fileID: 318649884566014162}
+  damageMultiplier: 1
 --- !u!1001 &106078332
 PrefabInstance:
   m_ObjectHideFlags: 0
