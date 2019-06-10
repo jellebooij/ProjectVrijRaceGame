@@ -28,8 +28,9 @@ public class PlayerStateHandler : MonoBehaviour
         carController = GetComponent<CarController>();
         myCarTarget = GetComponent<Transform>();
         targetIndex = 1;
-        type = PlayerState.Spectating;
+        type = PlayerState.Spectating;   
         health = GetComponent<Health>();
+        SwitchSpectatorToPlayer();
     }
 
     // Update is called once per frame
