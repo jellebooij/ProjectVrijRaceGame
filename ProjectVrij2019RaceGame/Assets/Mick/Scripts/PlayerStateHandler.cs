@@ -9,7 +9,7 @@ public class PlayerStateHandler : MonoBehaviour
     private int targetIndex;
     public List<Transform> otherCarTransforms = new List<Transform>();
     public Transform parentOfOtherCarTransforms;
-    public PlayerState type { get; protected set; }
+    public PlayerState type { get; set; }
     private Health health;
     private CarController carController;
     public GameObject pod;
