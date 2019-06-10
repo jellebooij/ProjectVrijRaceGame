@@ -74,6 +74,7 @@ public class ClientBehaviour : MonoBehaviour
         packetHandler.RegisterHandler(packetTypes.Damage, Damage);
         packetHandler.RegisterHandler(packetTypes.PlayerDied, PlayerDied);
         packetHandler.RegisterHandler(packetTypes.ActivateShield, PlayerActivateShield);
+        packetHandler.RegisterHandler(packetTypes.AssignPostion, AssignPosition);
 
         packets = new TransformList();
 
@@ -265,6 +266,7 @@ public class ClientBehaviour : MonoBehaviour
         BasePacket packet = new CarTransformPacked();
         packet.Read(reader, ref context);
         CarTransformPacked p = packet as CarTransformPacked;
+        Debug.Log("got position from CLIENT " + (packet as CarTransformPacked).netID);
 
         packets.Add(p.netID, p);
         
@@ -284,6 +286,19 @@ public class ClientBehaviour : MonoBehaviour
         }
 
     }
+
+    void AssignPosition(DataStreamReader reader, ref DataStreamReader.Context context)
+    {
+
+        AssignPositionPacked packed = new AssignPositionPacked();
+        packed.Read(reader, ref context);
+
+        player.transform.position = packed.postition;
+        player.transform.rotation = packed.rotation;
+
+    }
+
+
 
     void UpdateWorldState(){
 
