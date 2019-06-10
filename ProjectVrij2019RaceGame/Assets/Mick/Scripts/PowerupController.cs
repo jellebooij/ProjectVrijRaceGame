@@ -145,7 +145,7 @@ public class PowerupController : MonoBehaviour {
         }
 
         if (other.tag == "Health") {
-            healthReference.health = 100;
+            ClientBehaviour.instance.TakeDamage(transform.gameObject.GetComponent<NetworkPlayer>().id, -50);
             Destroy(other.gameObject);
         }
     }
