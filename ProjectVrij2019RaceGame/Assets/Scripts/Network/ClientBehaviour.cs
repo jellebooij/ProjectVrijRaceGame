@@ -74,6 +74,7 @@ public class ClientBehaviour : MonoBehaviour
         packetHandler.RegisterHandler(packetTypes.Damage, Damage);
         packetHandler.RegisterHandler(packetTypes.PlayerDied, PlayerDied);
         packetHandler.RegisterHandler(packetTypes.ActivateShield, PlayerActivateShield);
+        packetHandler.RegisterHandler(packetTypes.AssignPostion, AssignPosition);
 
         packets = new TransformList();
 
