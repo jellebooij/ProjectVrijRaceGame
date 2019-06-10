@@ -40,9 +40,10 @@ public class MachineGunBullet : MonoBehaviour
                         ClientBehaviour.instance.TakeDamage(hit.transform.gameObject.GetComponent<NetworkPlayer>().id, 2f);
                     }
 
-                    Destroy(gameObject);
+                    
                 }
-               
+
+                Destroy(gameObject);
             }
      }
     
