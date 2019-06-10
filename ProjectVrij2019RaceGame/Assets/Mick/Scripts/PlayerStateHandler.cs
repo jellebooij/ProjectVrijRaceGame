@@ -28,7 +28,7 @@ public class PlayerStateHandler : MonoBehaviour
         carController = GetComponent<CarController>();
         myCarTarget = GetComponent<Transform>();
         targetIndex = 1;
-        type = PlayerState.Playing;
+        type = PlayerState.Spectating;
         health = GetComponent<Health>();
     }
 
