@@ -131,6 +131,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   isOwner: 1
+  Shot: {fileID: 2105938129968587185, guid: 561909d11a4f98b4ea6c1d630b072cdf, type: 3}
 --- !u!65 &1470812275430772754
 BoxCollider:
   m_ObjectHideFlags: 0
