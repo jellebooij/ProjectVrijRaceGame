@@ -17,10 +17,12 @@ public class PlayerStateHandler : MonoBehaviour
     private float watchingPodThisLong;
     public float staticWatchingTime = 10f;
     private bool isSpectatingAutomatically;
+    private PowerupController powerupController;
 
     // Start is called before the first frame update
     void Start()
     {
+        powerupController = GetComponent<PowerupController>();
         isSpectatingAutomatically = true;
         rb = GetComponent<Rigidbody>();
         carController = GetComponent<CarController>();
@@ -62,6 +64,7 @@ public class PlayerStateHandler : MonoBehaviour
         if (!rb.isKinematic) {
             rb.isKinematic = true;
         }
+        powerupController.enabled = false;
         carController.enabled = false;
         pod.SetActive(false);
 
