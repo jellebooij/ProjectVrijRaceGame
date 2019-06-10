@@ -23,13 +23,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 315775099}
-  m_LocalRotation: {x: 0, y: 0.99913627, z: -0.04155307, w: 0}
+  m_LocalRotation: {x: 0, y: 0.99993664, z: -0.011257162, w: 0}
   m_LocalPosition: {x: -0.01400701, y: 0.05509465, z: -0.27408054}
   m_LocalScale: {x: 0.8755055, y: 0.45710045, z: 1.3106502}
   m_Children: []
   m_Father: {fileID: 1690619202572172869}
   m_RootOrder: 13
-  m_LocalEulerAnglesHint: {x: 4.763, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 1.29, y: 180, z: 0}
 --- !u!1 &1518730618
 GameObject:
   m_ObjectHideFlags: 0
@@ -615,9 +615,9 @@ MonoBehaviour:
   laserFx: {fileID: 0}
   bulletPrefab: {fileID: 7442395122292656413, guid: f760c887110a8e14d974f6e1ae399967,
     type: 3}
-  machineGunDuration: 5
-  machineGunStrayFactor: 5
-  MachineGunFireRate: 0.1
+  machineGunDuration: 1000000
+  machineGunStrayFactor: 1.04
+  MachineGunFireRate: 0.03
   MachineGunFirePoint: {fileID: 315775099}
   homingMissilePowerupDuration: 10
   homingMissileOriginOffset: {x: 0, y: 0, z: 0}
