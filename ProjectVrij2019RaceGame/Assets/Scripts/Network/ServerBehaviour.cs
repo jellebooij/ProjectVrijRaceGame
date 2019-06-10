@@ -16,15 +16,18 @@ public class ServerBehaviour : MonoBehaviour
 {   
     public UdpNetworkDriver m_Driver;
     public float time;
-    private List<NetworkConnection> m_Connections;
+    private Dictionary<int, NetworkConnection> m_Connections ;
     private Dictionary<int, int> idMap = new Dictionary<int, int>();
     private NetworkPipeline relieablePipeline;
     private NetworkPipeline unrelieablePipeline;
     private PacketHandler packetHandler;
     public Transform[] spawns;
+    private List<int> alivePlayersID = new List<int>();
 
     public int connectedPlaters;
     public int alivePlayers;
+
+    float t = 0;
 
     int spawnIndex = 0;
 
@@ -68,8 +71,15 @@ public class ServerBehaviour : MonoBehaviour
         CheckDisconnect();
         m_Driver.ScheduleUpdate().Complete();
 
-        if (connectedPlaters >= 2 && alivePlayers < 2)
+        if (connectedPlaters >= 2 && alivePlayersID.Count < 2)
+            t += Time.deltaTime;
+        
+        if(t > 5)
+        {
+            t = 0;
             StartGame();
+        }
+        
         
         // CleanUpConnections
         for (int i = 0; i < m_Connections.Count; i++)
@@ -138,6 +148,27 @@ public class ServerBehaviour : MonoBehaviour
                     Debug.Log("Client disconnected from server");
                     connectedPlaters--;
 
+                    int disconnectedId = 0;
+                    bool found = false;
+
+                    foreach(KeyValuePair<int,int> pair in idMap)
+                    {
+                        if(pair.Value == i)
+                        {
+                            found = true;
+                            disconnectedId = pair.Key;
+                        }
+                    }
+
+                    if (alivePlayersID.Contains(disconnectedId) && found)
+                    {
+                        alivePlayersID.Remove(disconnectedId);
+                    }
+
+                    idMap.Remove(disconnectedId);
+                    IDs.Remove(disconnectedId);
+                    timeSinceLastPacked.Remove(disconnectedId);
+
 
                 }
             }
@@ -149,11 +180,13 @@ public class ServerBehaviour : MonoBehaviour
     {
 
         alivePlayers = connectedPlaters;
+        alivePlayersID.Clear();
 
-        for (int i = 0; i < connectedPlaters; i++)
+        for (int i = 0; i < m_Connections.Count; i++)
         {
 
             AssignPosition(IDs[i], spawns[spawnIndex]);
+            alivePlayersID.Add(IDs[i]);
 
             spawnIndex++;
 
@@ -176,7 +209,7 @@ public class ServerBehaviour : MonoBehaviour
                 {
 
                     int disId = IDs[i];
-                    m_Connections[idMap[disId]] = default(NetworkConnection);
+                    m_Connections.RemoveAt(idMap[disId]);
 
                     for (int j = 0; j < m_Connections.Count; j++)
                     {
@@ -196,8 +229,15 @@ public class ServerBehaviour : MonoBehaviour
                     }
 
                     connectedPlaters--;
+                    alivePlayers--;
                     IDs.Remove(disId);
                     idMap.Remove(disId);
+
+                    if (alivePlayersID.Contains(disId))
+                    {
+                        alivePlayersID.Remove(disId);
+                    }
+
                     timeSinceLastPacked.Remove(disId);
                 }
             }
@@ -212,7 +252,7 @@ public class ServerBehaviour : MonoBehaviour
         ServerTimePacket returnPacket = new ServerTimePacket(time, packet.localTime);
         var writer = returnPacket.Write();
 
-        m_Driver.Send(unrelieablePipeline,m_Connections[idMap[packet.netID]], writer);
+        m_Driver.Send(unrelieablePipeline, m_Connections[idMap[packet.netID]], writer);
 
     }
 
@@ -265,6 +305,11 @@ public class ServerBehaviour : MonoBehaviour
         PlayerDiedPackage packed = new PlayerDiedPackage();
         packed.Read(stream, ref context);
         alivePlayers--;
+
+        if (alivePlayersID.Contains(packed.netID))
+        {
+            alivePlayersID.Remove(packed.netID);
+        }
 
         for (int j = 0; j < m_Connections.Count; j++)
         {
