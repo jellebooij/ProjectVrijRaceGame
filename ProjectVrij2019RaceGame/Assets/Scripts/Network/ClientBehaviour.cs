@@ -200,6 +200,7 @@ public class ClientBehaviour : MonoBehaviour
         PlayerDiedPackage packed = new PlayerDiedPackage();
         packed.Read(reader, ref context);
         transforms[packed.netID].gameObject.SetActive(false);
+        player.GetComponent<Health>().health = 100;
     }
 
     void PlayerConnected(DataStreamReader reader, ref DataStreamReader.Context context){
@@ -294,8 +295,6 @@ public class ClientBehaviour : MonoBehaviour
 
         player.transform.position = packed.postition;
         player.transform.rotation = packed.rotation;
-
-        player.GetComponent<Health>().health = 100;
 
         foreach(KeyValuePair<int,Transform> key in transforms)
         {
