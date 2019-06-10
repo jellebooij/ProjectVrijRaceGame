@@ -210,6 +210,8 @@ public class ClientBehaviour : MonoBehaviour
         transforms.Add(playerID, p);
         p.GetComponentInChildren<NetworkPlayer>().id = playerID;
 
+        player.GetComponent<PlayerStateHandler>().type = PlayerState.Spectating;
+
         Debug.Log(playerID + " connectedTOClient");
 
     }
