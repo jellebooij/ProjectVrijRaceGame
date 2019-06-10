@@ -132,6 +132,7 @@ public class ClientBehaviour : MonoBehaviour
             t = 0;
             SendPosition();
             RequestTime();
+            Debug.Log("sendPos");
         }
     }
 
