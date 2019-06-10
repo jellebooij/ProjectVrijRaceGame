@@ -180,6 +180,7 @@ public class ClientBehaviour : MonoBehaviour
     {
         PlayerDiedPackage package = new PlayerDiedPackage(networkId);
         m_Driver.Send(NetworkPipeline.Null, m_Connection, package.Write());
+        player.GetComponent<Health>().health = 100;
     }
 
     public void ActivateShield()
@@ -200,6 +201,7 @@ public class ClientBehaviour : MonoBehaviour
         PlayerDiedPackage packed = new PlayerDiedPackage();
         packed.Read(reader, ref context);
         transforms[packed.netID].gameObject.SetActive(false);
+
     }
 
     void PlayerConnected(DataStreamReader reader, ref DataStreamReader.Context context){
@@ -294,8 +296,6 @@ public class ClientBehaviour : MonoBehaviour
 
         player.transform.position = packed.postition;
         player.transform.rotation = packed.rotation;
-
-        player.GetComponent<Health>().health = 100;
 
         foreach(KeyValuePair<int,Transform> key in transforms)
         {
