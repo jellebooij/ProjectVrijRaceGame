@@ -133,7 +133,6 @@ public class ClientBehaviour : MonoBehaviour
             t = 0;
             SendPosition();
             RequestTime();
-            Debug.Log("sendPos");
         }
     }
 
@@ -295,6 +294,8 @@ public class ClientBehaviour : MonoBehaviour
 
         player.transform.position = packed.postition;
         player.transform.rotation = packed.rotation;
+
+        player.GetComponent<PlayerStateHandler>().type = PlayerState.Playing;
 
     }
 
