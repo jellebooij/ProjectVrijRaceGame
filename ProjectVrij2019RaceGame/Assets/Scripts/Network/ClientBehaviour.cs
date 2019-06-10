@@ -295,6 +295,11 @@ public class ClientBehaviour : MonoBehaviour
         player.transform.position = packed.postition;
         player.transform.rotation = packed.rotation;
 
+        for(int i = 0; i < transforms.Count; i++)
+        {
+            transforms[i].gameObject.SetActive(true);
+        }
+
         player.GetComponent<PlayerStateHandler>().type = PlayerState.Playing;
 
     }

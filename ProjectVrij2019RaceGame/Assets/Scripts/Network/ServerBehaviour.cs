@@ -23,6 +23,9 @@ public class ServerBehaviour : MonoBehaviour
     private PacketHandler packetHandler;
     public Transform[] spawns;
 
+    public int connectedPlaters;
+    public int alivePlayers;
+
     int spawnIndex = 0;
 
     private List<int> IDs = new List<int>();
@@ -64,6 +67,9 @@ public class ServerBehaviour : MonoBehaviour
         time += Time.deltaTime;
         CheckDisconnect();
         m_Driver.ScheduleUpdate().Complete();
+
+        if (connectedPlaters >= 2 && alivePlayers < 2)
+            StartGame();
         
         // CleanUpConnections
         for (int i = 0; i < m_Connections.Count; i++)
@@ -87,12 +93,7 @@ public class ServerBehaviour : MonoBehaviour
 
             Debug.Log(id);
             idMap.Add(id, m_Connections.Count - 1);
-            AssignPosition(id, spawns[spawnIndex]);
 
-            spawnIndex++;
-
-            if (spawnIndex == spawns.Length)
-                spawnIndex = 0;
 
 
             for (int i = 0; i < m_Connections.Count; i++){
@@ -110,7 +111,8 @@ public class ServerBehaviour : MonoBehaviour
                 }
 
             }
-            
+
+            connectedPlaters++;
             SetupConnection conn = new SetupConnection(id, IDs.Count, IDs.ToArray());
             m_Driver.Send(relieablePipeline,c,conn.Write());
    
@@ -134,13 +136,31 @@ public class ServerBehaviour : MonoBehaviour
                 else if (cmd == NetworkEvent.Type.Disconnect)
                 {
                     Debug.Log("Client disconnected from server");
-                   
+                    connectedPlaters--;
 
 
                 }
             }
         }
 
+    }
+
+    void StartGame()
+    {
+
+        alivePlayers = connectedPlaters;
+
+        for (int i = 0; i < connectedPlaters; i++)
+        {
+
+            AssignPosition(IDs[i], spawns[spawnIndex]);
+
+            spawnIndex++;
+
+            if (spawnIndex == spawns.Length)
+                spawnIndex = 0;
+
+        }
     }
 
     void CheckDisconnect()
@@ -175,6 +195,7 @@ public class ServerBehaviour : MonoBehaviour
 
                     }
 
+                    connectedPlaters--;
                     IDs.Remove(disId);
                     idMap.Remove(disId);
                     timeSinceLastPacked.Remove(disId);
@@ -243,6 +264,7 @@ public class ServerBehaviour : MonoBehaviour
     {
         PlayerDiedPackage packed = new PlayerDiedPackage();
         packed.Read(stream, ref context);
+        alivePlayers--;
 
         for (int j = 0; j < m_Connections.Count; j++)
         {
