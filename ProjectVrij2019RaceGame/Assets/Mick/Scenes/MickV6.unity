@@ -5597,6 +5597,8 @@ MonoBehaviour:
   - {fileID: 1842543345}
   - {fileID: 1956265966}
   - {fileID: 113344047}
+  connectedPlaters: 0
+  alivePlayers: 0
 --- !u!4 &778284431
 Transform:
   m_ObjectHideFlags: 0
@@ -13490,6 +13492,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Car (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 229748916, guid: fd84fbef1a6fadf44a0dba34de2d1384, type: 3}
+      propertyPath: machineGunDuration
+      value: 1000000
+      objectReference: {fileID: 0}
+    - target: {fileID: 229748916, guid: fd84fbef1a6fadf44a0dba34de2d1384, type: 3}
+      propertyPath: shieldDuration
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 318649884566014161, guid: fd84fbef1a6fadf44a0dba34de2d1384,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -13553,13 +13563,20 @@ PrefabInstance:
       propertyPath: parentOfOtherCarTransforms
       value: 
       objectReference: {fileID: 750610011}
-    - target: {fileID: 229748916, guid: fd84fbef1a6fadf44a0dba34de2d1384, type: 3}
-      propertyPath: machineGunDuration
-      value: 1000000
+    - target: {fileID: 318649884566014165, guid: fd84fbef1a6fadf44a0dba34de2d1384,
+        type: 3}
+      propertyPath: rotationSpeed
+      value: 0.12
       objectReference: {fileID: 0}
-    - target: {fileID: 229748916, guid: fd84fbef1a6fadf44a0dba34de2d1384, type: 3}
-      propertyPath: shieldDuration
-      value: 15
+    - target: {fileID: 318649884566014165, guid: fd84fbef1a6fadf44a0dba34de2d1384,
+        type: 3}
+      propertyPath: rayHeight
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 318649884566014165, guid: fd84fbef1a6fadf44a0dba34de2d1384,
+        type: 3}
+      propertyPath: extents.y
+      value: 0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd84fbef1a6fadf44a0dba34de2d1384, type: 3}
