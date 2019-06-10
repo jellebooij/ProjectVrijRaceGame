@@ -7,9 +7,9 @@ public class PlayerStateHandler : MonoBehaviour
     public CarCamera carCamera;
     private Transform myCarTarget;
     private int targetIndex;
-    public Transform[] otherCarTransforms;
+    public List<Transform> otherCarTransforms = new List<Transform>();
     public Transform parentOfOtherCarTransforms;
-    public PlayerState type { get; protected set; }
+    public PlayerState type { get; set; }
     private Health health;
     private CarController carController;
     public GameObject pod;
@@ -28,8 +28,9 @@ public class PlayerStateHandler : MonoBehaviour
         carController = GetComponent<CarController>();
         myCarTarget = GetComponent<Transform>();
         targetIndex = 1;
-        type = PlayerState.Playing;
+        type = PlayerState.Spectating;   
         health = GetComponent<Health>();
+        SwitchSpectatorToPlayer();
     }
 
     // Update is called once per frame
@@ -59,6 +60,11 @@ public class PlayerStateHandler : MonoBehaviour
 
     private void Spectating() {
 
+        otherCarTransforms.Clear();
+        foreach (Transform child in parentOfOtherCarTransforms.transform) {
+            otherCarTransforms.Add(child);
+        }
+
         carCamera.isSpectating = true;
 
         if (!rb.isKinematic) {
@@ -75,7 +81,7 @@ public class PlayerStateHandler : MonoBehaviour
                 watchingPodThisLong = 0;
             }
         }
-        otherCarTransforms = parentOfOtherCarTransforms.GetComponentsInChildren<Transform>();
+           
         if (Input.GetButtonDown("Fire1")) {
             isSpectatingAutomatically = false;
             SwitchSpectatorToPlayer();
@@ -83,13 +89,10 @@ public class PlayerStateHandler : MonoBehaviour
     }
 
     private void SwitchSpectatorToPlayer() {
-        if (otherCarTransforms.Length <= 1) {
-            return;
-        }
-        if (targetIndex < otherCarTransforms.Length) {
+        if (targetIndex < (otherCarTransforms.Count - 1)    ) {
             targetIndex += 1;
         } else {
-            targetIndex = 1;
+            targetIndex = 0;
         }
 
         carCamera.target = otherCarTransforms[targetIndex];
@@ -97,6 +100,15 @@ public class PlayerStateHandler : MonoBehaviour
     }
 
     private void Playing() {
+        carCamera.isSpectating = false;
+
+        if (rb.isKinematic) {
+            rb.isKinematic = false;
+        }
+        powerupController.enabled = true;
+        carController.enabled = true;
+        pod.SetActive(true);
+
         carCamera.target = myCarTarget;
     }
 }
