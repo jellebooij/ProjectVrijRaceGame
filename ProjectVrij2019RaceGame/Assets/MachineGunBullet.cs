@@ -10,6 +10,7 @@ public class MachineGunBullet : MonoBehaviour
     private float timer;
     public LayerMask layerMask;
     public bool isOwner = true;
+    public GameObject Shot;
     // Start is called before the first frame update
     void Start()
     {
@@ -38,10 +39,11 @@ public class MachineGunBullet : MonoBehaviour
                     if (isOwner)
                     {
                         ClientBehaviour.instance.TakeDamage(hit.transform.gameObject.GetComponent<NetworkPlayer>().id, 2f);
-                    }
 
-                    
-                }
+                    }
+                    Instantiate(Shot,hit.point , Quaternion.identity);
+
+            }
 
                 Destroy(gameObject);
             }
