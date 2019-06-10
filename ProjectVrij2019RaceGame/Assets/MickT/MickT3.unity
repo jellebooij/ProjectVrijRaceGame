@@ -247,12 +247,12 @@ PrefabInstance:
         type: 3}
       propertyPath: powerUp
       value: 
-      objectReference: {fileID: 228156968}
+      objectReference: {fileID: 0}
     - target: {fileID: 2530635809447939989, guid: f229ec792102c7f438f0eda582431db7,
         type: 3}
       propertyPath: powerUp
       value: 
-      objectReference: {fileID: 228156968}
+      objectReference: {fileID: 0}
     - target: {fileID: 6560565415846264716, guid: f229ec792102c7f438f0eda582431db7,
         type: 3}
       propertyPath: m_Sprite
@@ -1826,18 +1826,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 213763875}
   m_Mesh: {fileID: -7147205526780014686, guid: 6e52317acec857d49a4494bfb6621fe6, type: 3}
---- !u!114 &228156968 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 318649884566014164, guid: fd84fbef1a6fadf44a0dba34de2d1384,
-    type: 3}
-  m_PrefabInstance: {fileID: 1889448897}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1915206059}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1b9c0f7b7ad38e428a165cacb7651e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &228156970 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 318649884566014163, guid: fd84fbef1a6fadf44a0dba34de2d1384,
@@ -13673,6 +13661,15 @@ PrefabInstance:
       propertyPath: carCamera
       value: 
       objectReference: {fileID: 1041764754}
+    - target: {fileID: 1518730618, guid: fd84fbef1a6fadf44a0dba34de2d1384, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3715569861269835123, guid: fd84fbef1a6fadf44a0dba34de2d1384,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7dacfeac10e1f0840b90eae0ef5a9067, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd84fbef1a6fadf44a0dba34de2d1384, type: 3}
 --- !u!1 &1897585516
