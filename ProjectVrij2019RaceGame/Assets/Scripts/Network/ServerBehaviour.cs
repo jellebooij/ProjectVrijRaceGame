@@ -22,13 +22,11 @@ public class ServerBehaviour : MonoBehaviour
     private PacketHandler packetHandler;
     public Transform[] spawns;
 
-
     public Transform[] powerupSpawns;
     List<float> powerupCountdown = new List<float>();
+    List<int> currentID = new List<int>();
+
     private List<int> alivePlayersID = new List<int>();
-
-
-
     public int connectedPlaters;
     public int alivePlayers;
 
@@ -270,6 +268,14 @@ public class ServerBehaviour : MonoBehaviour
         RemovePowerup packed = new RemovePowerup();
         packed.Read(stream, ref context);
 
+        for(int i = 0; i < currentID.Count; i++)
+        {
+            if (currentID[i] == packed.powerupID)
+            {
+                currentID[i] = -1;
+            }
+        }
+
         foreach (KeyValuePair<int, NetworkConnection> value in m_Connections)
         {
             m_Driver.Send(relieablePipeline, value.Value, packed.Write());
@@ -376,10 +382,11 @@ public class ServerBehaviour : MonoBehaviour
         {
             powerupCountdown[i] -= Time.deltaTime;
 
-            if(powerupCountdown[i] < 0)
+            if(powerupCountdown[i] < 0 && currentID[i] == -1)
             {
                 powerupCountdown[i] = 15;
                 SpawnPowerup(powerupSpawns[i].position);
+                currentID[i] = powerupID;
             }
 
         }
