@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: SuperBoostParticle
-  m_Shader: {fileID: -6465566751694194690, guid: 964ff648476dfa044bca8c528d01f96f,
+  m_Name: ShotPaticle
+  m_Shader: {fileID: -6465566751694194690, guid: 347ec65053ad9594ab9144ea3af69e46,
     type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -21,7 +21,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - Texture2D_1503D6E2:
-        m_Texture: {fileID: 2800000, guid: c6d7697641583a246a159a6e907b04bd, type: 3}
+        m_Texture: {fileID: 2800000, guid: ca530e5103133914ca96c72490bd9768, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_675CB9D3:
@@ -29,12 +29,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_4E786FB1: -19.99
-    - Vector1_599FB9B5: 0.185
+    - Vector1_599FB9B5: 0.306
     - Vector1_BDC2FF4D: 25
-    - Vector1_D02DE318: 0.772
+    - Vector1_D02DE318: 0.832
     - Vector1_D110E2B5: 2
     m_Colors:
-    - Color_FE85C68B: {r: 12.226418, g: 7.041765, b: 0, a: 0.6}
-    - Vector2_63BD9897: {r: 0.7, g: 0, b: 0, a: 0}
-    - Vector2_9060446: {r: 0.5, g: 0, b: 0, a: 0}
+    - Color_FE85C68B: {r: 7.999999, g: 1.4136814, b: 0, a: 1}
+    - Vector2_63BD9897: {r: -0.7, g: 0, b: 0, a: 0}
+    - Vector2_9060446: {r: -0.5, g: 0, b: 0, a: 0}
