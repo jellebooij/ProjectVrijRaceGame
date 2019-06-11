@@ -119,32 +119,33 @@ public class PowerupController : MonoBehaviour {
             currentAttackPowerup.StartPowerup();
             Debug.Log(currentAttackPowerup.type);
             Destroy(other.gameObject);
+            ClientBehaviour.instance.RemovePowerup(other.gameObject);
         }
 
         if (other.tag == "MachineGun") {
             currentAttackPowerup = machineGun;
             currentAttackPowerup.StartPowerup();
             Debug.Log(currentAttackPowerup.type);
-            Destroy(other.gameObject);
+            ClientBehaviour.instance.RemovePowerup(other.gameObject);
         }
 
         if (other.tag == "HomingMissilePowerup") {
             currentAttackPowerup = homingMissilePowerup;
             currentAttackPowerup.StartPowerup();
             Debug.Log(currentAttackPowerup.type);
-            Destroy(other.gameObject);
+            ClientBehaviour.instance.RemovePowerup(other.gameObject);
         }
 
         if (other.tag == "Shield") {
             currentDefensePowerup = shieldPowerup;
             currentDefensePowerup.StartPowerup();
             Debug.Log(currentAttackPowerup.type);
-            Destroy(other.gameObject);
+            ClientBehaviour.instance.RemovePowerup(other.gameObject);
         }
 
         if (other.tag == "Health") {
             healthReference.health = 100;
-            Destroy(other.gameObject);
+            ClientBehaviour.instance.RemovePowerup(other.gameObject);
         }
     }
 }

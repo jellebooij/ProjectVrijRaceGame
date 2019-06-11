@@ -5,7 +5,9 @@ using UnityEngine;
 public class PowerupManager : MonoBehaviour
 {
 
-    private Dictionary<int, GameObject> currentPowerUps = new Dictionary<int, GameObject>();
+    public Dictionary<int, GameObject> currentPowerUps = new Dictionary<int, GameObject>();
+    public Dictionary<GameObject, int> gameObjectMap = new Dictionary<GameObject, int>();
+
     public GameObject attackPowerup;
 
     public void AddPowerup(int id, Vector3 position)
@@ -13,12 +15,20 @@ public class PowerupManager : MonoBehaviour
         
         GameObject current = Instantiate(attackPowerup, position, Quaternion.identity, transform) as GameObject;
         currentPowerUps.Add(id, current);
+        gameObjectMap.Add(current, id);
+
     }
 
     public void Removepowerup(int id)
     {
-        Destroy(currentPowerUps[id]);
-        currentPowerUps.Remove(id);
+
+        if (gameObjectMap.ContainsValue(id))
+        {
+            gameObjectMap.Remove(currentPowerUps[id]);
+            Destroy(currentPowerUps[id]);
+            currentPowerUps.Remove(id);
+        }
+        
     }
 
 }

@@ -5692,10 +5692,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   time: 0
   spawns:
+  - {fileID: 1842543345}
+  - {fileID: 1956265966}
+  - {fileID: 113344047}
+  powerupSpawns:
   - {fileID: 506844013}
   - {fileID: 2103963822}
   - {fileID: 831724754}
-  powerupSpawns: []
   connectedPlaters: 0
   alivePlayers: 0
 --- !u!4 &778284431

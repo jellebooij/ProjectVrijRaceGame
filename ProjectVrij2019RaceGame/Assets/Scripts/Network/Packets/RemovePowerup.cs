@@ -17,7 +17,7 @@ public class RemovePowerup : BasePacket
 
     }
 
-    public RemovePowerup(int powerupID, Vector3 postition)
+    public RemovePowerup(int powerupID)
     {
 
         this.powerupID = powerupID;
