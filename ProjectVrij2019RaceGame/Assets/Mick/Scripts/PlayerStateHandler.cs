@@ -31,6 +31,8 @@ public class PlayerStateHandler : MonoBehaviour
         type = PlayerState.Spectating;   
         health = GetComponent<Health>();
         SwitchSpectatorToPlayer();
+
+        watchingPodThisLong = staticWatchingTime;
     }
 
     // Update is called once per frame
