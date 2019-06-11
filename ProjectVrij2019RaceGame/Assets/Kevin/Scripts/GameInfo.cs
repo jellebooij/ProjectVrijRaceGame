@@ -11,7 +11,7 @@ public class GameInfo : MonoBehaviour {
     [SerializeField]
     private TextMeshProUGUI infoText;
     [SerializeField]
-    private float fadeSpeed = 0.05f;
+    private float fadeSpeed = 1.0f;
 
     private void Start() {
         infoText.CrossFadeAlpha(1, fadeSpeed, false);
@@ -20,10 +20,17 @@ public class GameInfo : MonoBehaviour {
 
     private void Update() {
         if (Input.GetKeyDown(KeyCode.E)) {
-            startCountdown = true;
+            BeginTimer();
         }
 
         StartTimer();
+    }
+
+    public void BeginTimer() {
+        infoText.CrossFadeAlpha(1, fadeSpeed, false);
+        countdown = 5;
+        startCountdown = true;
+        StopCoroutine(StartGame());
     }
 
     public void StartTimer() {

@@ -32,6 +32,10 @@ public class ClientBehaviour : MonoBehaviour
 
     bool connected;
 
+    bool countDown = false;
+    float countDownT;
+    AssignPositionPacked assPosPack;
+
     float t = 0;
 
     public static ClientBehaviour instance;
@@ -89,6 +93,15 @@ public class ClientBehaviour : MonoBehaviour
     {
 
         time += Time.deltaTime;
+
+        if (countDown) {
+            countDownT -= Time.deltaTime;
+
+            if(countDownT <= 0) {
+                StartGame();
+                countDown = false;
+            }
+        }
 
         if(connected)
             UpdateWorldState();
@@ -293,11 +306,18 @@ public class ClientBehaviour : MonoBehaviour
         AssignPositionPacked packed = new AssignPositionPacked();
         packed.Read(reader, ref context);
 
-        player.transform.position = packed.postition;
-        player.transform.rotation = packed.rotation;
+        assPosPack = packed;
+        countDown = true;
+        countDownT = 5;
 
-        foreach(KeyValuePair<int,Transform> key in transforms)
-        {
+    }
+
+    void StartGame() {
+
+        player.transform.position = assPosPack.postition;
+        player.transform.rotation = assPosPack.rotation;
+
+        foreach (KeyValuePair<int, Transform> key in transforms) {
             key.Value.gameObject.SetActive(true);
         }
 
