@@ -60,6 +60,7 @@ public class ServerBehaviour : MonoBehaviour
         packetHandler.RegisterHandler(packetTypes.Damage, Damage);
         packetHandler.RegisterHandler(packetTypes.PlayerDied, PlayerDied);
         packetHandler.RegisterHandler(packetTypes.ActivateShield, ActivateShield);
+        packetHandler.RegisterHandler(packetTypes.RemovePowerup, RemovePowerup);
 
         for(int i = 0; i < powerupSpawns.Length; i++)
         {
