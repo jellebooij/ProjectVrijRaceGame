@@ -309,7 +309,7 @@ public class ClientBehaviour : MonoBehaviour
 
     void UpdateWorldState(){
 
-        float currentTime = time - 0.15f;
+        float currentTime = time - 0.1f;
 
         for(int i = 0; i < 20; i++){
             
