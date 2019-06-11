@@ -93,6 +93,11 @@ public class ClientBehaviour : MonoBehaviour {
 
             if (countDownT <= 0) {
                 StartGame();
+                
+            }
+
+            if(countDownT < -3)
+            {
                 countDown = false;
             }
         }
