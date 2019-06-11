@@ -13534,6 +13534,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Car (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 318649884566014163, guid: fd84fbef1a6fadf44a0dba34de2d1384,
+        type: 3}
+      propertyPath: boostFallOffSpeed
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 318649884566014161, guid: fd84fbef1a6fadf44a0dba34de2d1384,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -13597,6 +13602,41 @@ PrefabInstance:
       propertyPath: parentOfOtherCarTransforms
       value: 
       objectReference: {fileID: 750610011}
+    - target: {fileID: 318649884566014165, guid: fd84fbef1a6fadf44a0dba34de2d1384,
+        type: 3}
+      propertyPath: downForce
+      value: -15
+      objectReference: {fileID: 0}
+    - target: {fileID: 318649884566014165, guid: fd84fbef1a6fadf44a0dba34de2d1384,
+        type: 3}
+      propertyPath: extents.x
+      value: 0.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 318649884566014165, guid: fd84fbef1a6fadf44a0dba34de2d1384,
+        type: 3}
+      propertyPath: extents.z
+      value: 0.95
+      objectReference: {fileID: 0}
+    - target: {fileID: 318649884566014165, guid: fd84fbef1a6fadf44a0dba34de2d1384,
+        type: 3}
+      propertyPath: extents.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 318649884566014165, guid: fd84fbef1a6fadf44a0dba34de2d1384,
+        type: 3}
+      propertyPath: rayHeight
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 318649884566014174, guid: fd84fbef1a6fadf44a0dba34de2d1384,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 0.84329456
+      objectReference: {fileID: 0}
+    - target: {fileID: 318649884566014174, guid: fd84fbef1a6fadf44a0dba34de2d1384,
+        type: 3}
+      propertyPath: m_Center.x
+      value: 0.015762515
+      objectReference: {fileID: 0}
     - target: {fileID: 1518730618, guid: fd84fbef1a6fadf44a0dba34de2d1384, type: 3}
       propertyPath: m_IsActive
       value: 1
