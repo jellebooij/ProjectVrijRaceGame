@@ -96,7 +96,7 @@ public class ClientBehaviour : MonoBehaviour {
                 
             }
 
-            if(countDownT < -3)
+            if(countDownT < -0.5f)
             {
                 countDown = false;
             }
