@@ -88,7 +88,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3601a33fd2f6cf14bb907264e197d6cd, type: 2}
+  - {fileID: 2100000, guid: bb0db027966340a478071bb6bf18e381, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -497,7 +497,7 @@ MonoBehaviour:
   currentBoostLevel: 0
   maxBoostLevel: 100
   boostRegenerationSpeed: 35
-  boostFallOffSpeed: 35
+  boostFallOffSpeed: 25
   boostMultiplier: 2.5
   carController: {fileID: 318649884566014165}
 --- !u!114 &318649884566014165
@@ -515,7 +515,7 @@ MonoBehaviour:
   inTestMode: 0
   drag: 2
   rotationDrag: 2
-  rotationSpeed: 0.15
+  rotationSpeed: 0.12
   minimumRotationSpeed: 1
   currentSpeed: 12
   speed: 50
@@ -523,10 +523,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   velocity: {x: 0, y: 0, z: 0}
-  downForce: -10
-  extents: {x: 0.7086182, y: 0, z: 1.060806}
+  downForce: -14
+  extents: {x: 0.55, y: 0.2, z: 1}
   boostSpeed: 0
-  rayHeight: 1
+  rayHeight: 1.1
   steeringWheelHorizontal: 0
 --- !u!114 &1759984961
 MonoBehaviour:
@@ -1325,6 +1325,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 318649884566014161}
     m_Modifications:
+    - target: {fileID: 8332039901393225074, guid: e925ec0b9db63c24e8ac819023a28e85,
+        type: 3}
+      propertyPath: m_Name
+      value: Pod
+      objectReference: {fileID: 0}
+    - target: {fileID: 8332039901393225074, guid: e925ec0b9db63c24e8ac819023a28e85,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7318249674340457311, guid: e925ec0b9db63c24e8ac819023a28e85,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1394,16 +1404,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 0.29432473
-      objectReference: {fileID: 0}
-    - target: {fileID: 8332039901393225074, guid: e925ec0b9db63c24e8ac819023a28e85,
-        type: 3}
-      propertyPath: m_Name
-      value: Pod
-      objectReference: {fileID: 0}
-    - target: {fileID: 8332039901393225074, guid: e925ec0b9db63c24e8ac819023a28e85,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e925ec0b9db63c24e8ac819023a28e85, type: 3}

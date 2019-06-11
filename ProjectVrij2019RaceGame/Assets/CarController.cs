@@ -58,7 +58,9 @@ public class CarController : MonoBehaviour {
         rb.angularDrag = rotationDrag;
 
         float gasPedal;
-        if (Input.GetButton("Gas")) { gasPedal = 1; } else gasPedal = 0;
+        if (Input.GetButton("Gas")) { gasPedal = 1; }
+            else if (Input.GetButton("Back")) { gasPedal = -1; } else gasPedal = 0;
+
         if (inTestMode) {
             gasPedal = 1;
         }
