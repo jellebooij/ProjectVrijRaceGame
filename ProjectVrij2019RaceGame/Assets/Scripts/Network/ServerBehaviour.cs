@@ -269,13 +269,6 @@ public class ServerBehaviour : MonoBehaviour
         RemovePowerup packed = new RemovePowerup();
         packed.Read(stream, ref context);
 
-        int index = 0;
-
-        for(int i = 0; i < powerupSpawns.Length; i++)
-        {
-            if(powerupSpawns[i].position == packed.)
-        }
-
         foreach (KeyValuePair<int, NetworkConnection> value in m_Connections)
         {
             m_Driver.Send(relieablePipeline, value.Value, packed.Write());

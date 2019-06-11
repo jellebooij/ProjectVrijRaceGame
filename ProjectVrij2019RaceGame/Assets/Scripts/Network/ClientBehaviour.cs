@@ -311,6 +311,16 @@ public class ClientBehaviour : MonoBehaviour {
 
     }
 
+    void RemovePowerup(DataStreamReader reader, ref DataStreamReader.Context context)
+    {
+
+        RemovePowerup packed = new RemovePowerup();
+        packed.Read(reader, ref context);
+        powerupManager.Removepowerup(packed.powerupID);
+        info.BeginTimer();
+
+    }
+
     void StartGame() {
 
         player.transform.position = assPosPack.postition;
