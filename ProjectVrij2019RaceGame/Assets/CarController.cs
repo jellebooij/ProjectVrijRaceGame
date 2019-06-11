@@ -121,7 +121,7 @@ public class CarController : MonoBehaviour {
 
     private void RotateToFlatPosition() {
         Quaternion newRotation =  Quaternion.Euler(new Vector3(0, transform.eulerAngles.y, 0));
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, newRotation, Time.deltaTime * 30);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, newRotation, Time.deltaTime * 35);
     }
 
 

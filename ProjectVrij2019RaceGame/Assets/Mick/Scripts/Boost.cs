@@ -32,12 +32,12 @@ public class Boost : MonoBehaviour {
     }
 
     private void BoostControl() {
-        if ((Input.GetButton("Boost") || (Input.GetAxisRaw("Triggers") > 0)) && currentBoostLevel > 0 && Input.GetButton("Gas")) {
+        if ((Input.GetButton("Boost") || (Input.GetAxisRaw("TriggerR") > 0)) && currentBoostLevel > 0 && Input.GetButton("Gas")) {
             currentBoostLevel -= boostFallOffSpeed * Time.deltaTime;
             carController.boostSpeed = carController.speed * boostMultiplier;
             waitForNewBoostTimer = 0;
         }
-        if (currentBoostLevel <= 0 || !(Input.GetAxisRaw("Triggers") > 0) && !Input.GetButton("Boost")) {
+        if (currentBoostLevel <= 0 || !(Input.GetAxisRaw("TriggerR") > 0) && !Input.GetButton("Boost")) {
 
             carController.boostSpeed = 0;
             waitForNewBoostTimer += Time.deltaTime;
