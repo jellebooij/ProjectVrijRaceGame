@@ -35,7 +35,10 @@ public class ClientBehaviour : MonoBehaviour {
     bool countDown = false;
     float countDownT;
     AssignPositionPacked assPosPack;
+    PowerupManager powerupManager;
     public GameInfo info;
+
+
 
     float t = 0;
 
@@ -52,7 +55,7 @@ public class ClientBehaviour : MonoBehaviour {
 
     void Start() {
 
-        Screen.fullScreen = false;
+        powerupManager = GetComponent<PowerupManager>();
 
         m_Driver = new UdpNetworkDriver(new INetworkParameter[0]);
         m_Connection = default(NetworkConnection);
@@ -75,6 +78,7 @@ public class ClientBehaviour : MonoBehaviour {
         packetHandler.RegisterHandler(packetTypes.PlayerDied, PlayerDied);
         packetHandler.RegisterHandler(packetTypes.ActivateShield, PlayerActivateShield);
         packetHandler.RegisterHandler(packetTypes.AssignPostion, AssignPosition);
+        packetHandler.RegisterHandler(packetTypes.AddPowerup, AddPowerup);
 
         packets = new TransformList();
 
@@ -195,6 +199,14 @@ public class ClientBehaviour : MonoBehaviour {
         PlayerDiedPackage packed = new PlayerDiedPackage();
         packed.Read(reader, ref context);
         transforms[packed.netID].gameObject.GetComponent<ShieldSwitch>().EnableShield();
+    }
+
+    void AddPowerup(DataStreamReader reader, ref DataStreamReader.Context context)
+    {
+        Debug.Log("POWERUPSPAWNED");
+        AddPowerup packed = new AddPowerup();
+        packed.Read(reader, ref context);
+        powerupManager.AddPowerup(packed.powerupID, packed.postition);
     }
 
     void PlayerDied(DataStreamReader reader, ref DataStreamReader.Context context) {

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using NetworkConnection = Unity.Networking.Transport.NetworkConnection;
 
 public enum packetTypes { PlayerConnected, SetupConnection, UpdatePlayer, RequestTime, ServerTime,
-    PlayerDisconected, MachineGunFire, Damage, PlayerDied, ActivateShield, AssignPostion, Last }
+    PlayerDisconected, MachineGunFire, Damage, PlayerDied, ActivateShield, AssignPostion, AddPowerup, RemovePowerup, Last }
 
 public class ServerBehaviour : MonoBehaviour
 {   
@@ -21,10 +21,18 @@ public class ServerBehaviour : MonoBehaviour
     private NetworkPipeline unrelieablePipeline;
     private PacketHandler packetHandler;
     public Transform[] spawns;
+
+
+    public Transform[] powerupSpawns;
+    List<float> powerupCountdown = new List<float>();
     private List<int> alivePlayersID = new List<int>();
+
+
 
     public int connectedPlaters;
     public int alivePlayers;
+
+    int powerupID;
 
     float t = 0;
 
@@ -53,6 +61,11 @@ public class ServerBehaviour : MonoBehaviour
         packetHandler.RegisterHandler(packetTypes.PlayerDied, PlayerDied);
         packetHandler.RegisterHandler(packetTypes.ActivateShield, ActivateShield);
 
+        for(int i = 0; i < powerupSpawns.Length; i++)
+        {
+            powerupCountdown.Add(0);
+        }
+
     }
     
     void OnDestroy() {
@@ -67,6 +80,7 @@ public class ServerBehaviour : MonoBehaviour
         time += Time.deltaTime;
         CheckDisconnect();
         m_Driver.ScheduleUpdate().Complete();
+        UpdatePowerup();
 
         if (connectedPlaters >= 2 && alivePlayersID.Count < 2)
         {
@@ -249,6 +263,26 @@ public class ServerBehaviour : MonoBehaviour
 
     }
 
+    void RemovePowerup(DataStreamReader stream, ref DataStreamReader.Context context)
+    {
+
+        RemovePowerup packed = new RemovePowerup();
+        packed.Read(stream, ref context);
+
+        int index = 0;
+
+        for(int i = 0; i < powerupSpawns.Length; i++)
+        {
+            if(powerupSpawns[i].position == packed.)
+        }
+
+        foreach (KeyValuePair<int, NetworkConnection> value in m_Connections)
+        {
+            m_Driver.Send(relieablePipeline, value.Value, packed.Write());
+        }
+
+    }
+
 
 
     void MachineGunFire(DataStreamReader stream, ref DataStreamReader.Context context)
@@ -324,6 +358,36 @@ public class ServerBehaviour : MonoBehaviour
         
         foreach(KeyValuePair<int,NetworkConnection> value in m_Connections){
             m_Driver.Send(unrelieablePipeline, value.Value, writer);
+        }
+
+    }
+
+    void SpawnPowerup(Vector3 position)
+    {
+
+        AddPowerup package = new AddPowerup(powerupID, position);
+        powerupID++;
+
+        foreach (KeyValuePair<int, NetworkConnection> value in m_Connections)
+        {
+            m_Driver.Send(relieablePipeline, value.Value, package.Write());
+        }
+
+    }
+
+    void UpdatePowerup()
+    {
+
+        for(int i = 0; i < powerupCountdown.Count; i++)
+        {
+            powerupCountdown[i] -= Time.deltaTime;
+
+            if(powerupCountdown[i] < 0)
+            {
+                powerupCountdown[i] = 15;
+                SpawnPowerup(powerupSpawns[i].position);
+            }
+
         }
 
     }
