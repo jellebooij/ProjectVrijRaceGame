@@ -114,10 +114,13 @@ public class PowerupController : MonoBehaviour {
     }
 
     private void OnTriggerEnter(Collider other) {
+
         if (other.tag == "Laser"){
             currentAttackPowerup = laser;
             currentAttackPowerup.StartPowerup();
             Debug.Log(currentAttackPowerup.type);
+            Destroy(other.gameObject);
+            ClientBehaviour.instance.RemovePowerup(other.gameObject);
             Destroy(other.gameObject);
         }
 
@@ -125,6 +128,7 @@ public class PowerupController : MonoBehaviour {
             currentAttackPowerup = machineGun;
             currentAttackPowerup.StartPowerup();
             Debug.Log(currentAttackPowerup.type);
+            ClientBehaviour.instance.RemovePowerup(other.gameObject);
             Destroy(other.gameObject);
         }
 
@@ -132,6 +136,7 @@ public class PowerupController : MonoBehaviour {
             currentAttackPowerup = homingMissilePowerup;
             currentAttackPowerup.StartPowerup();
             Debug.Log(currentAttackPowerup.type);
+            ClientBehaviour.instance.RemovePowerup(other.gameObject);
             Destroy(other.gameObject);
         }
 
@@ -139,11 +144,13 @@ public class PowerupController : MonoBehaviour {
             currentDefensePowerup = shieldPowerup;
             currentDefensePowerup.StartPowerup();
             Debug.Log(currentAttackPowerup.type);
+            ClientBehaviour.instance.RemovePowerup(other.gameObject);
             Destroy(other.gameObject);
         }
 
         if (other.tag == "Health") {
             healthReference.health = 100;
+            ClientBehaviour.instance.RemovePowerup(other.gameObject);
             Destroy(other.gameObject);
         }
     }

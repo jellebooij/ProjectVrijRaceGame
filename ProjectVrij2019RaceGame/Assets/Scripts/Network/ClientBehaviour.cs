@@ -79,6 +79,7 @@ public class ClientBehaviour : MonoBehaviour {
         packetHandler.RegisterHandler(packetTypes.ActivateShield, PlayerActivateShield);
         packetHandler.RegisterHandler(packetTypes.AssignPostion, AssignPosition);
         packetHandler.RegisterHandler(packetTypes.AddPowerup, AddPowerup);
+        packetHandler.RegisterHandler(packetTypes.RemovePowerup, RemovePowerUpPackage);
 
         packets = new TransformList();
 
@@ -229,6 +230,15 @@ public class ClientBehaviour : MonoBehaviour {
 
     }
 
+    void RemovePowerUpPackage(DataStreamReader reader, ref DataStreamReader.Context context)
+    {
+
+        RemovePowerup pack = new RemovePowerup();
+        pack.Read(reader, ref context);
+        powerupManager.Removepowerup(pack.powerupID);
+
+    }
+
     void Disconnect(DataStreamReader reader, ref DataStreamReader.Context context) {
 
         Debug.Log("playerdisconnectedClient");
@@ -284,6 +294,15 @@ public class ClientBehaviour : MonoBehaviour {
         CarTransformPacked p = packet as CarTransformPacked;
 
         packets.Add(p.netID, p);
+
+    }
+
+    public void RemovePowerup(GameObject powerup)
+    {
+
+        int id = powerupManager.gameObjectMap[powerup];
+        RemovePowerup package = new RemovePowerup(id);
+        m_Driver.Send(NetworkPipeline.Null, m_Connection, package.Write());
 
     }
 
