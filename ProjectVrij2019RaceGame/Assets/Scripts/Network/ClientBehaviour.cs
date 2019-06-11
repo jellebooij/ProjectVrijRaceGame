@@ -324,7 +324,7 @@ public class ClientBehaviour : MonoBehaviour {
         else
         {
             if(playerHealth.ContainsKey((packet as TakeDamage).damagedPlayerID)){
-                playerHealth[(packet as TakeDamage).damagedPlayerID] -= (packet as TakeDamage).damagedPlayerID;
+                playerHealth[(packet as TakeDamage).damagedPlayerID] -= (packet as TakeDamage).damage;
                 transforms[(packet as TakeDamage).damagedPlayerID].gameObject.GetComponentInChildren<WorldSpaceHealthUI>().health = playerHealth[(packet as TakeDamage).damagedPlayerID];
             }
         }
@@ -365,6 +365,8 @@ public class ClientBehaviour : MonoBehaviour {
 
         foreach (KeyValuePair<int, Transform> key in transforms) {
             key.Value.gameObject.SetActive(true);
+            playerHealth[key.Key] = 100;
+            transforms[key.Key].GetComponentInChildren<WorldSpaceHealthUI>().health = 100;
         }
 
         player.GetComponent<PlayerStateHandler>().type = PlayerState.Playing;
