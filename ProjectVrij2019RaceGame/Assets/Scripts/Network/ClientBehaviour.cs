@@ -60,7 +60,7 @@ public class ClientBehaviour : MonoBehaviour
         //relieablePipeline = m_Driver.CreatePipeline(typeof(ReliableSequencedPipelineStage));
         //unrelieablePipeline = m_Driver.CreatePipeline(typeof(UnreliableSequencedPipelineStage));
 
-        var endpoint = NetworkEndPoint.Parse("192.168.1.17", 9000);
+        var endpoint = NetworkEndPoint.Parse("10.3.21.103", 9000);
         m_Connection = m_Driver.Connect(endpoint);
         
         packetHandler = new PacketHandler();
@@ -267,7 +267,6 @@ public class ClientBehaviour : MonoBehaviour
         BasePacket packet = new CarTransformPacked();
         packet.Read(reader, ref context);
         CarTransformPacked p = packet as CarTransformPacked;
-        Debug.Log("got position from CLIENT " + (packet as CarTransformPacked).netID);
 
         packets.Add(p.netID, p);
         
@@ -316,13 +315,13 @@ public class ClientBehaviour : MonoBehaviour
             
             TransformPair pair = packets.GetPair(i,currentTime);
 
-            if(pair == null)
+            if(pair == null)  
                 continue;   
 
             if(pair.before == null || pair.after == null)   
                 continue;   
                 
-            if(!transforms.ContainsKey(pair.after.netID))
+            if(!transforms.ContainsKey(i))
                 continue;
                 
             float lerpValue = (currentTime - pair.before.timeStamp) / (pair.after.timeStamp - pair.before.timeStamp);

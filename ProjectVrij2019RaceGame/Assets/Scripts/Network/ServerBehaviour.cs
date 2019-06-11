@@ -37,7 +37,7 @@ public class ServerBehaviour : MonoBehaviour
 
         m_Driver = new UdpNetworkDriver(new INetworkParameter[0]);
 
-        if (m_Driver.Bind(NetworkEndPoint.Parse("192.168.1.17", 9000)) != 0)
+        if (m_Driver.Bind(NetworkEndPoint.Parse("10.3.21.103", 9000)) != 0)
             Debug.Log("Failed to bind to port 9000");
         else
             m_Driver.Listen();

@@ -44,8 +44,8 @@ public class TransformList : MonoBehaviour
 
         }  
         
-        if(pair.before == null){
-                return pair;
+        if(pair.before == null || pair.after == null){
+                return null;
         }
 
         List<CarTransformPacked> removables = new List<CarTransformPacked>();
