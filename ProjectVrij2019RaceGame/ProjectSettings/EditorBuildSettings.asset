@@ -14,7 +14,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Offline.unity
     guid: 81c4fbd6e48d9bf40ab6eba14252f48a
-  - enabled: 1
+  - enabled: 0
     path: Assets/Mick/Scenes/MickV4.unity
     guid: 3dd285695fb29d74abf74c0dcab60e3a
+  - enabled: 1
+    path: Assets/Mick/Scenes/MickV6.unity
+    guid: af1d6f5b2c5fcbf44986c01c7c5e8167
   m_configObjects: {}
