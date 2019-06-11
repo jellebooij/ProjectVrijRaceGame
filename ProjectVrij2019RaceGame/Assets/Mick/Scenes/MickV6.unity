@@ -5664,6 +5664,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackPowerup: {fileID: 2376847138227744472, guid: 6a0e910cf3cf6c347970e918a325c68e,
     type: 3}
+  shieldPowerup: {fileID: 4814070823528858385, guid: ab14f4b5882dbba4aa6608dd6cd3d3f4,
+    type: 3}
 --- !u!1 &790868684
 GameObject:
   m_ObjectHideFlags: 0

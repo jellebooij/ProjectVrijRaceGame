@@ -11,6 +11,7 @@ using Unity.Networking.Transport.Utilities;
 public class AddPowerup : BasePacket
 {
     public int powerupID;
+    public powerupType type;
     public Vector3 postition;
 
     public AddPowerup()
@@ -18,9 +19,10 @@ public class AddPowerup : BasePacket
 
     }
 
-    public AddPowerup(int powerupID, Vector3 postition)
+    public AddPowerup(int powerupID, powerupType type ,Vector3 postition)
     {
 
+        this.type = type;
         this.powerupID = powerupID;
         this.postition = postition;
 
@@ -29,11 +31,12 @@ public class AddPowerup : BasePacket
     public override DataStreamWriter Write()
     {
 
-        DataStreamWriter writer = new DataStreamWriter(20, Allocator.Temp);
+        DataStreamWriter writer = new DataStreamWriter(24, Allocator.Temp);
 
         writer.Write((int)packetTypes.AddPowerup);
 
         writer.Write(powerupID);
+        writer.Write((int)type);
 
         writer.Write(postition.x);
         writer.Write(postition.y);
@@ -47,6 +50,7 @@ public class AddPowerup : BasePacket
     {
 
         powerupID = reader.ReadInt(ref context);
+        type = (powerupType)reader.ReadInt(ref context);
         postition = new Vector3(reader.ReadFloat(ref context), reader.ReadFloat(ref context), reader.ReadFloat(ref context));
 
     }

@@ -359,7 +359,7 @@ public class ServerBehaviour : MonoBehaviour
     void SpawnPowerup(Vector3 position)
     {
 
-        AddPowerup package = new AddPowerup(powerupID, position);
+        AddPowerup package = new AddPowerup(powerupID, (powerupType)Random.Range(0,2), position);
         powerupID++;
 
         foreach (KeyValuePair<int, NetworkConnection> value in m_Connections)

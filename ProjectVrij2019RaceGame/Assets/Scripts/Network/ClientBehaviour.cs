@@ -207,7 +207,7 @@ public class ClientBehaviour : MonoBehaviour {
         Debug.Log("POWERUPSPAWNED");
         AddPowerup packed = new AddPowerup();
         packed.Read(reader, ref context);
-        powerupManager.AddPowerup(packed.powerupID, packed.postition);
+        powerupManager.AddPowerup(packed.powerupID, packed.type ,packed.postition);
     }
 
     void PlayerDied(DataStreamReader reader, ref DataStreamReader.Context context) {

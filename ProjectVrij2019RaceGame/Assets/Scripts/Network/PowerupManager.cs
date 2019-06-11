@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum powerupType { attack, shield }
+
 public class PowerupManager : MonoBehaviour
 {
 
@@ -9,11 +11,18 @@ public class PowerupManager : MonoBehaviour
     public Dictionary<GameObject, int> gameObjectMap = new Dictionary<GameObject, int>();
 
     public GameObject attackPowerup;
+    public GameObject shieldPowerup;
 
-    public void AddPowerup(int id, Vector3 position)
+    public void AddPowerup(int id, powerupType type ,Vector3 position)
     {
-        
-        GameObject current = Instantiate(attackPowerup, position, Quaternion.identity, transform) as GameObject;
+
+        GameObject current;
+
+        if (type == powerupType.attack)
+            current = Instantiate(attackPowerup, position, Quaternion.identity, transform) as GameObject;
+        else
+            current = Instantiate(shieldPowerup, position, Quaternion.identity, transform) as GameObject;
+
         currentPowerUps.Add(id, current);
         gameObjectMap.Add(current, id);
 
