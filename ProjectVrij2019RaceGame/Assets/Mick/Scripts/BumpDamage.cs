@@ -39,6 +39,7 @@ public class BumpDamage : MonoBehaviour {
             float angle = Vector3.Angle(otherCar.velocity, transform.position - otherCar.transform.position);
             float forceOfImpact = Mathf.Cos(angle) * thisCarController.velocity.magnitude * damageMultiplier;
             if (forceOfImpact > 0) {
+                Debug.Log(forceOfImpact);
                 ClientBehaviour.instance.TakeDamage(otherCar.transform.gameObject.GetComponent<NetworkPlayer>().id, forceOfImpact);
             }
         }
