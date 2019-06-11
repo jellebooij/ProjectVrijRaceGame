@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Logo
+  m_Shader: {fileID: -6465566751694194690, guid: 964ff648476dfa044bca8c528d01f96f,
+    type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture2D_1503D6E2:
+        m_Texture: {fileID: 2800000, guid: c6d7697641583a246a159a6e907b04bd, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_675CB9D3:
+        m_Texture: {fileID: 2800000, guid: 22e034d502c75194fbdf7b618c76af3a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - Vector1_4E786FB1: 1
+    - Vector1_599FB9B5: 0.1
+    - Vector1_BDC2FF4D: 25
+    - Vector1_D02DE318: 0.6
+    - Vector1_D110E2B5: 2
+    m_Colors:
+    - Color_FE85C68B: {r: 12.226416, g: 1.2362162, b: 0, a: 1}
+    - Vector2_63BD9897: {r: -0.7, g: 0, b: 0, a: 0}
+    - Vector2_9060446: {r: -0.5, g: 0, b: 0, a: 0}
