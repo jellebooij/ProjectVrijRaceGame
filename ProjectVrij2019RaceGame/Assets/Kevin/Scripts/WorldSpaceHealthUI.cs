@@ -7,7 +7,7 @@ using TMPro;
 public class WorldSpaceHealthUI : MonoBehaviour {
 
     public Image healthBarRight;
-    public Health health;
+    public float health;
 
     [SerializeField]
     private float dangerLevel = 30f;
@@ -26,9 +26,9 @@ public class WorldSpaceHealthUI : MonoBehaviour {
     }
 
     private void HealthBar() {
-        healthBarRight.fillAmount = health.health / health.maxHealth;
+        healthBarRight.fillAmount = health / 100.0f;
 
-        if (health.health < dangerLevel) {
+        if (health < dangerLevel) {
             healthBarRight.color = lowColor;
         } else {
             healthBarRight.color = fullColor;
