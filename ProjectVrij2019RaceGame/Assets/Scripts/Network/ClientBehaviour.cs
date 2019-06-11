@@ -206,6 +206,7 @@ public class ClientBehaviour : MonoBehaviour {
         Transform p = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity, parent).transform;
         transforms.Add(playerID, p);
         p.GetComponentInChildren<NetworkPlayer>().id = playerID;
+        p.gameObject.SetActive(false);
 
         Debug.Log(playerID + " connectedTOClient");
 
