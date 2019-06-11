@@ -22,7 +22,6 @@ public class Boost : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         BoostControl();
-        Debug.Log(Input.GetAxisRaw("Triggers"));
     }
 
     private void BoostRegeneration() {

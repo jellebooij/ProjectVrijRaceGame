@@ -18,6 +18,7 @@ public class PlayerStateHandler : MonoBehaviour
     public float staticWatchingTime = 10f;
     private bool isSpectatingAutomatically;
     private PowerupController powerupController;
+    public GameObject[] UIObjectsToDisableAtSpectate;
 
     // Start is called before the first frame update
     void Start()
@@ -61,7 +62,7 @@ public class PlayerStateHandler : MonoBehaviour
     }
 
     private void Spectating() {
-
+        SetObjectsInArray(UIObjectsToDisableAtSpectate, false);
         otherCarTransforms.Clear();
         foreach (Transform child in parentOfOtherCarTransforms.transform) {
             otherCarTransforms.Add(child);
@@ -102,6 +103,7 @@ public class PlayerStateHandler : MonoBehaviour
     }
 
     private void Playing() {
+        SetObjectsInArray(UIObjectsToDisableAtSpectate, true);
         carCamera.isSpectating = false;
 
         if (rb.isKinematic) {
@@ -112,6 +114,14 @@ public class PlayerStateHandler : MonoBehaviour
         pod.SetActive(true);
 
         carCamera.target = myCarTarget;
+    }
+
+    private void SetObjectsInArray(GameObject[] objects, bool set) {
+        for (int i = 0; i < objects.Length; i++) {
+            if (objects[i].activeSelf != set) {
+                objects[i].SetActive(set);
+            }
+        }
     }
 }
 public enum PlayerState { Spectating, Playing }
