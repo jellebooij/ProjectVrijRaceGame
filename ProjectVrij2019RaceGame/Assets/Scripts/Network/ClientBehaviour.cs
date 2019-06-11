@@ -273,7 +273,7 @@ public class ClientBehaviour : MonoBehaviour {
         packet.Read(reader, ref context);
         TakeDamage p = packet as TakeDamage;
 
-        if (p.damagedPlayerID == networkId) {
+        if (p.damagedPlayerID == networkId && !countDown) {
             player.gameObject.GetComponent<Health>().health -= p.damage;
         }
 
