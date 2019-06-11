@@ -63,6 +63,7 @@ public class ServerBehaviour : MonoBehaviour
         for(int i = 0; i < powerupSpawns.Length; i++)
         {
             powerupCountdown.Add(0);
+            currentID.Add(-1);
         }
 
     }
@@ -162,6 +163,11 @@ public class ServerBehaviour : MonoBehaviour
 
         alivePlayers = connectedPlaters;
         alivePlayersID.Clear();
+
+        for(int i = 0; i < currentID.Count; i++)
+        {
+            currentID[i] = -1;
+        }
 
         foreach (KeyValuePair<int,NetworkConnection> value in m_Connections)
         {
@@ -384,9 +390,10 @@ public class ServerBehaviour : MonoBehaviour
 
             if(powerupCountdown[i] < 0 && currentID[i] == -1)
             {
-                powerupCountdown[i] = 15;
+                powerupCountdown[i] = 10;
                 SpawnPowerup(powerupSpawns[i].position);
                 currentID[i] = powerupID;
+                Debug.Log("FUCKING SPAWNDEDGNIAODONG");
             }
 
         }
