@@ -232,9 +232,11 @@ public class ClientBehaviour : MonoBehaviour {
     }
 
     public void TakeDamage(int damagedPlayerId, float damage) {
-        TakeDamage packed = new TakeDamage(damagedPlayerId, damage);
-        m_Driver.Send(NetworkPipeline.Null, m_Connection, packed.Write());
-
+        if (!countDown)
+        {
+            TakeDamage packed = new TakeDamage(damagedPlayerId, damage);
+            m_Driver.Send(NetworkPipeline.Null, m_Connection, packed.Write());
+        }
     }
 
     void SetupConnection(DataStreamReader reader, ref DataStreamReader.Context context) {
