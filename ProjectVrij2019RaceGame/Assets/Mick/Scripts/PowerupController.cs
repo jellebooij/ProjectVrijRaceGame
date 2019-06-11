@@ -10,7 +10,7 @@ public class PowerupController : MonoBehaviour {
     MachineGunPowerup machineGun;
     HomingMissilePowerup homingMissilePowerup;
     ShieldPowerup shieldPowerup;
-    NoPowerup none;
+    `public NoPowerup none;
     public float laserDuration = 10;
     public float laserDistance = 50f;
     public Vector3 laserOriginOffset = Vector3.zero;
