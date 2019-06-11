@@ -70,15 +70,7 @@ public class ServerBehaviour : MonoBehaviour
 
         if (connectedPlaters >= 2 && alivePlayersID.Count < 2)
         {
-            t += Time.deltaTime;
-            Debug.Log(alivePlayersID.Count);
-        }
-        
-        if(t > 5)
-        {
-            t = 0;
             StartGame();
-            Debug.Log("poepiekakie");
         }
         
         // AcceptNewConnections

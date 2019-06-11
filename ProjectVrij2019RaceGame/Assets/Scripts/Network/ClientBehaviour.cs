@@ -164,7 +164,7 @@ public class ClientBehaviour : MonoBehaviour
 
         float t = packet.serverTime + (time - packet.localTime) / 2;
 
-        if(Mathf.Abs(time - t) > 0.5f){
+        if(Mathf.Abs(time - t) > 0.34f){
             time = t;
         }
 
@@ -309,7 +309,7 @@ public class ClientBehaviour : MonoBehaviour
 
     void UpdateWorldState(){
 
-        float currentTime = time - 0.1f;
+        float currentTime = time - 0.35f;
 
         for(int i = 0; i < 20; i++){
             
