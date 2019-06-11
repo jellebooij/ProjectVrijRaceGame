@@ -38,7 +38,7 @@ public class MachineGunPowerup : BasePowerup{
 
         cooldownTimer += Time.deltaTime;
 
-        if (Input.GetButton("Fire1") && cooldownTimer > coolDownDuration) {
+        if ((Input.GetButton("Fire1") || (Input.GetAxisRaw("TriggerL") > 0)) && cooldownTimer > coolDownDuration) {
             Debug.Log("Shooting");
             ShootBullets();
         }

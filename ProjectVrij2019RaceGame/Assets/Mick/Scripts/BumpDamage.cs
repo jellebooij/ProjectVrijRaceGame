@@ -14,32 +14,25 @@ public class BumpDamage : MonoBehaviour {
     }
 
     private void OnCollisionEnter(Collision collision) {
-        if (collision.transform.tag == "Pod") {
+        if (collision.transform.root.tag == "Pod") {
             Health otherCarHealth;
-            CarController otherCar = null;
+            Transform otherCar = collision.transform;
             Rigidbody rb;
-            if (collision.transform.GetComponentInParent<Health>() != null) {
-                otherCarHealth = collision.transform.GetComponentInParent<Health>();
-            } else if (collision.transform.GetComponent<Health>() != null) {
-                otherCarHealth = collision.transform.GetComponent<Health>();
+           
+
+            if (collision.transform.root.GetComponent<Rigidbody>() != null) {
+                rb = collision.transform.root.GetComponent<Rigidbody>();
+            } else if (collision.transform.root.GetComponent<Rigidbody>() != null) {
+                rb = collision.transform.root.GetComponent<Rigidbody>();
             }
 
-            if (collision.transform.GetComponentInParent<CarController>() != null) {
-                otherCar = collision.transform.GetComponentInParent<CarController>();
-            } else if (collision.transform.GetComponent<CarController>() != null) {
-                otherCar = collision.transform.GetComponent<CarController>();
-            }
-
-            if (collision.transform.GetComponentInParent<Rigidbody>() != null) {
-                rb = collision.transform.GetComponentInParent<Rigidbody>();
-            } else if (collision.transform.GetComponent<Rigidbody>() != null) {
-                rb = collision.transform.GetComponent<Rigidbody>();
-            }
-
-            float angle = Vector3.Angle(otherCar.velocity, transform.position - otherCar.transform.position);
-            float forceOfImpact = Mathf.Cos(angle) * thisCarController.velocity.magnitude * damageMultiplier;
-            if (forceOfImpact > 0) {
-                ClientBehaviour.instance.TakeDamage(otherCar.transform.gameObject.GetComponent<NetworkPlayer>().id, forceOfImpact);
+            if (otherCar != null) {
+                float angle = Vector3.Angle(otherCar.forward, transform.position - otherCar.transform.position);
+                float forceOfImpact = Mathf.Cos(angle) * thisCarController.velocity.magnitude * damageMultiplier;
+                if (forceOfImpact > 0) {
+                    Debug.Log(forceOfImpact);
+                    ClientBehaviour.instance.TakeDamage(otherCar.transform.gameObject.GetComponent<NetworkPlayer>().id, forceOfImpact);
+                }
             }
         }
     }

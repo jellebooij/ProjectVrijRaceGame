@@ -10,7 +10,7 @@ public class PowerupController : MonoBehaviour {
     MachineGunPowerup machineGun;
     HomingMissilePowerup homingMissilePowerup;
     ShieldPowerup shieldPowerup;
-    NoPowerup none;
+    public NoPowerup none;
     public float laserDuration = 10;
     public float laserDistance = 50f;
     public Vector3 laserOriginOffset = Vector3.zero;
@@ -97,14 +97,12 @@ public class PowerupController : MonoBehaviour {
         } else {
             currentAttackPowerup = none;
         }
-        Debug.Log(currentAttackPowerup.type);
 
         if (currentDefensePowerup.PowerupExecutionOrder != null) {
             currentDefensePowerup.PowerupExecutionOrder();
         } else {
             currentDefensePowerup = none;
         }
-        Debug.Log(currentDefensePowerup.type);
 
         //if (currentpowerup.attackpowerupexecutionorder != null) {
         //    currentpowerup.attackpowerupexecutionorder();
@@ -145,7 +143,7 @@ public class PowerupController : MonoBehaviour {
         }
 
         if (other.tag == "Health") {
-            ClientBehaviour.instance.TakeDamage(transform.gameObject.GetComponent<NetworkPlayer>().id, -50);
+            healthReference.health = 100;
             Destroy(other.gameObject);
         }
     }

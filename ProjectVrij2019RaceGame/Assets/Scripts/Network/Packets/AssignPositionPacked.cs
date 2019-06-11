@@ -27,7 +27,7 @@ public class AssignPositionPacked : BasePacket
     public override DataStreamWriter Write()
     {
 
-        DataStreamWriter writer = new DataStreamWriter(40, Allocator.Temp);
+        DataStreamWriter writer = new DataStreamWriter(32, Allocator.Temp);
 
         writer.Write((int)packetTypes.AssignPostion);
 

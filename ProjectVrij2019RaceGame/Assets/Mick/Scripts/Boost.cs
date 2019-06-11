@@ -22,7 +22,6 @@ public class Boost : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         BoostControl();
-
     }
 
     private void BoostRegeneration() {
@@ -32,12 +31,13 @@ public class Boost : MonoBehaviour {
     }
 
     private void BoostControl() {
-        if (Input.GetButton("Boost") && currentBoostLevel > 0) {
+        if ((Input.GetButton("Boost") || (Input.GetAxisRaw("TriggerR") > 0)) && currentBoostLevel > 0 && Input.GetButton("Gas")) {
             currentBoostLevel -= boostFallOffSpeed * Time.deltaTime;
             carController.boostSpeed = carController.speed * boostMultiplier;
             waitForNewBoostTimer = 0;
         }
-        if (currentBoostLevel <= 0 || !Input.GetButton("Boost")){
+        if (currentBoostLevel <= 0 || !(Input.GetAxisRaw("TriggerR") > 0) && !Input.GetButton("Boost")) {
+
             carController.boostSpeed = 0;
             waitForNewBoostTimer += Time.deltaTime;
             BoostRegeneration();

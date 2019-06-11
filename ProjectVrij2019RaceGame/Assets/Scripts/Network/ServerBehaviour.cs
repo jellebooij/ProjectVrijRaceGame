@@ -10,21 +10,31 @@ using System.Collections.Generic;
 using NetworkConnection = Unity.Networking.Transport.NetworkConnection;
 
 public enum packetTypes { PlayerConnected, SetupConnection, UpdatePlayer, RequestTime, ServerTime,
-    PlayerDisconected, MachineGunFire, Damage, PlayerDied, ActivateShield, AssignPostion, Last }
+    PlayerDisconected, MachineGunFire, Damage, PlayerDied, ActivateShield, AssignPostion, AddPowerup, RemovePowerup, Last }
 
 public class ServerBehaviour : MonoBehaviour
 {   
     public UdpNetworkDriver m_Driver;
     public float time;
-    private List<NetworkConnection> m_Connections;
-    private Dictionary<int, int> idMap = new Dictionary<int, int>();
+    private Dictionary<int, NetworkConnection> m_Connections = new Dictionary<int, NetworkConnection>();
     private NetworkPipeline relieablePipeline;
     private NetworkPipeline unrelieablePipeline;
     private PacketHandler packetHandler;
     public Transform[] spawns;
 
+
+    public Transform[] powerupSpawns;
+    List<float> powerupCountdown = new List<float>();
+    private List<int> alivePlayersID = new List<int>();
+
+
+
     public int connectedPlaters;
     public int alivePlayers;
+
+    int powerupID;
+
+    float t = 0;
 
     int spawnIndex = 0;
 
@@ -35,15 +45,13 @@ public class ServerBehaviour : MonoBehaviour
 
         m_Driver = new UdpNetworkDriver(new INetworkParameter[0]);
 
-        if (m_Driver.Bind(NetworkEndPoint.Parse("192.168.1.17", 9000)) != 0)
+        if (m_Driver.Bind(NetworkEndPoint.Parse("10.3.21.103", 9000)) != 0)
             Debug.Log("Failed to bind to port 9000");
         else
             m_Driver.Listen();
 
         //relieablePipeline = m_Driver.CreatePipeline(typeof(ReliableSequencedPipelineStage));
         //unrelieablePipeline = m_Driver.CreatePipeline(typeof(UnreliableSequencedPipelineStage));
-
-        m_Connections = new List<NetworkConnection>();
 
         packetHandler = new PacketHandler();
         packetHandler.RegisterHandler(packetTypes.UpdatePlayer, UpdatePlayer);
@@ -52,6 +60,11 @@ public class ServerBehaviour : MonoBehaviour
         packetHandler.RegisterHandler(packetTypes.Damage, Damage);
         packetHandler.RegisterHandler(packetTypes.PlayerDied, PlayerDied);
         packetHandler.RegisterHandler(packetTypes.ActivateShield, ActivateShield);
+
+        for(int i = 0; i < powerupSpawns.Length; i++)
+        {
+            powerupCountdown.Add(0);
+        }
 
     }
     
@@ -67,19 +80,13 @@ public class ServerBehaviour : MonoBehaviour
         time += Time.deltaTime;
         CheckDisconnect();
         m_Driver.ScheduleUpdate().Complete();
+        UpdatePowerup();
 
-        if (connectedPlaters >= 2 && alivePlayers < 2)
-            StartGame();
-        
-        // CleanUpConnections
-        for (int i = 0; i < m_Connections.Count; i++)
+        if (connectedPlaters >= 2 && alivePlayersID.Count < 2)
         {
-            if (!m_Connections[i].IsCreated)
-            {
-                m_Connections.RemoveAtSwapBack(i);
-                --i;
-            }
+            StartGame();
         }
+        
         // AcceptNewConnections
         NetworkConnection c;
         while ((c = m_Driver.Accept()) != default(NetworkConnection))
@@ -87,31 +94,24 @@ public class ServerBehaviour : MonoBehaviour
             
             Debug.Log("Accepted a connection");
 
-            m_Connections.Add(c);
-
             int id = GetNewID();
+            
 
-            Debug.Log(id);
-            idMap.Add(id, m_Connections.Count - 1);
-
-
-
-            for (int i = 0; i < m_Connections.Count; i++){
+            foreach (KeyValuePair<int,NetworkConnection> pair in m_Connections){
 
                 using (DataStreamWriter writer = new DataStreamWriter(8, Allocator.Temp))
                 {
-                    if(i == m_Connections.Count - 1)
-                        continue;
 
                     writer.Write((int)packetTypes.PlayerConnected);
                     writer.Write(id);
-                    m_Driver.Send(NetworkPipeline.Null, m_Connections[i], writer);
+                    m_Driver.Send(NetworkPipeline.Null, pair.Value, writer);
                     Debug.Log("player" + id + "connectedToServer");
                       
                 }
 
             }
 
+            m_Connections.Add(id,c);
             connectedPlaters++;
             SetupConnection conn = new SetupConnection(id, IDs.Count, IDs.ToArray());
             m_Driver.Send(relieablePipeline,c,conn.Write());
@@ -119,14 +119,16 @@ public class ServerBehaviour : MonoBehaviour
         }
         
         DataStreamReader stream;
-        for (int i = 0; i < m_Connections.Count; i++)
+        foreach (KeyValuePair<int,NetworkConnection> value in m_Connections)
         {
-            if (!m_Connections[i].IsCreated)
+            if (!value.Value.IsCreated)
                 Debug.Log("Unity is kut");
             
             NetworkEvent.Type cmd;
+
             
-            while ((cmd = m_Driver.PopEventForConnection(m_Connections[i], out stream)) !=
+            
+            while ((cmd = m_Driver.PopEventForConnection(value.Value, out stream)) !=
                    NetworkEvent.Type.Empty)
             {
                 if (cmd == NetworkEvent.Type.Data)
@@ -138,6 +140,17 @@ public class ServerBehaviour : MonoBehaviour
                     Debug.Log("Client disconnected from server");
                     connectedPlaters--;
 
+                    int disconnectedId = value.Key;
+                    bool found = false;
+
+                    if (alivePlayersID.Contains(disconnectedId) && found)
+                    {
+                        alivePlayersID.Remove(disconnectedId);
+                    }
+
+                    m_Connections.Remove(disconnectedId);
+                    IDs.Remove(disconnectedId);
+                    timeSinceLastPacked.Remove(disconnectedId);
 
                 }
             }
@@ -149,11 +162,13 @@ public class ServerBehaviour : MonoBehaviour
     {
 
         alivePlayers = connectedPlaters;
+        alivePlayersID.Clear();
 
-        for (int i = 0; i < connectedPlaters; i++)
+        foreach (KeyValuePair<int,NetworkConnection> value in m_Connections)
         {
 
-            AssignPosition(IDs[i], spawns[spawnIndex]);
+            AssignPosition(value.Key, spawns[spawnIndex]);
+            alivePlayersID.Add(value.Key);
 
             spawnIndex++;
 
@@ -176,12 +191,12 @@ public class ServerBehaviour : MonoBehaviour
                 {
 
                     int disId = IDs[i];
-                    m_Connections[idMap[disId]] = default(NetworkConnection);
+                    m_Connections.Remove(disId);
 
-                    for (int j = 0; j < m_Connections.Count; j++)
+                    foreach (KeyValuePair<int,NetworkConnection> value in m_Connections)
                     {
 
-                        if (j == idMap[disId])
+                        if (value.Key == disId)
                             continue;
 
                         using (DataStreamWriter writer = new DataStreamWriter(8, Allocator.Temp))
@@ -189,15 +204,21 @@ public class ServerBehaviour : MonoBehaviour
 
                             writer.Write((int)packetTypes.PlayerDisconected);
                             writer.Write(disId);
-                            m_Driver.Send(relieablePipeline, m_Connections[j], writer);
+                            m_Driver.Send(relieablePipeline, value.Value, writer);
 
                         }
 
                     }
 
                     connectedPlaters--;
+                    alivePlayers--;
                     IDs.Remove(disId);
-                    idMap.Remove(disId);
+
+                    if (alivePlayersID.Contains(disId))
+                    {
+                        alivePlayersID.Remove(disId);
+                    }
+
                     timeSinceLastPacked.Remove(disId);
                 }
             }
@@ -212,17 +233,17 @@ public class ServerBehaviour : MonoBehaviour
         ServerTimePacket returnPacket = new ServerTimePacket(time, packet.localTime);
         var writer = returnPacket.Write();
 
-        m_Driver.Send(unrelieablePipeline,m_Connections[idMap[packet.netID]], writer);
+        m_Driver.Send(unrelieablePipeline, m_Connections[packet.netID], writer);
 
     }
 
     void AssignPosition(int carID, Transform position)
     {
 
-        if (idMap.ContainsKey(carID))
+        if (m_Connections.ContainsKey(carID))
         {
             AssignPositionPacked packed = new AssignPositionPacked(position.position, position.rotation);
-            m_Driver.Send( unrelieablePipeline, m_Connections[idMap[carID]], packed.Write() );
+            m_Driver.Send(relieablePipeline, m_Connections[carID], packed.Write() );
         }
     }
 
@@ -232,12 +253,25 @@ public class ServerBehaviour : MonoBehaviour
         ActivateShieldPackage packed = new ActivateShieldPackage();
         packed.Read(stream, ref context);
 
-        for (int j = 0; j < m_Connections.Count; j++)
+        foreach (KeyValuePair<int, NetworkConnection> value in m_Connections)
         {
-            if (IDs[j] == packed.netID)
+            if (value.Key == packed.netID)
                 continue;
 
-            m_Driver.Send(unrelieablePipeline, m_Connections[j], packed.Write());
+            m_Driver.Send(relieablePipeline, value.Value, packed.Write());
+        }
+
+    }
+
+    void RemovePowerup(DataStreamReader stream, ref DataStreamReader.Context context)
+    {
+
+        RemovePowerup packed = new RemovePowerup();
+        packed.Read(stream, ref context);
+
+        foreach (KeyValuePair<int, NetworkConnection> value in m_Connections)
+        {
+            m_Driver.Send(relieablePipeline, value.Value, packed.Write());
         }
 
     }
@@ -250,12 +284,12 @@ public class ServerBehaviour : MonoBehaviour
         MachineGunFirePacked packed = new MachineGunFirePacked();
         packed.Read(stream, ref context);
 
-         for(int j =0; j<m_Connections.Count; j++)
-         {
-            if (IDs[j] == packed.netID)
+        foreach (KeyValuePair<int, NetworkConnection> value in m_Connections)
+        {
+            if (value.Key == packed.netID)
                 continue;
 
-            m_Driver.Send(unrelieablePipeline, m_Connections[j], packed.Write());
+            m_Driver.Send(relieablePipeline, value.Value, packed.Write());
          }
 
     }
@@ -266,12 +300,19 @@ public class ServerBehaviour : MonoBehaviour
         packed.Read(stream, ref context);
         alivePlayers--;
 
-        for (int j = 0; j < m_Connections.Count; j++)
+        if (alivePlayersID.Contains(packed.netID))
         {
-            if (IDs[j] == packed.netID)
+            alivePlayersID.Remove(packed.netID);
+        }
+
+        foreach (KeyValuePair<int, NetworkConnection> value in m_Connections)
+        {
+
+            if (value.Key == packed.netID)
                 continue;
 
-            m_Driver.Send(unrelieablePipeline, m_Connections[j], packed.Write());
+            m_Driver.Send(relieablePipeline, value.Value, packed.Write());
+
         }
     }
 
@@ -281,9 +322,9 @@ public class ServerBehaviour : MonoBehaviour
         TakeDamage packed = new TakeDamage();
         packed.Read(stream, ref context);
 
-        for (int j = 0; j < m_Connections.Count; j++)
+        foreach (KeyValuePair<int, NetworkConnection> value in m_Connections)
         {
-            m_Driver.Send(unrelieablePipeline, m_Connections[j], packed.Write());
+            m_Driver.Send(relieablePipeline, value.Value, packed.Write());
         }
 
     }
@@ -301,7 +342,6 @@ public class ServerBehaviour : MonoBehaviour
         timeSinceLastPacked[(packet as CarTransformPacked).netID] = 0;
 
         SendPosition(packet as CarTransformPacked);
-        Debug.Log("got position from  " + (packet as CarTransformPacked).netID);
                                 
     }
 
@@ -309,8 +349,38 @@ public class ServerBehaviour : MonoBehaviour
 
         var writer = packed.Write();
         
-        for(int j = 0; j < m_Connections.Count; j++){
-            m_Driver.Send(unrelieablePipeline, m_Connections[j], writer);
+        foreach(KeyValuePair<int,NetworkConnection> value in m_Connections){
+            m_Driver.Send(unrelieablePipeline, value.Value, writer);
+        }
+
+    }
+
+    void SpawnPowerup(Vector3 position)
+    {
+
+        AddPowerup package = new AddPowerup(powerupID, position);
+        powerupID++;
+
+        foreach (KeyValuePair<int, NetworkConnection> value in m_Connections)
+        {
+            m_Driver.Send(relieablePipeline, value.Value, package.Write());
+        }
+
+    }
+
+    void UpdatePowerup()
+    {
+
+        for(int i = 0; i < powerupCountdown.Count; i++)
+        {
+            powerupCountdown[i] -= Time.deltaTime;
+
+            if(powerupCountdown[i] < 0)
+            {
+                powerupCountdown[i] = 15;
+                SpawnPowerup(powerupSpawns[i].position);
+            }
+
         }
 
     }
