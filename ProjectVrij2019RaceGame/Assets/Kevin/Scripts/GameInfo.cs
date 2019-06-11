@@ -14,16 +14,15 @@ public class GameInfo : MonoBehaviour {
     private float fadeSpeed = 1.0f;
 
     private void Start() {
-
         infoText.gameObject.SetActive(false);
         infoText.text = "Starting game in... " + Mathf.FloorToInt(countdown).ToString();
 
     }
 
     private void Update() {
-        if (Input.GetKeyDown(KeyCode.E)) {
-            BeginTimer();
-        }
+        //if (Input.GetKeyDown(KeyCode.E)) {
+        //    EliminatePlayer();
+        //}
 
         StartTimer();
     }
@@ -46,8 +45,6 @@ public class GameInfo : MonoBehaviour {
                 StartCoroutine(StartGame());
             }
         }
-
-
     }
 
     public IEnumerator StartGame() {
@@ -56,5 +53,19 @@ public class GameInfo : MonoBehaviour {
         yield return new WaitForSeconds(1f);
         infoText.gameObject.SetActive(false);
         startCountdown = false;
+    }
+
+    public IEnumerator EliminatePlayer() {
+        infoText.text = "YOU HAVE ELIMINATED A PLAYER!";
+        infoText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(2f);
+        infoText.gameObject.SetActive(false);
+    }
+
+    public IEnumerator PlayerDefeated() {
+        infoText.text = "YOU HAVE BEEN DEFEATED!";
+        infoText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(2f);
+        infoText.gameObject.SetActive(false);
     }
 }
