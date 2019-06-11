@@ -98,7 +98,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
   m_LightingDataAsset: {fileID: 112000000, guid: 5660a63deab9bc34db9985611db3b7cf,
     type: 2}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -473,6 +473,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_textInfo.pageCount
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9067267225174320311, guid: f229ec792102c7f438f0eda582431db7,
+        type: 3}
+      propertyPath: fadeSpeed
+      value: 0.15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f229ec792102c7f438f0eda582431db7, type: 3}
@@ -2251,6 +2256,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 263756981}
   m_Mesh: {fileID: -8769828493162718696, guid: 6e52317acec857d49a4494bfb6621fe6, type: 3}
+--- !u!114 &284108249 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9067267225174320311, guid: f229ec792102c7f438f0eda582431db7,
+    type: 3}
+  m_PrefabInstance: {fileID: 16034769}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3164d6c5f0cf364da76bc1e2fc011de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &311017718
 GameObject:
   m_ObjectHideFlags: 0
@@ -5568,7 +5585,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 778284428}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15f227012c186e64fb845c4d74f43263, type: 3}
+  m_Script: {fileID: 11500000, guid: 2c04b59dd8c752f40bed72210cd9bff1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   time: 0
@@ -5580,6 +5597,7 @@ MonoBehaviour:
   parent: {fileID: 750610011}
   player: {fileID: 680595894}
   msIntervall: 10
+  info: {fileID: 284108249}
 --- !u!114 &778284430
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13239,8 +13257,15 @@ MonoBehaviour:
     type: 3}
   machinegunBullet: {fileID: 0}
   parent: {fileID: 0}
+  packets: {fileID: 0}
   player: {fileID: 0}
   msIntervall: 0
+  networkId: 0
+  connected: 0
+  countDown: 0
+  countDownT: 0
+  info: {fileID: 0}
+  t: 0
 --- !u!4 &1833322038
 Transform:
   m_ObjectHideFlags: 0
