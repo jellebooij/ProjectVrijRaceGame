@@ -294,12 +294,12 @@ public class ClientBehaviour : MonoBehaviour {
 
     void StartGame() {
 
+        player.transform.position = assPosPack.postition;
+        player.transform.rotation = assPosPack.rotation;
+
         player.GetComponent<Health>().health = 100;
         player.GetComponent<PowerupController>().currentAttackPowerup = player.GetComponent<PowerupController>().none;
         player.GetComponent<PowerupController>().currentDefensePowerup = player.GetComponent<PowerupController>().none;
-
-        player.transform.position = assPosPack.postition;
-        player.transform.rotation = assPosPack.rotation;
 
         foreach (KeyValuePair<int, Transform> key in transforms) {
             key.Value.gameObject.SetActive(true);
