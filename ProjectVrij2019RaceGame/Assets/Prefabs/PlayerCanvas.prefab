@@ -87,6 +87,7 @@ GameObject:
   - component: {fileID: 5040518932832705093}
   - component: {fileID: 9024278598281934375}
   - component: {fileID: 473172090556755605}
+  - component: {fileID: 1181363186}
   m_Layer: 5
   m_Name: PlayerCanvas
   m_TagString: Untagged
@@ -189,6 +190,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   offset: {x: 0, y: 1.6, z: 0}
   target: {fileID: 0}
+--- !u!114 &1181363186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2698305532556592326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 093dfb7175a75c44185c4e4d47088cd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthBarRight: {fileID: 6288437845880188424}
+  health: {fileID: 0}
+  dangerLevel: 30
+  fullColor: {r: 0, g: 0, b: 0, a: 0}
+  lowColor: {r: 0, g: 0, b: 0, a: 0}
+  whiteColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &2791286949736839545
 GameObject:
   m_ObjectHideFlags: 0
