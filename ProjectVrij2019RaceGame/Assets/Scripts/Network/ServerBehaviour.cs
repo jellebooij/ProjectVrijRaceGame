@@ -63,6 +63,7 @@ public class ServerBehaviour : MonoBehaviour
         for(int i = 0; i < powerupSpawns.Length; i++)
         {
             powerupCountdown.Add(0);
+            currentID.Add(0);
         }
 
     }
