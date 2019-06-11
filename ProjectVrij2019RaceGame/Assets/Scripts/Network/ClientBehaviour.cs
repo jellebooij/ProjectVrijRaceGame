@@ -325,7 +325,7 @@ public class ClientBehaviour : MonoBehaviour {
         {
             if(playerHealth.ContainsKey((packet as TakeDamage).damagedPlayerID)){
                 playerHealth[(packet as TakeDamage).damagedPlayerID] -= (packet as TakeDamage).damagedPlayerID;
-                transforms[(packet as TakeDamage).damagedPlayerID].gameObject.GetComponent<WorldSpaceHealthUI>().health = playerHealth[(packet as TakeDamage).damagedPlayerID];
+                transforms[(packet as TakeDamage).damagedPlayerID].gameObject.GetComponentInChildren<WorldSpaceHealthUI>().health = playerHealth[(packet as TakeDamage).damagedPlayerID];
             }
         }
 
