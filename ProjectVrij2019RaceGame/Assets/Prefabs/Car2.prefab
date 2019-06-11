@@ -88,7 +88,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3601a33fd2f6cf14bb907264e197d6cd, type: 2}
+  - {fileID: 2100000, guid: bb0db027966340a478071bb6bf18e381, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -605,6 +605,7 @@ MonoBehaviour:
   healthReference: {fileID: 0}
   currentAttackPowerup: {fileID: 0}
   currentDefensePowerup: {fileID: 0}
+  none: {fileID: 0}
   laserDuration: 10
   laserDistance: 50
   laserOriginOffset: {x: 0, y: 0, z: 0}
@@ -1325,6 +1326,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 318649884566014161}
     m_Modifications:
+    - target: {fileID: 8332039901393225074, guid: e925ec0b9db63c24e8ac819023a28e85,
+        type: 3}
+      propertyPath: m_Name
+      value: Pod
+      objectReference: {fileID: 0}
+    - target: {fileID: 8332039901393225074, guid: e925ec0b9db63c24e8ac819023a28e85,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7318249674340457311, guid: e925ec0b9db63c24e8ac819023a28e85,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1394,16 +1405,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 0.29432473
-      objectReference: {fileID: 0}
-    - target: {fileID: 8332039901393225074, guid: e925ec0b9db63c24e8ac819023a28e85,
-        type: 3}
-      propertyPath: m_Name
-      value: Pod
-      objectReference: {fileID: 0}
-    - target: {fileID: 8332039901393225074, guid: e925ec0b9db63c24e8ac819023a28e85,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e925ec0b9db63c24e8ac819023a28e85, type: 3}
