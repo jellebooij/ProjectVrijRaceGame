@@ -11,6 +11,7 @@ using NetworkConnection = Unity.Networking.Transport.NetworkConnection;
 
 
 public class ClientBehaviour : MonoBehaviour {
+
     public UdpNetworkDriver m_Driver;
     public NetworkConnection m_Connection;
     public float time;
@@ -220,6 +221,7 @@ public class ClientBehaviour : MonoBehaviour {
     }
 
     void MachineGunFire(DataStreamReader reader, ref DataStreamReader.Context context) {
+
         MachineGunFirePacked packet = new MachineGunFirePacked();
         packet.Read(reader, ref context);
 
@@ -290,6 +292,10 @@ public class ClientBehaviour : MonoBehaviour {
     }
 
     void StartGame() {
+
+        player.GetComponent<Health>().health = 100;
+        player.GetComponent<PowerupController>().currentAttackPowerup = player.GetComponent<PowerupController>().none;
+        player.GetComponent<PowerupController>().currentDefensePowerup = player.GetComponent<PowerupController>().none;
 
         player.transform.position = assPosPack.postition;
         player.transform.rotation = assPosPack.rotation;

@@ -111,6 +111,8 @@ public class ServerBehaviour : MonoBehaviour
                 Debug.Log("Unity is kut");
             
             NetworkEvent.Type cmd;
+
+            
             
             while ((cmd = m_Driver.PopEventForConnection(value.Value, out stream)) !=
                    NetworkEvent.Type.Empty)
@@ -132,6 +134,7 @@ public class ServerBehaviour : MonoBehaviour
                         alivePlayersID.Remove(disconnectedId);
                     }
 
+                    m_Connections.Remove(disconnectedId);
                     IDs.Remove(disconnectedId);
                     timeSinceLastPacked.Remove(disconnectedId);
 
@@ -226,7 +229,7 @@ public class ServerBehaviour : MonoBehaviour
         if (m_Connections.ContainsKey(carID))
         {
             AssignPositionPacked packed = new AssignPositionPacked(position.position, position.rotation);
-            m_Driver.Send( unrelieablePipeline, m_Connections[carID], packed.Write() );
+            m_Driver.Send(relieablePipeline, m_Connections[carID], packed.Write() );
         }
     }
 
@@ -236,12 +239,12 @@ public class ServerBehaviour : MonoBehaviour
         ActivateShieldPackage packed = new ActivateShieldPackage();
         packed.Read(stream, ref context);
 
-        for (int j = 0; j < m_Connections.Count; j++)
+        foreach (KeyValuePair<int, NetworkConnection> value in m_Connections)
         {
-            if (IDs[j] == packed.netID)
+            if (value.Key == packed.netID)
                 continue;
 
-            m_Driver.Send(unrelieablePipeline, m_Connections[j], packed.Write());
+            m_Driver.Send(relieablePipeline, value.Value, packed.Write());
         }
 
     }
@@ -254,12 +257,12 @@ public class ServerBehaviour : MonoBehaviour
         MachineGunFirePacked packed = new MachineGunFirePacked();
         packed.Read(stream, ref context);
 
-         for(int j =0; j<m_Connections.Count; j++)
-         {
-            if (IDs[j] == packed.netID)
+        foreach (KeyValuePair<int, NetworkConnection> value in m_Connections)
+        {
+            if (value.Key == packed.netID)
                 continue;
 
-            m_Driver.Send(unrelieablePipeline, m_Connections[j], packed.Write());
+            m_Driver.Send(relieablePipeline, value.Value, packed.Write());
          }
 
     }
@@ -275,12 +278,14 @@ public class ServerBehaviour : MonoBehaviour
             alivePlayersID.Remove(packed.netID);
         }
 
-        for (int j = 0; j < m_Connections.Count; j++)
+        foreach (KeyValuePair<int, NetworkConnection> value in m_Connections)
         {
-            if (IDs[j] == packed.netID)
+
+            if (value.Key == packed.netID)
                 continue;
 
-            m_Driver.Send(unrelieablePipeline, m_Connections[j], packed.Write());
+            m_Driver.Send(relieablePipeline, value.Value, packed.Write());
+
         }
     }
 
@@ -290,9 +295,9 @@ public class ServerBehaviour : MonoBehaviour
         TakeDamage packed = new TakeDamage();
         packed.Read(stream, ref context);
 
-        for (int j = 0; j < m_Connections.Count; j++)
+        foreach (KeyValuePair<int, NetworkConnection> value in m_Connections)
         {
-            m_Driver.Send(unrelieablePipeline, m_Connections[j], packed.Write());
+            m_Driver.Send(relieablePipeline, value.Value, packed.Write());
         }
 
     }
@@ -317,8 +322,8 @@ public class ServerBehaviour : MonoBehaviour
 
         var writer = packed.Write();
         
-        for(int j = 0; j < m_Connections.Count; j++){
-            m_Driver.Send(unrelieablePipeline, m_Connections[j], writer);
+        foreach(KeyValuePair<int,NetworkConnection> value in m_Connections){
+            m_Driver.Send(unrelieablePipeline, value.Value, writer);
         }
 
     }
