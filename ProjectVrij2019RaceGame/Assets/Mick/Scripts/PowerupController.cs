@@ -97,14 +97,12 @@ public class PowerupController : MonoBehaviour {
         } else {
             currentAttackPowerup = none;
         }
-        Debug.Log(currentAttackPowerup.type);
 
         if (currentDefensePowerup.PowerupExecutionOrder != null) {
             currentDefensePowerup.PowerupExecutionOrder();
         } else {
             currentDefensePowerup = none;
         }
-        Debug.Log(currentDefensePowerup.type);
 
         //if (currentpowerup.attackpowerupexecutionorder != null) {
         //    currentpowerup.attackpowerupexecutionorder();

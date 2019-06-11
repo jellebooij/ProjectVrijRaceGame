@@ -310,7 +310,6 @@ public class ServerBehaviour : MonoBehaviour
         timeSinceLastPacked[(packet as CarTransformPacked).netID] = 0;
 
         SendPosition(packet as CarTransformPacked);
-        Debug.Log("got position from  " + (packet as CarTransformPacked).netID);
                                 
     }
 
