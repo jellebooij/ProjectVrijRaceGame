@@ -6,13 +6,13 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/Scenes/Server.unity
+    path: Assets/Kevin/Scripts/Scenes/Server.unity
     guid: dc59fd939d3af79409c320729e1c5a9f
   - enabled: 0
-    path: Assets/Scenes/Client.unity
+    path: Assets/Kevin/Scripts/Scenes/Client.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 0
-    path: Assets/Scenes/Offline.unity
+    path: Assets/Kevin/Scripts/Scenes/Offline.unity
     guid: 81c4fbd6e48d9bf40ab6eba14252f48a
   - enabled: 0
     path: Assets/Mick/Scenes/MickV4.unity

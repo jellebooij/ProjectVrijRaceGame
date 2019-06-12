@@ -21,7 +21,6 @@ public class ClientBehaviour : MonoBehaviour {
     private NetworkPipeline unrelieablePipeline;
     private PacketHandler packetHandler;
     public Dictionary<int, Transform> transforms = new Dictionary<int, Transform>();
-    public Dictionary<int, float> playerHealth = new Dictionary<int, float>();
     public GameObject machinegunBullet;
     public Transform parent;
 
@@ -226,7 +225,6 @@ public class ClientBehaviour : MonoBehaviour {
         transforms.Add(playerID, p);
         p.GetComponentInChildren<NetworkPlayer>().id = playerID;
         p.gameObject.SetActive(false);
-        playerHealth.Add(playerID, 100);
 
         Debug.Log(playerID + " connectedTOClient");
 
@@ -248,8 +246,6 @@ public class ClientBehaviour : MonoBehaviour {
         int id = reader.ReadInt(ref context);
         Destroy(transforms[id].gameObject);
         transforms.Remove(id);
-        playerHealth.Remove(id);
-
     }
 
     void MachineGunFire(DataStreamReader reader, ref DataStreamReader.Context context) {
@@ -287,8 +283,6 @@ public class ClientBehaviour : MonoBehaviour {
             Transform p = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity, parent).transform;
             transforms.Add(conn.IDs[i], p);
             p.GetComponentInChildren<NetworkPlayer>().id = conn.IDs[i];
-            playerHealth.Add(conn.IDs[i], 100);
-
         }
 
     }
@@ -312,6 +306,7 @@ public class ClientBehaviour : MonoBehaviour {
 
     }
 
+
     void Damage(DataStreamReader reader, ref DataStreamReader.Context context) {
 
         BasePacket packet = new TakeDamage();
@@ -320,13 +315,6 @@ public class ClientBehaviour : MonoBehaviour {
 
         if (p.damagedPlayerID == networkId && !countDown) {
             player.gameObject.GetComponent<Health>().health -= p.damage;
-        }
-        else
-        {
-            if(playerHealth.ContainsKey((packet as TakeDamage).damagedPlayerID)){
-                playerHealth[(packet as TakeDamage).damagedPlayerID] -= (packet as TakeDamage).damage;
-                transforms[(packet as TakeDamage).damagedPlayerID].gameObject.GetComponentInChildren<WorldSpaceHealthUI>().health = playerHealth[(packet as TakeDamage).damagedPlayerID];
-            }
         }
 
     }
@@ -365,8 +353,6 @@ public class ClientBehaviour : MonoBehaviour {
 
         foreach (KeyValuePair<int, Transform> key in transforms) {
             key.Value.gameObject.SetActive(true);
-            playerHealth[key.Key] = 100;
-            transforms[key.Key].GetComponentInChildren<WorldSpaceHealthUI>().health = 100;
         }
 
         player.GetComponent<PlayerStateHandler>().type = PlayerState.Playing;
