@@ -29,7 +29,6 @@ public class AdditionalInfoUI : MonoBehaviour
 
         if (playerStateHandler.type == PlayerState.Spectating) {
             infoText.gameObject.SetActive(true);
-            infoText.text = "YOU ARE CURRENTLY SPECTATING!";
         } else {
             infoText.gameObject.SetActive(false);
         }
