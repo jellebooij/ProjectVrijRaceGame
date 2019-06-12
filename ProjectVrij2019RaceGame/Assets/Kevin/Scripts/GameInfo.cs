@@ -12,6 +12,7 @@ public class GameInfo : MonoBehaviour {
     private TextMeshProUGUI infoText;
     [SerializeField]
     private float fadeSpeed = 1.0f;
+    public GameObject spectating;
 
     private void Start() {
         infoText.gameObject.SetActive(false);
@@ -37,6 +38,7 @@ public class GameInfo : MonoBehaviour {
     public void StartTimer() {
 
         if(startCountdown) {
+            spectating.SetActive(false);
             countdown -= Time.deltaTime;
 
             infoText.text = "Starting game in... " + Mathf.FloorToInt(countdown).ToString();

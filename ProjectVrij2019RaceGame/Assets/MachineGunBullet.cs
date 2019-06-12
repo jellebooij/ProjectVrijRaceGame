@@ -37,7 +37,7 @@ public class MachineGunBullet : MonoBehaviour {
         if (Physics.Linecast(transform.position, transform.position + transform.forward * speed * Time.deltaTime, out hit, layerMask)) {
             if (hit.transform.gameObject.GetComponent<NetworkPlayer>() != null) {
                 if (isOwner) {
-                    ClientBehaviour.instance.TakeDamage(hit.transform.gameObject.GetComponent<NetworkPlayer>().id, 2f);
+                    ClientBehaviour.instance.TakeDamage(hit.transform.gameObject.GetComponent<NetworkPlayer>().id, 4f);
 
                 }
 
