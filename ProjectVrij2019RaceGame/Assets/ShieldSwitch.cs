@@ -21,7 +21,7 @@ public class ShieldSwitch : MonoBehaviour
     // Update is called once per frame
     public void EnableShield()
     {
-        time = GetComponent<PowerupController>().shieldDuration;
+        time = 10;
         shield.SetActive(true);
     }
     public void DisableShield() {
