@@ -10,6 +10,9 @@ public class AttackUI : MonoBehaviour {
     private Vector2 refPos;
     private Vector2 refSize;
 
+    public AudioClip impact;
+    AudioSource audioSource;
+
     [SerializeField] private RectTransform attackInactive;
     [SerializeField] private RectTransform attackActive;
     [SerializeField] private Image attackTimer;
@@ -17,6 +20,10 @@ public class AttackUI : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI attackText;
 
     public List<Sprite> icons = new List<Sprite>();
+
+    public void Start() {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     public void Activate(RectTransform oldState, RectTransform newState, Sprite attackSprite, string attackName, Vector2 refPos, float animSpeed) {
         oldState.anchoredPosition = Vector2.Lerp(oldState.anchoredPosition, refPos, animSpeed);
@@ -40,6 +47,7 @@ public class AttackUI : MonoBehaviour {
         }
         else if (powerUp.currentAttackPowerup.type == PowerupType.MachineGun) {
             Activate(attackInactive, attackActive, icons[2], "Machine Gun", new Vector2(250, 0), 0.075f);
+            
         }
         else if (powerUp.currentAttackPowerup.type == PowerupType.None) {
             Deactivate(attackInactive, attackActive, new Vector2(250, 0), 0.075f);

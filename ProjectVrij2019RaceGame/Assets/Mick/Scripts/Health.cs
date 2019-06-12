@@ -10,6 +10,12 @@ public class Health : MonoBehaviour {
     public float maxArmor;
     public float armor;
 
+    public AudioClip impact;
+    AudioSource audioSource;
+
+    public Transform trans;
+    public GameObject Explosion;
+
 
     // Start is called before the first frame update
     void Start() {
@@ -21,9 +27,12 @@ public class Health : MonoBehaviour {
         if (health > maxHealth) {
             health = maxHealth;
         }
-        if (health < 0) {
+        if (health <= 0) {
+            audioSource.PlayOneShot(impact, 0.7F);
+            Explosion = Instantiate(Explosion, transform.position, transform.rotation);
         }
     }
+    
 
     public void TakeDamage(float amount) {
         float combinedHealth = health + armor;
