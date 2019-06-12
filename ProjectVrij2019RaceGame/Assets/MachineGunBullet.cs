@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MachineGunBullet : MonoBehaviour
-{
+public class MachineGunBullet : MonoBehaviour {
 
     public float speed = 20f;
     public float lifeTime = 1f;
@@ -11,15 +10,15 @@ public class MachineGunBullet : MonoBehaviour
     public LayerMask layerMask;
     public bool isOwner = true;
     public GameObject Shot;
+
     // Start is called before the first frame update
-    void Start()
-    {
-        
+    void Start() {
+
+
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         timer += Time.deltaTime;
         if (timer > lifeTime) {
             Destroy(gameObject);
@@ -32,21 +31,22 @@ public class MachineGunBullet : MonoBehaviour
     }
 
     private void CheckRayCollision() {
-        
-            RaycastHit hit;
-            if (Physics.Linecast(transform.position, transform.position + transform.forward * speed * Time.deltaTime, out hit, layerMask)) {
-                if (hit.transform.gameObject.GetComponent<NetworkPlayer>() != null) {
-                    if (isOwner)
-                    {
-                        ClientBehaviour.instance.TakeDamage(hit.transform.gameObject.GetComponent<NetworkPlayer>().id, 2f);
 
-                    }
-                    Instantiate(Shot,hit.point , Quaternion.identity);
+        RaycastHit hit;
+
+        if (Physics.Linecast(transform.position, transform.position + transform.forward * speed * Time.deltaTime, out hit, layerMask)) {
+            if (hit.transform.gameObject.GetComponent<NetworkPlayer>() != null) {
+                if (isOwner) {
+                    ClientBehaviour.instance.TakeDamage(hit.transform.gameObject.GetComponent<NetworkPlayer>().id, 2f);
+
+                }
+
+                GameObject bulletImpact = Instantiate(Shot, hit.point, Quaternion.identity);
+                Destroy(bulletImpact, 2f);
 
             }
 
-                Destroy(gameObject);
-            }
-     }
-    
+            Destroy(gameObject);
+        }
+    }
 }
