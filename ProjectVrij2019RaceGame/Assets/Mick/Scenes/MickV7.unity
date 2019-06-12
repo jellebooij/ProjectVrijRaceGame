@@ -10096,6 +10096,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 473172090556755605, guid: 11c172448971abc489f38acc8fc327b6,
+        type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 680595894}
     - target: {fileID: 1181363186, guid: 11c172448971abc489f38acc8fc327b6, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -10104,11 +10109,6 @@ PrefabInstance:
       propertyPath: health
       value: 
       objectReference: {fileID: 680595889}
-    - target: {fileID: 473172090556755605, guid: 11c172448971abc489f38acc8fc327b6,
-        type: 3}
-      propertyPath: target
-      value: 
-      objectReference: {fileID: 680595894}
     - target: {fileID: 5196625861468670876, guid: 11c172448971abc489f38acc8fc327b6,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -15561,7 +15561,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: 'YOU ARE CURRENTLY SPECTATING!
 
-    Press "B" to switch camera'
+    Press "A" to switch camera'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cd8bab12e69cdda4286e0eabc9eed990, type: 2}
   m_sharedMaterial: {fileID: 3263682096234522817, guid: cd8bab12e69cdda4286e0eabc9eed990,

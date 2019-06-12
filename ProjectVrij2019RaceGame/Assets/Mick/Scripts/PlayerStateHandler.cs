@@ -85,7 +85,7 @@ public class PlayerStateHandler : MonoBehaviour
             }
         }
            
-        if (Input.GetButtonDown("Fire1")) {
+        if (Input.GetButtonDown("Gas")) {
             isSpectatingAutomatically = false;
             SwitchSpectatorToPlayer();
         }
