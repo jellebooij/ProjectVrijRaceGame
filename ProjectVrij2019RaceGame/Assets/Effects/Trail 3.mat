@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Trail 2
+  m_Name: Trail 3
   m_Shader: {fileID: -6465566751694194690, guid: 347ec65053ad9594ab9144ea3af69e46,
     type: 3}
   m_ShaderKeywords: 
@@ -21,17 +21,17 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - Texture2D_1503D6E2:
-        m_Texture: {fileID: 2800000, guid: ca530e5103133914ca96c72490bd9768, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - Texture2D_675CB9D3:
         m_Texture: {fileID: 2800000, guid: a222b3d2c604e1946af11e01d29efdee, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - Texture2D_675CB9D3:
+        m_Texture: {fileID: 10300, guid: 0000000000000000f000000000000000, type: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_599FB9B5: 0.217
+    - Vector1_599FB9B5: 0.102
     - Vector1_BDC2FF4D: 25
-    - Vector1_D02DE318: 0.776
+    - Vector1_D02DE318: 0.569
     - Vector1_D110E2B5: 2
     m_Colors:
     - Color_FE85C68B: {r: 7.999999, g: 1.6335077, b: 0, a: 0.8235294}
