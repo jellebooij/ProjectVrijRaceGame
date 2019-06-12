@@ -68,4 +68,11 @@ public class GameInfo : MonoBehaviour {
         yield return new WaitForSeconds(2f);
         infoText.gameObject.SetActive(false);
     }
+
+    public IEnumerator Spectating() {
+        infoText.text = "YOU ARE CURRENTLY SPECTATING!";
+        infoText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(2f);
+        infoText.gameObject.SetActive(false);
+    }
 }
