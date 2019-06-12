@@ -9,7 +9,12 @@ public class AdditionalInfoUI : MonoBehaviour
 {
     public Transform otherCarsTransform;
     public TextMeshProUGUI playersAliveCountText;
-    private int playersAliveCount; 
+    private int playersAliveCount;
+
+    [SerializeField]
+    private TextMeshProUGUI infoText;
+
+    public PlayerStateHandler playerStateHandler;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,10 +26,17 @@ public class AdditionalInfoUI : MonoBehaviour
     {
         playersAliveCount = CheckForPlayers();
         playersAliveCountText.text = playersAliveCount.ToString();
+
+        if (playerStateHandler.type == PlayerState.Spectating) {
+            infoText.gameObject.SetActive(true);
+            infoText.text = "YOU ARE CURRENTLY SPECTATING!";
+        } else {
+            infoText.gameObject.SetActive(false);
+        }
     }
 
     private int CheckForPlayers() {
-        int aliveAmount = 0;
+        int aliveAmount = 1;
         foreach (Transform child in otherCarsTransform) {
              if (child.tag == "Pod") {
                  aliveAmount += 1;

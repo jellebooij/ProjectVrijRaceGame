@@ -35,7 +35,7 @@ public class DefendUI : MonoBehaviour {
     private void Activate(RectTransform oldState, RectTransform newState, Sprite defendSprite, string name, Vector2 refPos, float animSpeed) {
         oldState.anchoredPosition = Vector2.Lerp(oldState.anchoredPosition, refPos, animSpeed);
         newState.anchoredPosition = Vector2.Lerp(newState.anchoredPosition, Vector2.zero, animSpeed);
-        defendTimer.fillAmount = powerUp.currentAttackPowerup.timer / powerUp.currentAttackPowerup.duration;
+        defendTimer.fillAmount = powerUp.currentDefensePowerup.timer / powerUp.currentDefensePowerup.duration;
         defendIcon.sprite = defendSprite;
         attackName = name;
     }
